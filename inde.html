@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES_COMPANY - Diamants FreeFire, Netflix, PayPal, WISE</title>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/qqFcpxM8/file-000000001f3471fda269be0d033dc40a.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2a2a72;
+            --secondary: #009ffd;
+            --accent: #ff6b6b;
+            --light: #f8f9fa;
+            --dark: #232528;
+            --success: #28a745;
+            --gray: #6c757d;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), #1a1a52);
+            color: white;
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+        
+        nav a:hover {
+            color: var(--secondary);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .hero h2 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #0088e0;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary);
+        }
+        
+        .btn-accent {
+            background-color: var(--accent);
+        }
+        
+        /* Services Section */
+        .services {
+            padding: 60px 0;
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background-color: var(--light);
+            border-radius: var(--radius);
+            padding: 30px 20px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+        
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+        
+        .service-icon img {
+            max-width: 50px;
+            max-height: 50px;
+        }
+        
+        .service-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .service-card p {
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        
+        /* Products Section */
+        .products {
+            padding: 60px 0;
+            margin-bottom: 40px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product-header {
+            background-color: var(--light);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .product-header img {
+            max-height: 60px;
+            max-width: 100%;
+        }
+        
+        .product-body {
+            padding: 20px;
+        }
+        
+        .product-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .product-description {
+            color: var(--gray);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+        
+        .product-footer {
+            padding: 15px 20px;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .product-footer .btn {
+            padding: 8px 20px;
+            font-size: 0.9rem;
+        }
+        
+        /* FreeFire Custom Quantity Section */
+        .custom-quantity {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+        
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .quantity-label {
+            font-weight: 600;
+            color: var(--primary);
+            min-width: 120px;
+        }
+        
+        .quantity-input {
+            flex: 1;
+            max-width: 300px;
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .quantity-input:focus {
+            border-color: var(--secondary);
+            outline: none;
+        }
+        
+        .quantity-info {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        .price-calculation {
+            background-color: var(--light);
+            padding: 20px;
+            border-radius: var(--radius);
+            margin-top: 20px;
+        }
+        
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .price-row.total {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--accent);
+            border-bottom: none;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 2px solid var(--primary);
+        }
+        
+        /* WISE Custom Amount Section */
+        .custom-amount {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+        
+        .amount-control {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .amount-label {
+            font-weight: 600;
+            color: var(--primary);
+            min-width: 120px;
+        }
+        
+        .amount-input {
+            flex: 1;
+            max-width: 300px;
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .amount-input:focus {
+            border-color: var(--secondary);
+            outline: none;
+        }
+        
+        .amount-info {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        /* Taux Section */
+        .taux {
+            background: linear-gradient(135deg, var(--primary), #1a1a52);
+            color: white;
+            padding: 40px 0;
+            border-radius: var(--radius);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .taux h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .taux-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        
+        .taux p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo img {
+            height: 40px;
+        }
+        
+        .footer-logo h3 {
+            font-size: 1.5rem;
+        }
+        
+        .footer-logo span {
+            color: var(--secondary);
+        }
+        
+        .footer-about p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+        
+        .footer-links h4, .footer-contact h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .footer-contact p {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero h2 {
+                font-size: 2.3rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav {
+                width: 100%;
+                order: 3;
+                margin-top: 20px;
+                display: none;
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .taux-value {
+                font-size: 2.5rem;
+            }
+            
+            .custom-quantity, .custom-amount {
+                padding: 25px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero {
+                padding: 60px 0;
+            }
+            
+            .quantity-control, .amount-control {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .quantity-input, .amount-input {
+                max-width: 100%;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://i.postimg.cc/qqFcpxM8/file-000000001f3471fda269be0d033dc40a.png" alt="ES_COMPANY Logo">
+                    <h1>ES<span>_COMPANY</span></h1>
+                </div>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="#"><i class="fas fa-home"></i> Accueil</a></li>
+                        <li><a href="#services"><i class="fas fa-shopping-cart"></i> Services</a></li>
+                        <li><a href="#products"><i class="fas fa-gem"></i> Produits</a></li>
+                        <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Vos services numériques en un seul endroit</h2>
+            <p>Achetez des diamants FreeFire, abonnements Netflix, créez des comptes PayPal et rechargez vos comptes WISE au meilleur taux: 148 GDS.</p>
+            <a href="#products" class="btn btn-primary">Voir nos produits</a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nos Services</h2>
+                <p>Nous offrons une variété de services numériques pour répondre à tous vos besoins en ligne.</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="https://i.postimg.cc/J7TCbD2z/images.png" alt="FreeFire Diamonds">
+                    </div>
+                    <h3>Diamants FreeFire</h3>
+                    <p>Achetez des diamants FreeFire instantanément et à des prix compétitifs pour améliorer votre expérience de jeu.</p>
+                    <a href="#freefire" class="btn">Acheter maintenant</a>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="https://i.postimg.cc/Y21vNmGY/images-(1).png" alt="Netflix">
+                    </div>
+                    <h3>Abonnement Netflix</h3>
+                    <p>Obtenez des abonnements Netflix premium à des tarifs avantageux. Profitez de tous les contenus sans restriction.</p>
+                    <a href="#netflix" class="btn">S'abonner</a>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="https://i.postimg.cc/HknFmXb7/paypal-logo-paypal-logo-free-free-vector.jpg" alt="PayPal">
+                    </div>
+                    <h3>Création de Compte PayPal</h3>
+                    <p>Nous vous aidons à créer et vérifier votre compte PayPal pour effectuer des transactions en ligne en toute sécurité.</p>
+                    <a href="#paypal" class="btn">Créer un compte</a>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="https://i.postimg.cc/C16KzPyj/images-(2).png" alt="WISE">
+                    </div>
+                    <h3>Recharge de Compte WISE</h3>
+                    <p>Rechargez votre compte WISE rapidement et profitez du meilleur taux de change: 148 GDS.</p>
+                    <a href="#wise" class="btn">Recharger maintenant</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FreeFire Custom Quantity Section -->
+    <section class="custom-quantity" id="freefire">
+        <div class="container">
+            <div class="section-title">
+                <h2>Achat de Diamants FreeFire</h2>
+                <p>Choisissez la quantité de diamants que vous souhaitez acheter. Prix flexibles selon vos besoins.</p>
+            </div>
+            
+            <div class="quantity-control">
+                <label class="quantity-label">Quantité de diamants:</label>
+                <input type="number" id="diamondQuantity" class="quantity-input" min="100" value="100" step="10">
+                <div class="quantity-info">Minimum: 100 diamants | Prix: 180 GDS pour 100 diamants</div>
+            </div>
+            
+            <div class="price-calculation">
+                <div class="price-row">
+                    <span>Quantité sélectionnée:</span>
+                    <span id="selectedQuantity">100 diamants</span>
+                </div>
+                <div class="price-row">
+                    <span>Prix unitaire approximatif:</span>
+                    <span id="unitPrice">1.80 GDS/diamant</span>
+                </div>
+                <div class="price-row total">
+                    <span>Prix total:</span>
+                    <span id="totalPrice">180 GDS</span>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-accent" id="buyFreefireBtn" style="padding: 15px 40px; font-size: 1.2rem;">
+                    <i class="fas fa-shopping-cart"></i> Acheter maintenant
+                </button>
+            </div>
+            
+            <div style="margin-top: 20px; text-align: center; color: var(--gray); font-size: 0.9rem;">
+                <p>Exemples: 500 diamants = 850 GDS | 1000 diamants = 1,600 GDS</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- WISE Custom Amount Section -->
+    <section class="custom-amount" id="wise">
+        <div class="container">
+            <div class="section-title">
+                <h2>Recharge de Compte WISE</h2>
+                <p>Choisissez le montant que vous souhaitez recharger sur votre compte WISE. Taux spécial: 148 GDS.</p>
+            </div>
+            
+            <div class="amount-control">
+                <label class="amount-label">Montant en USD ($):</label>
+                <input type="number" id="wiseAmount" class="amount-input" min="30" value="30" step="5">
+                <div class="amount-info">Minimum: $30 | Taux: 148 GDS pour 1 USD</div>
+            </div>
+            
+            <div class="price-calculation">
+                <div class="price-row">
+                    <span>Montant sélectionné:</span>
+                    <span id="selectedAmount">$30 USD</span>
+                </div>
+                <div class="price-row">
+                    <span>Taux de change:</span>
+                    <span>148 GDS = 1 USD</span>
+                </div>
+                <div class="price-row total">
+                    <span>Prix total en GDS:</span>
+                    <span id="wiseTotalPrice">4,440 GDS</span>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-accent" id="buyWiseBtn" style="padding: 15px 40px; font-size: 1.2rem;">
+                    <i class="fas fa-credit-card"></i> Recharger maintenant
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nos Autres Produits</h2>
+                <p>Découvrez notre sélection de produits numériques disponibles à l'achat immédiat.</p>
+            </div>
+            
+            <div class="products-grid">
+                <!-- Netflix Products -->
+                <div class="product-card">
+                    <div class="product-header">
+                        <img src="https://i.postimg.cc/Y21vNmGY/images-(1).png" alt="Netflix">
+                    </div>
+                    <div class="product-body">
+                        <h3 class="product-title">Abonnement Netflix 1 Mois</h3>
+                        <p class="product-description">Abonnement premium Netflix valable pour 1 mois. Accès à tous les contenus.</p>
+                        <div class="product-price">550 GDS</div>
+                    </div>
+                    <div class="product-footer">
+                        <button class="btn btn-primary buy-now-btn" data-product="Abonnement Netflix 1 Mois" data-price="550">Acheter maintenant</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-header">
+                        <img src="https://i.postimg.cc/Y21vNmGY/images-(1).png" alt="Netflix">
+                    </div>
+                    <div class="product-body">
+                        <h3 class="product-title">Abonnement Netflix 3 Mois</h3>
+                        <p class="product-description">Abonnement premium Netflix valable pour 3 mois. Économisez en prenant l'abonnement trimestriel.</p>
+                        <div class="product-price">1,300 GDS</div>
+                    </div>
+                    <div class="product-footer">
+                        <button class="btn btn-primary buy-now-btn" data-product="Abonnement Netflix 3 Mois" data-price="1300">Acheter maintenant</button>
+                    </div>
+                </div>
+                
+                <!-- PayPal Service -->
+                <div class="product-card">
+                    <div class="product-header">
+                        <img src="https://i.postimg.cc/HknFmXb7/paypal-logo-paypal-logo-free-free-vector.jpg" alt="PayPal">
+                    </div>
+                    <div class="product-body">
+                        <h3 class="product-title">Création Compte PayPal</h3>
+                        <p class="product-description">Service complet de création et vérification de compte PayPal avec assistance professionnelle.</p>
+                        <div class="product-price">1,300 GDS</div>
+                    </div>
+                    <div class="product-footer">
+                        <button class="btn btn-primary buy-now-btn" data-product="Création Compte PayPal" data-price="1300">Acheter maintenant</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Taux Section -->
+    <section class="taux">
+        <div class="container">
+            <h3>Taux de change spécial WISE</h3>
+            <div class="taux-value">148 GDS</div>
+            <p>Profitez de notre taux exceptionnel pour recharger votre compte WISE. Meilleur taux garanti sur le marché.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="https://i.postimg.cc/qqFcpxM8/file-000000001f3471fda269be0d033dc40a.png" alt="ES_COMPANY Logo">
+                        <h3>ES<span>_COMPANY</span></h3>
+                    </div>
+                    <p>Votre partenaire de confiance pour tous vos besoins numériques. Nous offrons des services rapides, sécurisés et fiables.</p>
+                    <div class="social-icons">
+                        <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Liens rapides</h4>
+                    <ul>
+                        <li><a href="#">Accueil</a></li>
+                        <li><a href="#services">Nos Services</a></li>
+                        <li><a href="#products">Produits</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#">Politique de confidentialité</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h4>Contactez-nous</h4>
+                    <p><i class="fas fa-envelope"></i> contact@escompany.com</p>
+                    <p><i class="fas fa-phone"></i> +509 48 00 0000</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Port-au-Prince, Haïti</p>
+                    <p><i class="fas fa-clock"></i> Lundi - Vendredi: 9h - 18h</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 ES_COMPANY. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+        });
+        
+        // FreeFire quantity calculation
+        const diamondQuantityInput = document.getElementById('diamondQuantity');
+        const selectedQuantityDisplay = document.getElementById('selectedQuantity');
+        const unitPriceDisplay = document.getElementById('unitPrice');
+        const totalPriceDisplay = document.getElementById('totalPrice');
+        const buyFreefireBtn = document.getElementById('buyFreefireBtn');
+        
+        function calculateFreefirePrice() {
+            const quantity = parseInt(diamondQuantityInput.value) || 100;
+            
+            // Ensure minimum quantity of 100
+            if (quantity < 100) {
+                diamondQuantityInput.value = 100;
+                return calculateFreefirePrice();
+            }
+            
+            // Calculate price based on quantity
+            let totalPrice;
+            let unitPrice;
+            
+            if (quantity === 500) {
+                totalPrice = 850; // Special price for 500 diamonds
+                unitPrice = (850 / 500).toFixed(2);
+            } else if (quantity === 1000) {
+                totalPrice = 1600; // Special price for 1000 diamonds
+                unitPrice = (1600 / 1000).toFixed(2);
+            } else {
+                // Price formula for custom quantities
+                // Base price: 100 diamonds = 180 GDS (1.80 GDS per diamond)
+                totalPrice = Math.round(quantity * 1.80);
+                unitPrice = (totalPrice / quantity).toFixed(2);
+            }
+            
+            // Format price with thousands separator
+            const formattedPrice = totalPrice.toLocaleString('fr-FR');
+            
+            // Update displays
+            selectedQuantityDisplay.textContent = `${quantity} diamants`;
+            unitPriceDisplay.textContent = `${unitPrice} GDS/diamant`;
+            totalPriceDisplay.textContent = `${formattedPrice} GDS`;
+            
+            return { quantity, totalPrice, unitPrice };
+        }
+        
+        // Calculate price when quantity changes
+        diamondQuantityInput.addEventListener('input', calculateFreefirePrice);
+        
+        // Buy FreeFire button
+        buyFreefireBtn.addEventListener('click', () => {
+            const { quantity, totalPrice } = calculateFreefirePrice();
+            
+            // Format price with thousands separator
+            const formattedPrice = totalPrice.toLocaleString('fr-FR');
+            
+            // In a real e-commerce site, this would redirect to payment page
+            alert(`Commande de ${quantity} diamants FreeFire pour ${formattedPrice} GDS\n\nDans un site réel, cela redirigerait vers une page de paiement sécurisée.`);
+        });
+        
+        // WISE amount calculation
+        const wiseAmountInput = document.getElementById('wiseAmount');
+        const selectedAmountDisplay = document.getElementById('selectedAmount');
+        const wiseTotalPriceDisplay = document.getElementById('wiseTotalPrice');
+        const buyWiseBtn = document.getElementById('buyWiseBtn');
+        
+        function calculateWisePrice() {
+            const amount = parseInt(wiseAmountInput.value) || 30;
+            
+            // Ensure minimum amount of $30
+            if (amount < 30) {
+                wiseAmountInput.value = 30;
+                return calculateWisePrice();
+            }
+            
+            // Calculate price: amount * 148 GDS
+            const totalPrice = amount * 148;
+            
+            // Format number with thousands separator
+            const formattedPrice = totalPrice.toLocaleString('fr-FR');
+            
+            // Update displays
+            selectedAmountDisplay.textContent = `$${amount} USD`;
+            wiseTotalPriceDisplay.textContent = `${formattedPrice} GDS`;
+            
+            return { amount, totalPrice };
+        }
+        
+        // Calculate price when amount changes
+        wiseAmountInput.addEventListener('input', calculateWisePrice);
+        
+        // Buy WISE button
+        buyWiseBtn.addEventListener('click', () => {
+            const { amount, totalPrice } = calculateWisePrice();
+            
+            // Format for display
+            const formattedPrice = totalPrice.toLocaleString('fr-FR');
+            
+            // In a real e-commerce site, this would redirect to payment page
+            alert(`Recharge WISE de $${amount} USD pour ${formattedPrice} GDS\nTaux: 148 GDS = 1 USD\n\nDans un site réel, cela redirigerait vers une page de paiement sécurisée.`);
+        });
+        
+        // Buy now buttons for other products
+        const buyNowButtons = document.querySelectorAll('.buy-now-btn');
+        buyNowButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const product = button.getAttribute('data-product');
+                const price = button.getAttribute('data-price');
+                
+                // Format price with thousands separator if needed
+                const formattedPrice = parseInt(price).toLocaleString('fr-FR');
+                
+                // In a real e-commerce site, this would redirect to payment page
+                alert(`Commande: ${product} pour ${formattedPrice} GDS\n\nDans un site réel, cela redirigerait vers une page de paiement sécurisée.`);
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    mainNav.classList.remove('active');
+                }
+            });
+        });
+        
+        // Initialize calculations on page load
+        calculateFreefirePrice();
+        calculateWisePrice();
+    </script>
+</body>
+</html>
