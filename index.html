@@ -641,7 +641,8 @@
                     </div>
                     <h3>Diamants FreeFire</h3>
                     <p>Achetez des diamants FreeFire instantanément et à des prix compétitifs pour améliorer votre expérience de jeu.</p>
-                    <a href="#freefire" class="btn">Acheter maintenant</a>
+                    <!-- MODIFICATION ICI: Lien vers la page FreeFire -->
+                    <a href="freefire.html" class="btn">Acheter maintenant</a>
                 </div>
                 
                 <div class="service-card">
@@ -704,9 +705,10 @@
             </div>
             
             <div style="text-align: center; margin-top: 30px;">
-                <button class="btn btn-accent" id="buyFreefireBtn" style="padding: 15px 40px; font-size: 1.2rem;">
+                <!-- MODIFICATION ICI: Lien vers la page FreeFire -->
+                <a href="freefire.html" class="btn btn-accent" style="padding: 15px 40px; font-size: 1.2rem; display: inline-block;">
                     <i class="fas fa-shopping-cart"></i> Acheter maintenant
-                </button>
+                </a>
             </div>
             
             <div style="margin-top: 20px; text-align: center; color: var(--gray); font-size: 0.9rem;">
@@ -874,7 +876,6 @@
         const selectedQuantityDisplay = document.getElementById('selectedQuantity');
         const unitPriceDisplay = document.getElementById('unitPrice');
         const totalPriceDisplay = document.getElementById('totalPrice');
-        const buyFreefireBtn = document.getElementById('buyFreefireBtn');
         
         function calculateFreefirePrice() {
             const quantity = parseInt(diamondQuantityInput.value) || 100;
@@ -915,17 +916,6 @@
         
         // Calculate price when quantity changes
         diamondQuantityInput.addEventListener('input', calculateFreefirePrice);
-        
-        // Buy FreeFire button
-        buyFreefireBtn.addEventListener('click', () => {
-            const { quantity, totalPrice } = calculateFreefirePrice();
-            
-            // Format price with thousands separator
-            const formattedPrice = totalPrice.toLocaleString('fr-FR');
-            
-            // In a real e-commerce site, this would redirect to payment page
-            alert(`Commande de ${quantity} diamants FreeFire pour ${formattedPrice} GDS\n\nDans un site réel, cela redirigerait vers une page de paiement sécurisée.`);
-        });
         
         // WISE amount calculation
         const wiseAmountInput = document.getElementById('wiseAmount');
