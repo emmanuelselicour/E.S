@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acheter des Diamants FreeFire - ES_COMPANY</title>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/qqFcpxM8/file-000000001f3471fda269be0d033dc40a.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2a2a72;
+            --secondary: #009ffd;
+            --accent: #ff6b6b;
+            --light: #f8f9fa;
+            --dark: #232528;
+            --success: #28a745;
+            --warning: #ffc107;
+            --gray: #6c757d;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), #1a1a52);
+            color: white;
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+        
+        nav a:hover {
+            color: var(--secondary);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        
+        .back-btn:hover {
+            color: var(--secondary);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .product-details {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .product-image {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+        
+        .product-image img {
+            max-width: 200px;
+            height: auto;
+        }
+        
+        .product-info {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+        
+        .product-info h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        .product-info ul {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+        
+        .product-info li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .product-info li i {
+            color: var(--success);
+            margin-top: 3px;
+        }
+        
+        .purchase-form {
+            flex: 1;
+            min-width: 300px;
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+        
+        .form-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+        
+        .quantity-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1.1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .quantity-input:focus {
+            border-color: var(--secondary);
+            outline: none;
+        }
+        
+        .quantity-info {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-top: 8px;
+        }
+        
+        /* Price Calculation */
+        .price-calculation {
+            background-color: var(--light);
+            padding: 25px;
+            border-radius: var(--radius);
+            margin-top: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .price-row.total {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--accent);
+            border-bottom: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid var(--primary);
+        }
+        
+        /* Quick Quantity Options */
+        .quick-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .quick-option {
+            background-color: var(--light);
+            border: 2px solid #ddd;
+            border-radius: var(--radius);
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .quick-option:hover {
+            border-color: var(--secondary);
+            background-color: #e8f4ff;
+        }
+        
+        .quick-option.active {
+            border-color: var(--secondary);
+            background-color: #e8f4ff;
+            font-weight: 600;
+        }
+        
+        .quick-option .quantity {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .quick-option .price {
+            color: var(--accent);
+            font-weight: 600;
+            margin-top: 5px;
+        }
+        
+        /* Payment Methods */
+        .payment-methods {
+            margin-top: 30px;
+            margin-bottom: 25px;
+        }
+        
+        .payment-methods h4 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .payment-option {
+            background-color: var(--light);
+            border-radius: var(--radius);
+            padding: 20px;
+            border: 2px solid #ddd;
+        }
+        
+        .payment-option.active {
+            border-color: var(--secondary);
+            background-color: #e8f4ff;
+        }
+        
+        .payment-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .payment-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            padding: 5px;
+        }
+        
+        .payment-logo img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
+        .payment-info h5 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+        
+        .payment-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .payment-number {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 12px;
+            margin-top: 10px;
+            font-weight: 600;
+            color: var(--primary);
+            text-align: center;
+            border: 1px dashed var(--primary);
+        }
+        
+        /* File Upload */
+        .file-upload {
+            margin-top: 25px;
+        }
+        
+        .file-upload-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .file-upload-area {
+            border: 2px dashed #ddd;
+            border-radius: var(--radius);
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background-color: var(--light);
+        }
+        
+        .file-upload-area:hover {
+            border-color: var(--secondary);
+            background-color: #e8f4ff;
+        }
+        
+        .file-upload-area i {
+            font-size: 2.5rem;
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+        
+        .file-upload-area p {
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+        
+        .file-upload-area small {
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+        
+        #fileName {
+            margin-top: 15px;
+            color: var(--success);
+            font-weight: 600;
+            display: none;
+        }
+        
+        /* Phone Number Input */
+        .phone-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .phone-prefix {
+            background-color: var(--light);
+            padding: 15px;
+            border-radius: var(--radius);
+            border: 2px solid #ddd;
+            font-weight: 600;
+            min-width: 60px;
+            text-align: center;
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .btn:hover {
+            background-color: #0088e0;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-accent {
+            background-color: var(--accent);
+        }
+        
+        .btn-accent:hover {
+            background-color: #ff5252;
+        }
+        
+        .btn-success {
+            background-color: var(--success);
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        
+        .btn-small {
+            padding: 10px 20px;
+            font-size: 1rem;
+            width: auto;
+        }
+        
+        /* Success Dialog */
+        .dialog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        
+        .dialog-overlay.active {
+            display: flex;
+        }
+        
+        .dialog-box {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: dialogAppear 0.3s ease-out;
+            position: relative;
+        }
+        
+        @keyframes dialogAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .dialog-icon {
+            width: 80px;
+            height: 80px;
+            background-color: var(--success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+        }
+        
+        .dialog-icon i {
+            font-size: 2.5rem;
+            color: white;
+        }
+        
+        .dialog-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .dialog-message {
+            color: var(--gray);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .order-details {
+            background-color: var(--light);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        
+        .order-details h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .order-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .order-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .dialog-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .close-dialog {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-dialog:hover {
+            color: var(--accent);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo img {
+            height: 40px;
+        }
+        
+        .footer-logo h3 {
+            font-size: 1.5rem;
+        }
+        
+        .footer-logo span {
+            color: var(--secondary);
+        }
+        
+        .footer-about p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+        
+        .footer-links h4, .footer-contact h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .footer-contact p {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav {
+                width: 100%;
+                order: 3;
+                margin-top: 20px;
+                display: none;
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .purchase-form {
+                padding: 25px;
+            }
+            
+            .payment-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .dialog-buttons {
+                flex-direction: column;
+            }
+            
+            .dialog-box {
+                padding: 25px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .quick-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .product-image {
+                padding: 25px;
+            }
+            
+            .product-image img {
+                max-width: 150px;
+            }
+            
+            .phone-input {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .phone-prefix {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <img src="https://i.postimg.cc/qqFcpxM8/file-000000001f3471fda269be0d033dc40a.png" alt="ES_COMPANY Logo">
+                    <h1>ES<span>_COMPANY</span></h1>
+                </a>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-home"></i> Accueil</a></li>
+                        <li><a href="index.html#services"><i class="fas fa-shopping-cart"></i> Services</a></li>
+                        <li><a href="index.html#products"><i class="fas fa-gem"></i> Produits</a></li>
+                        <li><a href="index.html#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                    </ul>
+                </nav>
+                
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Acheter des Diamants FreeFire</h2>
+            <p>Rechargez votre compte FreeFire avec des diamants et améliorez votre expérience de jeu!</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-content">
+            <!-- Product Details -->
+            <div class="product-details">
+                <div class="product-image">
+                    <img src="https://i.postimg.cc/J7TCbD2z/images.png" alt="FreeFire Diamonds">
+                </div>
+                
+                <div class="product-info">
+                    <h3>À propos des diamants FreeFire</h3>
+                    <p>Les diamants sont la monnaie premium de FreeFire. Utilisez-les pour:</p>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Acheter des personnages exclusifs</li>
+                        <li><i class="fas fa-check-circle"></i> Débloquer des armes et skins rares</li>
+                        <li><i class="fas fa-check-circle"></i> Obtenir des passes de combat</li>
+                        <li><i class="fas fa-check-circle"></i> Acheter des objets dans la boutique</li>
+                        <li><i class="fas fa-check-circle"></i> Participer à des événements spéciaux</li>
+                    </ul>
+                    
+                    <div class="payment-methods">
+                        <h4>Instructions de paiement</h4>
+                        <p>1. Choisissez la quantité de diamants</p>
+                        <p>2. Sélectionnez votre méthode de paiement</p>
+                        <p>3. Effectuez le paiement au numéro indiqué</p>
+                        <p>4. Téléchargez la confirmation de paiement</p>
+                        <p>5. Cliquez sur "Acheter maintenant"</p>
+                        <p style="color: var(--accent); font-weight: 600; margin-top: 15px;">
+                            <i class="fas fa-bolt"></i> Livraison instantanée après vérification!
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Purchase Form -->
+            <div class="purchase-form">
+                <h2 class="form-title">Acheter des Diamants</h2>
+                
+                <form id="freefireForm">
+                    <!-- Quantity Selection -->
+                    <div class="form-group">
+                        <label class="form-label">Choisissez la quantité:</label>
+                        
+                        <!-- Quick quantity options -->
+                        <div class="quick-options">
+                            <div class="quick-option" data-quantity="100">
+                                <div class="quantity">100 diamants</div>
+                                <div class="price">180 GDS</div>
+                            </div>
+                            <div class="quick-option" data-quantity="500">
+                                <div class="quantity">500 diamants</div>
+                                <div class="price">850 GDS</div>
+                            </div>
+                            <div class="quick-option" data-quantity="1000">
+                                <div class="quantity">1,000 diamants</div>
+                                <div class="price">1,600 GDS</div>
+                            </div>
+                            <div class="quick-option" data-quantity="10000">
+                                <div class="quantity">10,000 diamants</div>
+                                <div class="price">15,000 GDS</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Custom quantity input -->
+                        <div style="margin-top: 20px;">
+                            <label class="form-label">Ou entrez une quantité personnalisée:</label>
+                            <input type="number" id="diamondQuantity" class="quantity-input" min="100" value="100" step="10">
+                            <div class="quantity-info">Minimum: 100 diamants | Prix: 180 GDS pour 100 diamants</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Price Calculation -->
+                    <div class="price-calculation">
+                        <div class="price-row">
+                            <span>Quantité de diamants:</span>
+                            <span id="selectedQuantity">100 diamants</span>
+                        </div>
+                        <div class="price-row">
+                            <span>Prix unitaire:</span>
+                            <span id="unitPrice">1.80 GDS/diamant</span>
+                        </div>
+                        <div class="price-row total">
+                            <span>Prix total:</span>
+                            <span id="totalPrice">180 GDS</span>
+                        </div>
+                    </div>
+                    
+                    <!-- User Information -->
+                    <div class="form-group">
+                        <label class="form-label">ID FreeFire:</label>
+                        <input type="text" class="quantity-input" id="freefireId" placeholder="Entrez votre ID FreeFire" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Nom du joueur:</label>
+                        <input type="text" class="quantity-input" id="playerName" placeholder="Entrez votre nom de joueur" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Numéro de téléphone:</label>
+                        <div class="phone-input">
+                            <div class="phone-prefix">+509</div>
+                            <input type="tel" class="quantity-input" id="phoneNumber" placeholder="Entrez votre numéro de téléphone" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Payment Methods -->
+                    <div class="payment-methods">
+                        <h4>Sélectionnez votre méthode de paiement:</h4>
+                        
+                        <div class="payment-options">
+                            <div class="payment-option" id="natcashOption">
+                                <div class="payment-header">
+                                    <div class="payment-logo">
+                                        <img src="https://i.postimg.cc/tTCFPMs2/d144965d8de439a0d8d6689b85fe4093.jpg" alt="NatCash">
+                                    </div>
+                                    <div class="payment-info">
+                                        <h5>NatCash</h5>
+                                        <p>Effectuez le paiement à ce numéro:</p>
+                                    </div>
+                                </div>
+                                <div class="payment-number">41866098</div>
+                            </div>
+                            
+                            <div class="payment-option" id="moncashOption">
+                                <div class="payment-header">
+                                    <div class="payment-logo">
+                                        <img src="https://i.postimg.cc/K8B7yLXM/images.jpg" alt="MonCash">
+                                    </div>
+                                    <div class="payment-info">
+                                        <h5>MonCash</h5>
+                                        <p>Effectuez le paiement à ce numéro:</p>
+                                    </div>
+                                </div>
+                                <div class="payment-number">46433333</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Payment Confirmation Upload -->
+                    <div class="file-upload">
+                        <label class="file-upload-label">Confirmation de paiement:</label>
+                        <div class="file-upload-area" id="fileUploadArea">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Cliquez pour télécharger la capture d'écran</p>
+                            <small>Formats acceptés: JPG, PNG, PDF (Max: 5MB)</small>
+                            <div id="fileName"></div>
+                        </div>
+                        <input type="file" id="paymentProof" accept=".jpg,.jpeg,.png,.pdf" style="display: none;">
+                    </div>
+                    
+                    <!-- Purchase Button -->
+                    <button type="submit" class="btn btn-accent" id="purchaseBtn">
+                        <i class="fas fa-shopping-cart"></i> Acheter maintenant
+                    </button>
+                    
+                    <div style="text-align: center; margin-top: 15px; color: var(--gray); font-size: 0.9rem;">
+                        <p><i class="fas fa-clock"></i> Livraison dans les 15 minutes après vérification</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Dialog -->
+    <div class="dialog-overlay" id="successDialog">
+        <div class="dialog-box">
+            <button class="close-dialog" id="closeDialog">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="dialog-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            
+            <h2 class="dialog-title">Merci pour votre achat!</h2>
+            
+            <p class="dialog-message">
+                Votre commande a été enregistrée avec succès. Nous traiterons votre paiement et vous livrerons les diamants dans les <strong>15 minutes</strong>.
+            </p>
+            
+            <div class="order-details" id="orderSummary">
+                <!-- Order details will be inserted here dynamically -->
+            </div>
+            
+            <div class="dialog-buttons">
+                <a href="index.html" class="btn btn-success btn-small">
+                    <i class="fas fa-home"></i> Retour à l'accueil
+                </a>
+                <button class="btn btn-primary btn-small" id="newOrderBtn">
+                    <i class="fas fa-shopping-cart"></i> Nouvelle commande
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="https://i.postimg.cc/qqFcpxM8/file-000000001f3471fda269be0d033dc40a.png" alt="ES_COMPANY Logo">
+                        <h3>ES<span>_COMPANY</span></h3>
+                    </div>
+                    <p>Votre partenaire de confiance pour tous vos besoins numériques. Nous offrons des services rapides, sécurisés et fiables.</p>
+                    <div class="social-icons">
+                        <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Liens rapides</h4>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="index.html#services">Nos Services</a></li>
+                        <li><a href="index.html#products">Produits</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                        <li><a href="#">Politique de confidentialité</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h4>Contactez-nous</h4>
+                    <p><i class="fas fa-envelope"></i> contact@escompany.com</p>
+                    <p><i class="fas fa-phone"></i> +509 48 00 0000</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Port-au-Prince, Haïti</p>
+                    <p><i class="fas fa-clock"></i> Lundi - Vendredi: 9h - 18h</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 ES_COMPANY. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+        });
+        
+        // Variables
+        const diamondQuantityInput = document.getElementById('diamondQuantity');
+        const selectedQuantityDisplay = document.getElementById('selectedQuantity');
+        const unitPriceDisplay = document.getElementById('unitPrice');
+        const totalPriceDisplay = document.getElementById('totalPrice');
+        const purchaseBtn = document.getElementById('purchaseBtn');
+        const quickOptions = document.querySelectorAll('.quick-option');
+        const paymentOptions = document.querySelectorAll('.payment-option');
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        const paymentProofInput = document.getElementById('paymentProof');
+        const fileNameDisplay = document.getElementById('fileName');
+        const successDialog = document.getElementById('successDialog');
+        const closeDialogBtn = document.getElementById('closeDialog');
+        const newOrderBtn = document.getElementById('newOrderBtn');
+        const orderSummary = document.getElementById('orderSummary');
+        
+        let selectedPaymentMethod = null;
+        let uploadedFile = null;
+        
+        // Price calculation function
+        function calculateFreefirePrice() {
+            const quantity = parseInt(diamondQuantityInput.value) || 100;
+            
+            // Ensure minimum quantity of 100
+            if (quantity < 100) {
+                diamondQuantityInput.value = 100;
+                return calculateFreefirePrice();
+            }
+            
+            // Calculate price based on quantity
+            let totalPrice;
+            let unitPrice;
+            
+            // Special prices for specific quantities
+            if (quantity === 500) {
+                totalPrice = 850; // Special price for 500 diamonds
+                unitPrice = (850 / 500).toFixed(2);
+            } else if (quantity === 1000) {
+                totalPrice = 1600; // Special price for 1000 diamonds
+                unitPrice = (1600 / 1000).toFixed(2);
+            } else if (quantity === 10000) {
+                totalPrice = 15000; // Special price for 10,000 diamonds
+                unitPrice = (15000 / 10000).toFixed(2);
+            } else {
+                // Price formula for custom quantities
+                // Base price: 100 diamonds = 180 GDS (1.80 GDS per diamond)
+                totalPrice = Math.round(quantity * 1.80);
+                unitPrice = (totalPrice / quantity).toFixed(2);
+            }
+            
+            // Format price with thousands separator
+            const formattedPrice = totalPrice.toLocaleString('fr-FR');
+            
+            // Update displays
+            selectedQuantityDisplay.textContent = `${quantity.toLocaleString('fr-FR')} diamants`;
+            unitPriceDisplay.textContent = `${unitPrice} GDS/diamant`;
+            totalPriceDisplay.textContent = `${formattedPrice} GDS`;
+            
+            // Update active quick option
+            quickOptions.forEach(option => {
+                option.classList.remove('active');
+                const optionQty = parseInt(option.getAttribute('data-quantity'));
+                if (optionQty === quantity) {
+                    option.classList.add('active');
+                }
+            });
+            
+            return { quantity, totalPrice, unitPrice };
+        }
+        
+        // Calculate price when quantity changes
+        diamondQuantityInput.addEventListener('input', calculateFreefirePrice);
+        
+        // Quick option selection
+        quickOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const quantity = option.getAttribute('data-quantity');
+                diamondQuantityInput.value = quantity;
+                calculateFreefirePrice();
+            });
+        });
+        
+        // Payment method selection
+        paymentOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                // Remove active class from all options
+                paymentOptions.forEach(opt => opt.classList.remove('active'));
+                
+                // Add active class to selected option
+                option.classList.add('active');
+                selectedPaymentMethod = option.id.replace('Option', '');
+            });
+        });
+        
+        // Default select NatCash
+        document.getElementById('natcashOption').classList.add('active');
+        selectedPaymentMethod = 'natcash';
+        
+        // File upload functionality
+        fileUploadArea.addEventListener('click', () => {
+            paymentProofInput.click();
+        });
+        
+        paymentProofInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                // Check file size (max 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('Fichier trop volumineux. Taille maximale: 5MB');
+                    paymentProofInput.value = '';
+                    return;
+                }
+                
+                // Check file type
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
+                if (!allowedTypes.includes(file.type)) {
+                    alert('Format de fichier non supporté. Formats acceptés: JPG, PNG, PDF');
+                    paymentProofInput.value = '';
+                    return;
+                }
+                
+                uploadedFile = file;
+                fileNameDisplay.textContent = `Fichier sélectionné: ${file.name}`;
+                fileNameDisplay.style.display = 'block';
+                
+                // Change upload area appearance
+                fileUploadArea.style.borderColor = 'var(--success)';
+                fileUploadArea.style.backgroundColor = '#e8f6ef';
+                fileUploadArea.querySelector('i').style.color = 'var(--success)';
+            }
+        });
+        
+        // Show success dialog
+        function showSuccessDialog(orderData) {
+            // Update order summary
+            const paymentNumber = selectedPaymentMethod === 'natcash' ? '41866098' : '46433333';
+            const paymentMethodName = selectedPaymentMethod === 'natcash' ? 'NatCash' : 'MonCash';
+            const formattedPrice = orderData.totalPrice.toLocaleString('fr-FR');
+            
+            orderSummary.innerHTML = `
+                <h4>Résumé de votre commande</h4>
+                <div class="order-row">
+                    <span>Produit:</span>
+                    <span>Diamants FreeFire</span>
+                </div>
+                <div class="order-row">
+                    <span>Quantité:</span>
+                    <span>${orderData.quantity.toLocaleString('fr-FR')} diamants</span>
+                </div>
+                <div class="order-row">
+                    <span>Prix total:</span>
+                    <span>${formattedPrice} GDS</span>
+                </div>
+                <div class="order-row">
+                    <span>ID FreeFire:</span>
+                    <span>${orderData.freefireId}</span>
+                </div>
+                <div class="order-row">
+                    <span>Nom du joueur:</span>
+                    <span>${orderData.playerName}</span>
+                </div>
+                <div class="order-row">
+                    <span>Méthode de paiement:</span>
+                    <span>${paymentMethodName} (${paymentNumber})</span>
+                </div>
+                <div class="order-row">
+                    <span>Statut:</span>
+                    <span style="color: var(--success); font-weight: 600;">En traitement</span>
+                </div>
+            `;
+            
+            // Show dialog
+            successDialog.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Close dialog
+        closeDialogBtn.addEventListener('click', () => {
+            successDialog.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // New order button
+        newOrderBtn.addEventListener('click', () => {
+            successDialog.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            
+            // Reset form
+            document.getElementById('freefireForm').reset();
+            calculateFreefirePrice();
+            paymentOptions.forEach(opt => opt.classList.remove('active'));
+            document.getElementById('natcashOption').classList.add('active');
+            selectedPaymentMethod = 'natcash';
+            uploadedFile = null;
+            fileNameDisplay.style.display = 'none';
+            fileUploadArea.style.borderColor = '#ddd';
+            fileUploadArea.style.backgroundColor = 'var(--light)';
+            fileUploadArea.querySelector('i').style.color = 'var(--gray)';
+            
+            // Scroll to top of form
+            document.querySelector('.purchase-form').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // Close dialog when clicking outside
+        successDialog.addEventListener('click', (e) => {
+            if (e.target === successDialog) {
+                successDialog.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Form submission
+        const freefireForm = document.getElementById('freefireForm');
+        freefireForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form data
+            const freefireId = document.getElementById('freefireId').value;
+            const playerName = document.getElementById('playerName').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            
+            // Validation
+            if (!freefireId.trim()) {
+                alert('Veuillez entrer votre ID FreeFire');
+                document.getElementById('freefireId').focus();
+                return;
+            }
+            
+            if (!playerName.trim()) {
+                alert('Veuillez entrer votre nom de joueur');
+                document.getElementById('playerName').focus();
+                return;
+            }
+            
+            if (!phoneNumber.trim()) {
+                alert('Veuillez entrer votre numéro de téléphone');
+                document.getElementById('phoneNumber').focus();
+                return;
+            }
+            
+            if (!selectedPaymentMethod) {
+                alert('Veuillez sélectionner une méthode de paiement');
+                return;
+            }
+            
+            if (!uploadedFile) {
+                alert('Veuillez télécharger la confirmation de paiement');
+                return;
+            }
+            
+            const { quantity, totalPrice } = calculateFreefirePrice();
+            
+            // Prepare order data
+            const orderData = {
+                product: 'FreeFire Diamonds',
+                quantity,
+                totalPrice,
+                freefireId,
+                playerName,
+                phoneNumber: '+509 ' + phoneNumber,
+                paymentMethod: selectedPaymentMethod === 'natcash' ? 'NatCash' : 'MonCash',
+                paymentNumber: selectedPaymentMethod === 'natcash' ? '41866098' : '46433333',
+                fileName: uploadedFile.name
+            };
+            
+            // In a real e-commerce site, this would send data to server
+            console.log('Commande envoyée:', orderData);
+            
+            // Show success dialog
+            showSuccessDialog(orderData);
+        });
+        
+        // Initialize calculations on page load
+        calculateFreefirePrice();
+    </script>
+</body>
+</html>
