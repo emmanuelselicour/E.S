@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Création de Compte PayPal - ES_COMPANY</title>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/qqFcpxM8/file-000000001f3471fda269be0d033dc40a.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2a2a72;
+            --secondary: #009ffd;
+            --accent: #ff6b6b;
+            --light: #f8f9fa;
+            --dark: #232528;
+            --success: #28a745;
+            --warning: #ffc107;
+            --gray: #6c757d;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), #1a1a52);
+            color: white;
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+        
+        nav a:hover {
+            color: var(--secondary);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        
+        .back-btn:hover {
+            color: var(--secondary);
+        }
+        
+        /* PayPal Hero Section */
+        .paypal-hero {
+            background: linear-gradient(rgba(0, 48, 135, 0.9), rgba(0, 0, 0, 0.9)), url('https://images.unsplash.com/photo-1613243555978-636c48dc653c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .paypal-hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .paypal-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .paypal-logo {
+            height: 80px;
+            margin-bottom: 20px;
+        }
+        
+        /* Services Section */
+        .services {
+            padding: 60px 0;
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: #003087;
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background-color: var(--light);
+            border-radius: var(--radius);
+            padding: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid #003087;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+        
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            margin-bottom: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            color: #003087;
+            font-size: 1.8rem;
+        }
+        
+        .service-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .service-card p {
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        
+        /* Benefits Section */
+        .benefits {
+            padding: 60px 0;
+            background-color: #f0f8ff;
+            margin-bottom: 40px;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .benefit-item {
+            background-color: white;
+            padding: 25px;
+            border-radius: var(--radius);
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            border-top: 3px solid #003087;
+        }
+        
+        .benefit-icon {
+            font-size: 2.5rem;
+            color: #003087;
+            margin-bottom: 15px;
+        }
+        
+        .benefit-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        /* Pricing Section */
+        .pricing {
+            padding: 60px 0;
+            margin-bottom: 40px;
+        }
+        
+        .pricing-card {
+            background-color: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+            border: 2px solid #003087;
+        }
+        
+        .pricing-header {
+            background: linear-gradient(135deg, #003087, #009cde);
+            color: white;
+            padding: 40px 20px;
+        }
+        
+        .pricing-header h3 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .pricing-price {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .pricing-period {
+            opacity: 0.9;
+        }
+        
+        .pricing-body {
+            padding: 40px 30px;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+        
+        .pricing-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+        
+        .pricing-features li i {
+            color: var(--success);
+            margin-right: 10px;
+        }
+        
+        /* Request Form Section */
+        .request-form {
+            padding: 60px 0;
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+        
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--secondary);
+            outline: none;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-info {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        .required {
+            color: var(--accent);
+        }
+        
+        /* Payment Dialog */
+        .dialog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        
+        .dialog-overlay.active {
+            display: flex;
+        }
+        
+        .dialog-box {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: dialogAppear 0.3s ease-out;
+            position: relative;
+        }
+        
+        @keyframes dialogAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .dialog-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #003087, #009cde);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+        }
+        
+        .dialog-icon i {
+            font-size: 2.5rem;
+            color: white;
+        }
+        
+        .dialog-title {
+            font-size: 2rem;
+            color: #003087;
+            margin-bottom: 15px;
+        }
+        
+        .dialog-message {
+            color: var(--gray);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .payment-info {
+            background-color: #e8f4ff;
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-bottom: 25px;
+            text-align: left;
+            border-left: 4px solid #003087;
+        }
+        
+        .payment-info h4 {
+            color: #003087;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.3rem;
+        }
+        
+        .payment-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed #aaa;
+        }
+        
+        .payment-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .payment-methods {
+            margin-top: 25px;
+            margin-bottom: 25px;
+        }
+        
+        .payment-methods h4 {
+            font-size: 1.2rem;
+            color: #003087;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .payment-option {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 15px;
+            border: 2px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .payment-option.active {
+            border-color: #003087;
+            background-color: #e8f4ff;
+        }
+        
+        .payment-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .payment-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--radius);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            padding: 5px;
+        }
+        
+        .payment-logo img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
+        .payment-info-detail h5 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: #003087;
+        }
+        
+        .payment-number {
+            background-color: #f0f7ff;
+            border-radius: var(--radius);
+            padding: 12px;
+            margin-top: 10px;
+            font-weight: 600;
+            color: #003087;
+            text-align: center;
+            border: 1px dashed #003087;
+        }
+        
+        .dialog-instructions {
+            background-color: #fff8e1;
+            border-radius: var(--radius);
+            padding: 20px;
+            margin: 25px 0;
+            text-align: left;
+            border-left: 4px solid var(--warning);
+        }
+        
+        .dialog-instructions h4 {
+            color: #003087;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .dialog-instructions ol {
+            padding-left: 20px;
+        }
+        
+        .dialog-instructions li {
+            margin-bottom: 8px;
+        }
+        
+        .close-dialog {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-dialog:hover {
+            color: var(--accent);
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            background: linear-gradient(to right, var(--primary), #1a1a52);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background: linear-gradient(to right, #1a1a52, var(--primary));
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(42, 42, 114, 0.15);
+        }
+        
+        .btn-paypal {
+            background: linear-gradient(to right, #003087, #009cde);
+            border: 2px solid #003087;
+        }
+        
+        .btn-paypal:hover {
+            background: linear-gradient(to right, #00205b, #003087);
+        }
+        
+        .btn-success {
+            background: linear-gradient(to right, var(--success), #34ce57);
+            border: 2px solid var(--success);
+        }
+        
+        .btn-success:hover {
+            background: linear-gradient(to right, #218838, var(--success));
+        }
+        
+        .btn-large {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+        }
+        
+        .btn-full {
+            width: 100%;
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary), #1a1a52);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo img {
+            height: 40px;
+        }
+        
+        .footer-logo h3 {
+            font-size: 1.5rem;
+        }
+        
+        .footer-logo span {
+            color: white;
+        }
+        
+        .footer-about p {
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        
+        .footer-links h4, .footer-contact h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .footer-contact p {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav {
+                width: 100%;
+                order: 3;
+                margin-top: 20px;
+                display: none;
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .paypal-hero h2 {
+                font-size: 2rem;
+            }
+            
+            .paypal-hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .payment-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .dialog-buttons {
+                flex-direction: column;
+            }
+            
+            .dialog-box {
+                padding: 25px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .paypal-hero {
+                padding: 60px 0;
+            }
+            
+            .pricing-price {
+                font-size: 2.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <img src="https://i.postimg.cc/qqFcpxM8/file-000000001f3471fda269be0d033dc40a.png" alt="ES_COMPANY Logo">
+                    <h1>ES<span>_COMPANY</span></h1>
+                </a>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-home"></i> Accueil</a></li>
+                        <li><a href="index.html#services"><i class="fas fa-shopping-cart"></i> Services</a></li>
+                        <li><a href="index.html#products"><i class="fas fa-gem"></i> Produits</a></li>
+                        <li><a href="index.html#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                    </ul>
+                </nav>
+                
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- PayPal Hero Section -->
+    <section class="paypal-hero">
+        <div class="container">
+            <img src="https://i.postimg.cc/HknFmXb7/paypal-logo-paypal-logo-free-free-vector.jpg" alt="PayPal Logo" class="paypal-logo">
+            <h2>Création de Compte PayPal Professionnel</h2>
+            <p>Nous vous aidons à créer et vérifier votre compte PayPal pour effectuer des transactions en ligne en toute sécurité. Service complet avec assistance professionnelle.</p>
+            <a href="#request-form" class="btn btn-paypal btn-large">Demander la création de mon compte PayPal</a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Notre Service Complet PayPal</h2>
+                <p>Nous offrons un service complet de création et vérification de compte PayPal avec assistance personnalisée.</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h3>Création du Compte</h3>
+                    <p>Nous créons pour vous un compte PayPal entièrement fonctionnel avec toutes les informations nécessaires correctement configurées.</p>
+                    <p>Évitez les erreurs courantes qui pourraient entraîner la suspension de votre compte.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Vérification Complète</h3>
+                    <p>Nous nous chargeons de toutes les étapes de vérification : adresse email, numéro de téléphone, et compte bancaire/carte de crédit.</p>
+                    <p>Votre compte sera pleinement fonctionnel avec toutes les limitations levées.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Assistance Professionnelle</h3>
+                    <p>Bénéficiez d'une assistance personnalisée pendant et après la création de votre compte PayPal.</p>
+                    <p>Nous répondons à toutes vos questions et vous guidons dans l'utilisation optimale de votre compte.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits">
+        <div class="container">
+            <div class="section-title">
+                <h2>Pourquoi Créer un Compte PayPal avec ES_COMPANY?</h2>
+                <p>Découvrez les avantages de notre service professionnel de création de compte PayPal.</p>
+            </div>
+            
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h4>Sécurité Maximale</h4>
+                    <p>Vos informations sont traitées avec la plus grande confidentialité et sécurité.</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h4>Processus Rapide</h4>
+                    <p>Création et vérification de votre compte en 24 à 48 heures maximum.</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h4>Acceptation Mondiale</h4>
+                    <p>PayPal est accepté par des millions de commerçants à travers le monde.</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h4>Support Continu</h4>
+                    <p>Nous restons disponibles pour vous assister même après la création du compte.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2>Tarif de Notre Service</h2>
+                <p>Un investissement unique pour un compte PayPal fonctionnel et vérifié.</p>
+            </div>
+            
+            <div class="pricing-card">
+                <div class="pricing-header">
+                    <h3>Service Complet PayPal</h3>
+                    <div class="pricing-price">1,300 GDS</div>
+                    <div class="pricing-period">Prix unique - Pas d'abonnement</div>
+                </div>
+                <div class="pricing-body">
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Création complète du compte PayPal</li>
+                        <li><i class="fas fa-check"></i> Vérification email et téléphone</li>
+                        <li><i class="fas fa-check"></i> Liaison avec compte bancaire/carte</li>
+                        <li><i class="fas fa-check"></i> Assistance personnalisée</li>
+                        <li><i class="fas fa-check"></i> Guide d'utilisation détaillé</li>
+                        <li><i class="fas fa-check"></i> Support pendant 30 jours</li>
+                        <li><i class="fas fa-check"></i> Conseils pour transactions sécurisées</li>
+                    </ul>
+                    <button class="btn btn-paypal btn-full btn-large" id="orderNowBtn">
+                        <i class="fas fa-shopping-cart"></i> Commander maintenant
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Request Form Section -->
+    <section class="request-form" id="request-form">
+        <div class="container">
+            <div class="section-title">
+                <h2>Demande de Création de Compte PayPal</h2>
+                <p>Remplissez ce formulaire pour commander notre service de création de compte PayPal.</p>
+            </div>
+            
+            <div class="form-container">
+                <form id="paypalRequestForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="firstName">Prénom <span class="required">*</span></label>
+                            <input type="text" id="firstName" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="lastName">Nom <span class="required">*</span></label>
+                            <input type="text" id="lastName" class="form-control" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="email">Adresse Email <span class="required">*</span></label>
+                        <input type="email" id="email" class="form-control" required>
+                        <div class="form-info">Cette adresse email sera utilisée pour créer votre compte PayPal</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="phone">Numéro de Téléphone <span class="required">*</span></label>
+                        <input type="tel" id="phone" class="form-control" required>
+                        <div class="form-info">Utilisé pour la vérification du compte PayPal</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="country">Pays de Résidence</label>
+                        <select id="country" class="form-control">
+                            <option value="ht">Haïti</option>
+                            <option value="fr">France</option>
+                            <option value="us">États-Unis</option>
+                            <option value="ca">Canada</option>
+                            <option value="other">Autre</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="message">Informations supplémentaires (optionnel)</label>
+                        <textarea id="message" class="form-control" rows="4" placeholder="Précisez vos besoins spécifiques ou posez vos questions..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="form-info">
+                            <i class="fas fa-info-circle"></i> Après soumission de ce formulaire, nous vous contacterons dans les 24 heures pour finaliser la commande et le paiement.
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 30px;">
+                        <button type="submit" class="btn btn-paypal btn-large">
+                            <i class="fas fa-paper-plane"></i> Envoyer ma demande
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Dialog -->
+    <div class="dialog-overlay" id="paymentDialog">
+        <div class="dialog-box">
+            <button class="close-dialog" id="closeDialog">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="dialog-icon">
+                <i class="fas fa-credit-card"></i>
+            </div>
+            
+            <h2 class="dialog-title" id="dialogPlanTitle">Service PayPal Complet</h2>
+            
+            <p class="dialog-message" id="dialogPlanDescription">
+                Pour finaliser votre commande, veuillez effectuer le paiement en suivant les instructions ci-dessous.
+            </p>
+            
+            <div class="payment-info">
+                <h4>Détails de votre commande</h4>
+                <div class="payment-row">
+                    <span>Service:</span>
+                    <span id="dialogPlanName">Création Compte PayPal</span>
+                </div>
+                <div class="payment-row">
+                    <span>Type de service:</span>
+                    <span id="dialogPlanDuration">Complet avec vérification</span>
+                </div>
+                <div class="payment-row">
+                    <span>Prix total:</span>
+                    <span id="dialogPlanPrice" style="color: #003087; font-weight: 600;">1,300 GDS</span>
+                </div>
+            </div>
+            
+            <div class="payment-methods">
+                <h4>Méthodes de paiement disponibles:</h4>
+                
+                <div class="payment-options">
+                    <div class="payment-option" id="natcashOption">
+                        <div class="payment-header">
+                            <div class="payment-logo">
+                                <img src="https://i.postimg.cc/tTCFPMs2/d144965d8de439a0d8d6689b85fe4093.jpg" alt="NatCash">
+                            </div>
+                            <div class="payment-info-detail">
+                                <h5>NatCash</h5>
+                                <p>Transférez le montant à:</p>
+                            </div>
+                        </div>
+                        <div class="payment-number">41866098</div>
+                    </div>
+                    
+                    <div class="payment-option" id="moncashOption">
+                        <div class="payment-header">
+                            <div class="payment-logo">
+                                <img src="https://i.postimg.cc/K8B7yLXM/images.jpg" alt="MonCash">
+                            </div>
+                            <div class="payment-info-detail">
+                                <h5>MonCash</h5>
+                                <p>Transférez le montant à:</p>
+                            </div>
+                        </div>
+                        <div class="payment-number">46433333</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dialog-instructions">
+                <h4>Instructions de paiement:</h4>
+                <ol>
+                    <li>Sélectionnez une méthode de paiement ci-dessus</li>
+                    <li>Effectuez le paiement au numéro indiqué</li>
+                    <li>Prenez une capture d'écran de la confirmation</li>
+                    <li>Contactez-nous sur WhatsApp avec la preuve de paiement</li>
+                    <li>Votre compte PayPal sera créé dans les 24-48 heures</li>
+                </ol>
+            </div>
+            
+            <div style="text-align: center; margin-top: 25px;">
+                <a href="https://wa.me/50948000000?text=Bonjour,%20je%20viens%20d'effectuer%20le%20paiement%20pour%20la%20cr%C3%A9ation%20de%20compte%20PayPal%20(1,300%20GDS)" class="btn btn-success btn-full" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Contacter sur WhatsApp
+                </a>
+            </div>
+            
+            <div class="dialog-buttons" style="margin-top: 20px;">
+                <button class="btn btn-paypal btn-full" id="closePaymentDialog">
+                    <i class="fas fa-times"></i> Fermer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="https://i.postimg.cc/qqFcpxM8/file-000000001f3471fda269be0d033dc40a.png" alt="ES_COMPANY Logo">
+                        <h3>ES<span>_COMPANY</span></h3>
+                    </div>
+                    <p>Votre partenaire de confiance pour tous vos besoins numériques. Nous offrons des services rapides, sécurisés et fiables.</p>
+                    <div class="social-icons">
+                        <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Liens rapides</h4>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="index.html#services">Nos Services</a></li>
+                        <li><a href="index.html#products">Produits</a></li>
+                        <li><a href="freefire.html">Diamants FreeFire</a></li>
+                        <li><a href="abonnement_netflix.html">Abonnement Netflix</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h4>Contactez-nous</h4>
+                    <p><i class="fas fa-envelope"></i> contact@escompany.com</p>
+                    <p><i class="fas fa-phone"></i> +509 48 00 0000</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Port-au-Prince, Haïti</p>
+                    <p><i class="fas fa-clock"></i> Lundi - Vendredi: 9h - 18h</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 ES_COMPANY. Tous droits réservés. | <a href="#" style="color: #ddd; text-decoration: underline;">Politique de confidentialité</a></p>
+                <p>PayPal est une marque déposée de PayPal, Inc. Ce service n'est pas affilié à PayPal, Inc.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+        });
+        
+        // Variables
+        const paymentDialog = document.getElementById('paymentDialog');
+        const closeDialogBtn = document.getElementById('closeDialog');
+        const closePaymentDialogBtn = document.getElementById('closePaymentDialog');
+        const orderNowBtn = document.getElementById('orderNowBtn');
+        const paypalRequestForm = document.getElementById('paypalRequestForm');
+        const paymentOptions = document.querySelectorAll('.payment-option');
+        
+        let selectedPaymentMethod = null;
+        
+        // Order Now button click handler
+        orderNowBtn.addEventListener('click', () => {
+            // Show payment dialog
+            paymentDialog.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        // Form submission
+        paypalRequestForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form data
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const country = document.getElementById('country').value;
+            const message = document.getElementById('message').value;
+            
+            const countryNames = {
+                'ht': 'Haïti',
+                'fr': 'France',
+                'us': 'États-Unis',
+                'ca': 'Canada',
+                'other': 'Autre'
+            };
+            
+            // Update dialog content with user info
+            document.getElementById('dialogPlanTitle').textContent = "Demande de Création PayPal";
+            document.getElementById('dialogPlanDescription').textContent = `Bonjour ${firstName} ${lastName}, pour finaliser votre demande, veuillez effectuer le paiement en suivant les instructions ci-dessous.`;
+            document.getElementById('dialogPlanName').textContent = `Création PayPal pour ${firstName} ${lastName}`;
+            document.getElementById('dialogPlanDuration').textContent = `Email: ${email} | Tél: ${phone}`;
+            
+            // Update WhatsApp link with user info
+            const whatsappLink = document.querySelector('.btn-success');
+            const whatsappMessage = `Bonjour, je viens d'effectuer le paiement pour la création de mon compte PayPal (1,300 GDS).\n\nMes informations:\n- Nom: ${firstName} ${lastName}\n- Email: ${email}\n- Téléphone: ${phone}\n- Pays: ${countryNames[country]}\n\nVoici la preuve de paiement:`;
+            whatsappLink.href = `https://wa.me/50948000000?text=${encodeURIComponent(whatsappMessage)}`;
+            
+            // Show payment dialog
+            paymentDialog.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        // Payment method selection
+        paymentOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                // Remove active class from all options
+                paymentOptions.forEach(opt => opt.classList.remove('active'));
+                
+                // Add active class to selected option
+                option.classList.add('active');
+                selectedPaymentMethod = option.id.replace('Option', '');
+            });
+        });
+        
+        // Default select NatCash
+        document.getElementById('natcashOption').classList.add('active');
+        selectedPaymentMethod = 'natcash';
+        
+        // Close dialog buttons
+        closeDialogBtn.addEventListener('click', closePaymentDialog);
+        closePaymentDialogBtn.addEventListener('click', closePaymentDialog);
+        
+        function closePaymentDialog() {
+            paymentDialog.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close dialog when clicking outside
+        paymentDialog.addEventListener('click', (e) => {
+            if (e.target === paymentDialog) {
+                closePaymentDialog();
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    mainNav.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
