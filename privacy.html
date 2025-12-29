@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Politique de Confidentialité - ES_COMPANY</title>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/qqFcpxM8/file-000000001f3471fda269be0d033dc40a.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2a2a72;
+            --secondary: #009ffd;
+            --accent: #ff6b6b;
+            --light: #f8f9fa;
+            --dark: #232528;
+            --success: #28a745;
+            --gray: #6c757d;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), #1a1a52);
+            color: white;
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+        
+        nav a:hover {
+            color: var(--secondary);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        
+        .back-btn:hover {
+            color: var(--secondary);
+        }
+        
+        /* Hero Section */
+        .privacy-hero {
+            background: linear-gradient(135deg, var(--primary), #1a1a52);
+            color: white;
+            padding: 80px 0 60px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .privacy-hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .privacy-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .last-updated {
+            margin-top: 20px;
+            font-style: italic;
+            opacity: 0.8;
+        }
+        
+        /* Main Content */
+        .privacy-content {
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 60px;
+            margin-bottom: 60px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section h2 i {
+            color: var(--secondary);
+        }
+        
+        .section p {
+            margin-bottom: 15px;
+            color: #444;
+            line-height: 1.7;
+        }
+        
+        .section ul, .section ol {
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .section li {
+            margin-bottom: 10px;
+            color: #444;
+            line-height: 1.7;
+        }
+        
+        .highlight-box {
+            background-color: #f8f9ff;
+            border-left: 4px solid var(--secondary);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: var(--radius);
+        }
+        
+        .highlight-box p {
+            margin-bottom: 0;
+            font-style: italic;
+        }
+        
+        .contact-info {
+            background-color: #f0f7ff;
+            padding: 30px;
+            border-radius: var(--radius);
+            margin-top: 30px;
+            border: 1px solid #ddd;
+        }
+        
+        .contact-info h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .contact-info p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .contact-info i {
+            color: var(--secondary);
+            min-width: 20px;
+        }
+        
+        /* Table of Contents */
+        .toc {
+            background-color: #f8f9ff;
+            border-radius: var(--radius);
+            padding: 30px;
+            margin-bottom: 40px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .toc h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .toc ol {
+            list-style-type: decimal;
+            margin-left: 20px;
+        }
+        
+        .toc li {
+            margin-bottom: 10px;
+        }
+        
+        .toc a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .toc a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #0088e0;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo img {
+            height: 40px;
+        }
+        
+        .footer-logo h3 {
+            font-size: 1.5rem;
+        }
+        
+        .footer-logo span {
+            color: var(--secondary);
+        }
+        
+        .footer-about p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+        
+        .footer-links h4, .footer-contact h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .footer-contact p {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .privacy-hero h1 {
+                font-size: 2.3rem;
+            }
+            
+            .section h2 {
+                font-size: 1.6rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav {
+                width: 100%;
+                order: 3;
+                margin-top: 20px;
+                display: none;
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .privacy-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .privacy-hero p {
+                font-size: 1rem;
+            }
+            
+            .privacy-content {
+                padding: 30px;
+            }
+            
+            .toc {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .privacy-content {
+                padding: 20px;
+            }
+            
+            .privacy-hero {
+                padding: 60px 0 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <img src="https://i.postimg.cc/qqFcpxM8/file-000000001f3471fda269be0d033dc40a.png" alt="ES_COMPANY Logo">
+                    <h1>ES<span>_COMPANY</span></h1>
+                </a>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-home"></i> Accueil</a></li>
+                        <li><a href="index.html#services"><i class="fas fa-shopping-cart"></i> Services</a></li>
+                        <li><a href="index.html#products"><i class="fas fa-gem"></i> Produits</a></li>
+                        <li><a href="index.html#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                    </ul>
+                </nav>
+                
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="privacy-hero">
+        <div class="container">
+            <h1>Politique de Confidentialité</h1>
+            <p>Découvrez comment ES_COMPANY collecte, utilise et protège vos informations personnelles lorsque vous utilisez nos services.</p>
+            <div class="last-updated">Dernière mise à jour : 1er Décembre 2023</div>
+        </div>
+    </section>
+
+    <!-- Table of Contents -->
+    <section class="container">
+        <div class="toc">
+            <h3><i class="fas fa-list-ul"></i> Table des matières</h3>
+            <ol>
+                <li><a href="#introduction">1. Introduction</a></li>
+                <li><a href="#collecte">2. Informations que nous collectons</a></li>
+                <li><a href="#utilisation">3. Utilisation de vos informations</a></li>
+                <li><a href="#protection">4. Protection de vos données</a></li>
+                <li><a href="#partage">5. Partage d'informations</a></li>
+                <li><a href="#cookies">6. Cookies et technologies similaires</a></li>
+                <li><a href="#droits">7. Vos droits</a></li>
+                <li><a href="#mineurs">8. Protection des mineurs</a></li>
+                <li><a href="#modifications">9. Modifications de cette politique</a></li>
+                <li><a href="#contact">10. Nous contacter</a></li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="container">
+        <div class="privacy-content">
+            <!-- Introduction -->
+            <div class="section" id="introduction">
+                <h2><i class="fas fa-info-circle"></i> 1. Introduction</h2>
+                <p>Bienvenue sur la Politique de Confidentialité de ES_COMPANY. Votre vie privée est extrêmement importante pour nous. Cette politique explique comment nous collectons, utilisons, divulguons et protégeons vos informations personnelles lorsque vous utilisez nos services, y compris l'achat de diamants FreeFire, d'abonnements Netflix, la création de comptes PayPal et la recharge de comptes WISE.</p>
+                <p>En utilisant nos services, vous acceptez les pratiques décrites dans cette politique de confidentialité. Si vous n'êtes pas d'accord avec cette politique, veuillez ne pas utiliser nos services.</p>
+                <div class="highlight-box">
+                    <p><strong>Note importante :</strong> ES_COMPANY agit en tant que revendeur de services numériques. Nous ne sommes pas affiliés à FreeFire, Netflix, PayPal ou WISE. Ces marques sont la propriété de leurs propriétaires respectifs.</p>
+                </div>
+            </div>
+            
+            <!-- Informations collectées -->
+            <div class="section" id="collecte">
+                <h2><i class="fas fa-database"></i> 2. Informations que nous collectons</h2>
+                <p>Nous collectons plusieurs types d'informations pour fournir et améliorer nos services :</p>
+                <h3 style="color: var(--primary); margin: 15px 0 10px; font-size: 1.3rem;">2.1 Informations personnelles que vous nous fournissez</h3>
+                <ul>
+                    <li><strong>Informations de contact :</strong> nom, prénom, adresse email, numéro de téléphone</li>
+                    <li><strong>Informations de compte :</strong> identifiants de jeu, identifiants de services tiers (fournis uniquement lorsque nécessaire pour la prestation de service)</li>
+                    <li><strong>Informations de paiement :</strong> méthodes de paiement utilisées (NatCash, MonCash), références de transaction</li>
+                    <li><strong>Communications :</strong> contenu de vos communications avec notre service client</li>
+                </ul>
+                
+                <h3 style="color: var(--primary); margin: 15px 0 10px; font-size: 1.3rem;">2.2 Informations collectées automatiquement</h3>
+                <ul>
+                    <li><strong>Informations techniques :</strong> adresse IP, type de navigateur, système d'exploitation, pages visitées, durée de visite</li>
+                    <li><strong>Informations d'utilisation :</strong> services achetés, fréquence d'utilisation, préférences</li>
+                </ul>
+                
+                <h3 style="color: var(--primary); margin: 15px 0 10px; font-size: 1.3rem;">2.3 Informations de tiers</h3>
+                <p>Nous pouvons recevoir des informations vous concernant de la part de fournisseurs de services tiers (comme les processeurs de paiement) dans le cadre de l'exécution de nos services.</p>
+            </div>
+            
+            <!-- Utilisation des informations -->
+            <div class="section" id="utilisation">
+                <h2><i class="fas fa-cogs"></i> 3. Utilisation de vos informations</h2>
+                <p>Nous utilisons vos informations personnelles pour les finalités suivantes :</p>
+                <ul>
+                    <li><strong>Fournir et maintenir nos services :</strong> traitement de vos commandes, livraison des services achetés, création de comptes</li>
+                    <li><strong>Communication :</strong> vous contacter concernant vos commandes, fournir un support client, répondre à vos demandes</li>
+                    <li><strong>Amélioration des services :</strong> analyser l'utilisation de nos services pour les améliorer et développer de nouvelles fonctionnalités</li>
+                    <li><strong>Sécurité :</strong> prévenir la fraude, protéger nos services contre les activités illégales</li>
+                    <li><strong>Conformité légale :</strong> respecter nos obligations légales et réglementaires</li>
+                </ul>
+                <div class="highlight-box">
+                    <p><strong>Principe de minimisation :</strong> Nous ne collectons que les informations strictement nécessaires à la fourniture de nos services. Nous ne collectons pas d'informations superflues.</p>
+                </div>
+            </div>
+            
+            <!-- Protection des données -->
+            <div class="section" id="protection">
+                <h2><i class="fas fa-shield-alt"></i> 4. Protection de vos données</h2>
+                <p>Nous mettons en œuvre des mesures de sécurité techniques et organisationnelles appropriées pour protéger vos informations personnelles contre tout accès non autorisé, modification, divulgation ou destruction. Ces mesures incluent :</p>
+                <ul>
+                    <li><strong>Chiffrement :</strong> utilisation de protocoles de chiffrement pour les communications sensibles</li>
+                    <<li><strong>Contrôles d'accès :</strong> restrictions d'accès aux informations personnelles uniquement aux employés ayant besoin d'y accéder</li>
+                    <li><strong>Formation du personnel :</strong> formation régulière de notre personnel sur les meilleures pratiques en matière de protection des données</li>
+                    <li><strong>Surveillance :</strong> surveillance régulière de nos systèmes pour détecter les vulnérabilités et les activités malveillantes</li>
+                </ul>
+                <p>Cependant, veuillez noter qu'aucune méthode de transmission sur Internet ou méthode de stockage électronique n'est sûre à 100%. Bien que nous nous efforcions d'utiliser des moyens commercialement acceptables pour protéger vos informations personnelles, nous ne pouvons garantir leur sécurité absolue.</p>
+            </div>
+            
+            <!-- Partage d'informations -->
+            <div class="section" id="partage">
+                <h2><i class="fas fa-share-alt"></i> 5. Partage d'informations</h2>
+                <p>Nous ne vendons, n'échangeons ni ne louons vos informations personnelles à des tiers. Nous pouvons partager vos informations dans les cas suivants :</p>
+                <ul>
+                    <li><strong>Fournisseurs de services :</strong> avec des prestataires de services qui nous aident à exploiter notre activité (processeurs de paiement, hébergeurs web) sous stricte obligation de confidentialité</li>
+                    <li><strong>Obligations légales :</strong> lorsque la loi l'exige ou en réponse à une demande légale valide (mandat de perquisition, ordonnance du tribunal)</li>
+                    <li><strong>Protection de nos droits :</strong> lorsque nous pensons que la divulgation est nécessaire pour protéger nos droits, votre sécurité ou celle d'autrui, enquêter sur une fraude ou répondre à une demande du gouvernement</li>
+                    <li><strong>Transaction commerciale :</strong> en cas de fusion, acquisition ou vente d'actifs, vos informations pourraient être transférées</li>
+                </ul>
+                <div class="highlight-box">
+                    <p><strong>Transparence :</strong> Nous informerons nos utilisants de tout partage substantiel de leurs informations personnelles, sauf lorsque la loi l'interdit.</p>
+                </div>
+            </div>
+            
+            <!-- Cookies -->
+            <div class="section" id="cookies">
+                <h2><i class="fas fa-cookie-bite"></i> 6. Cookies et technologies similaires</h2>
+                <p>Nous utilisons des cookies et des technologies similaires pour améliorer votre expérience sur notre site :</p>
+                <h3 style="color: var(--primary); margin: 15px 0 10px; font-size: 1.3rem;">6.1 Types de cookies utilisés</h3>
+                <ul>
+                    <li><strong>Cookies essentiels :</strong> nécessaires au fonctionnement de base du site</li>
+                    <li><strong>Cookies de performance :</strong> collectent des informations sur la manière dont les visiteurs utilisent notre site</li>
+                    <li><strong>Cookies de fonctionnalité :</strong> permettent au site de se souvenir des choix que vous faites</li>
+                </ul>
+                
+                <h3 style="color: var(--primary); margin: 15px 0 10px; font-size: 1.3rem;">6.2 Gestion des cookies</h3>
+                <p>La plupart des navigateurs vous permettent de contrôler les cookies via leurs paramètres. Vous pouvez configurer votre navigateur pour refuser les cookies ou supprimer les cookies existants. Cependant, si vous désactivez les cookies, certaines fonctionnalités de notre site peuvent ne pas fonctionner correctement.</p>
+            </div>
+            
+            <!-- Vos droits -->
+            <div class="section" id="droits">
+                <h2><i class="fas fa-user-check"></i> 7. Vos droits</h2>
+                <p>En fonction de votre juridiction, vous disposez de certains droits concernant vos informations personnelles :</p>
+                <ul>
+                    <li><strong>Droit d'accès :</strong> vous pouvez demander une copie des informations personnelles que nous détenons à votre sujet</li>
+                    <li><strong>Droit de rectification :</strong> vous pouvez demander la correction d'informations inexactes ou incomplètes</li>
+                    <li><strong>Droit à l'effacement :</strong> vous pouvez demander la suppression de vos informations personnelles dans certaines circonstances</li>
+                    <li><strong>Droit à la limitation du traitement :</strong> vous pouvez demander la limitation du traitement de vos informations</li>
+                    <li><strong>Droit d'opposition :</strong> vous pouvez vous opposer au traitement de vos informations pour certaines finalités</li>
+                    <li><strong>Droit à la portabilité :</strong> vous pouvez recevoir vos informations dans un format structuré et commun</li>
+                </ul>
+                <p>Pour exercer ces droits, veuillez nous contacter à l'adresse indiquée dans la section "Nous contacter". Nous répondrons à votre demande dans un délai raisonnable et conformément à la loi applicable.</p>
+            </div>
+            
+            <!-- Protection des mineurs -->
+            <div class="section" id="mineurs">
+                <h2><i class="fas fa-child"></i> 8. Protection des mineurs</h2>
+                <p>Nos services ne s'adressent pas aux personnes de moins de 13 ans (ou l'âge minimum requis dans votre juridiction). Nous ne collectons pas sciemment d'informations personnelles auprès de mineurs. Si vous êtes un parent ou un tuteur et que vous pensez que votre enfant nous a fourni des informations personnelles, veuillez nous contacter. Si nous apprenons que nous avons collecté des informations personnelles d'un mineur sans vérification du consentement parental, nous prendrons des mesures pour supprimer ces informations de nos serveurs.</p>
+            </div>
+            
+            <!-- Modifications -->
+            <div class="section" id="modifications">
+                <h2><i class="fas fa-sync-alt"></i> 9. Modifications de cette politique</h2>
+                <p>Nous pouvons mettre à jour notre politique de confidentialité de temps à autre. Nous vous informerons de tout changement en publiant la nouvelle politique de confidentialité sur cette page et en mettant à jour la date de "dernière mise à jour" en haut de cette politique.</p>
+                <p>Nous vous encourageons à consulter régulièrement cette politique de confidentialité pour tout changement. Les modifications apportées à cette politique de confidentialité entrent en vigueur lorsqu'elles sont publiées sur cette page.</p>
+                <div class="highlight-box">
+                    <p><strong>Notification des changements importants :</strong> Pour les modifications substantielles, nous pourrons vous envoyer une notification par email si vous nous avez fourni votre adresse email.</p>
+                </div>
+            </div>
+            
+            <!-- Nous contacter -->
+            <div class="section" id="contact">
+                <h2><i class="fas fa-envelope"></i> 10. Nous contacter</h2>
+                <p>Si vous avez des questions concernant cette politique de confidentialité ou nos pratiques en matière de protection des données, veuillez nous contacter :</p>
+                
+                <div class="contact-info">
+                    <h3>ES_COMPANY - Service Protection des Données</h3>
+                    <p><i class="fas fa-envelope"></i> <strong>Email :</strong> privacy@escompany.com</p>
+                    <p><i class="fas fa-phone"></i> <strong>Téléphone :</strong> +509 48 00 0000</p>
+                    <p><i class="fas fa-map-marker-alt"></i> <strong>Adresse :</strong> Port-au-Prince, Haïti</p>
+                    <p><i class="fas fa-clock"></i> <strong>Heures d'ouverture :</strong> Lundi - Vendredi, 9h - 18h</p>
+                </div>
+                
+                <p style="margin-top: 20px;">Nous nous engageons à répondre à vos préoccupations concernant la confidentialité et à traiter les demandes concernant vos données personnelles dans un délai raisonnable.</p>
+            </div>
+            
+            <!-- Final Section -->
+            <div class="section" style="margin-top: 50px; text-align: center; padding-top: 30px; border-top: 1px solid #eee;">
+                <p>En utilisant les services de ES_COMPANY, vous reconnaissez avoir lu et compris cette politique de confidentialité.</p>
+                <p style="font-style: italic; margin-top: 15px;">Merci de votre confiance.</p>
+                <div style="margin-top: 30px;">
+                    <a href="index.html" class="btn">
+                        <i class="fas fa-home"></i> Retour à l'accueil
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="https://i.postimg.cc/qqFcpxM8/file-000000001f3471fda269be0d033dc40a.png" alt="ES_COMPANY Logo">
+                        <h3>ES<span>_COMPANY</span></h3>
+                    </div>
+                    <p>Votre partenaire de confiance pour tous vos besoins numériques. Nous offrons des services rapides, sécurisés et fiables.</p>
+                    <div class="social-icons">
+                        <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Liens rapides</h4>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="index.html#services">Nos Services</a></li>
+                        <li><a href="index.html#products">Produits</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                        <li><a href="#">Politique de confidentialité</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h4>Contactez-nous</h4>
+                    <p><i class="fas fa-envelope"></i> contact@escompany.com</p>
+                    <p><i class="fas fa-phone"></i> +509 48 00 0000</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Port-au-Prince, Haïti</p>
+                    <p><i class="fas fa-clock"></i> Lundi - Vendredi: 9h - 18h</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 ES_COMPANY. Tous droits réservés.</p>
+                <p>Cette politique de confidentialité est valide à partir du 1er Décembre 2023.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    mainNav.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
