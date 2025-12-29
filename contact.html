@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - ES_COMPANY</title>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/qqFcpxM8/file-000000001f3471fda269be0d033dc40a.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2a2a72;
+            --secondary: #009ffd;
+            --accent: #ff6b6b;
+            --light: #f8f9fa;
+            --dark: #232528;
+            --success: #28a745;
+            --gray: #6c757d;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), #1a1a52);
+            color: white;
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+        
+        nav a:hover {
+            color: var(--secondary);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        
+        .back-btn:hover {
+            color: var(--secondary);
+        }
+        
+        /* Hero Section */
+        .contact-hero {
+            background: linear-gradient(135deg, var(--primary), #1a1a52);
+            color: white;
+            padding: 80px 0 60px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .contact-hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .contact-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        /* Contact Content */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 60px;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .info-card {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .info-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--secondary), #0088e0);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .info-card h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .info-card p {
+            color: var(--gray);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-card i {
+            color: var(--secondary);
+            min-width: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-link {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: var(--secondary);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .whatsapp-link {
+            background-color: #25D366;
+            color: white;
+        }
+        
+        .whatsapp-link:hover {
+            background-color: #128C7E;
+        }
+        
+        /* Contact Form */
+        .contact-form-container {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            border-top: 5px solid var(--secondary);
+        }
+        
+        .form-title {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .required {
+            color: var(--accent);
+        }
+        
+        .form-input {
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-input:focus {
+            border-color: var(--secondary);
+            outline: none;
+        }
+        
+        .form-textarea {
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            resize: vertical;
+            min-height: 120px;
+            font-family: inherit;
+        }
+        
+        .form-textarea:focus {
+            border-color: var(--secondary);
+            outline: none;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 60px;
+            box-shadow: var(--shadow);
+            margin-bottom: 60px;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: var(--secondary);
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+        
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .faq-item {
+            border: 1px solid #eee;
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 20px;
+            background-color: var(--light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .faq-question:hover {
+            background-color: #e9ecef;
+        }
+        
+        .faq-question h3 {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        
+        .faq-icon {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+        
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s, padding 0.3s;
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 20px;
+            max-height: 500px;
+        }
+        
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            background: linear-gradient(to right, var(--secondary), #0088e0);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background: linear-gradient(to right, #0088e0, var(--secondary));
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 159, 253, 0.2);
+        }
+        
+        .btn-full {
+            width: 100%;
+        }
+        
+        .btn-large {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary), #1a1a52);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo img {
+            height: 40px;
+        }
+        
+        .footer-logo h3 {
+            font-size: 1.5rem;
+        }
+        
+        .footer-logo span {
+            color: var(--secondary);
+        }
+        
+        .footer-about p {
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        
+        .footer-links h4, .footer-contact h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .footer-contact p {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        
+        /* Success Message */
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+            display: none;
+        }
+        
+        .success-message.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .contact-hero h1 {
+                font-size: 2.3rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .contact-content {
+                gap: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav {
+                width: 100%;
+                order: 3;
+                margin-top: 20px;
+                display: none;
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .contact-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .contact-hero p {
+                font-size: 1rem;
+            }
+            
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .faq-section {
+                padding: 40px 20px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .contact-hero {
+                padding: 60px 0 40px;
+            }
+            
+            .info-card {
+                padding: 20px;
+            }
+            
+            .contact-form-container {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <img src="https://i.postimg.cc/qqFcpxM8/file-000000001f3471fda269be0d033dc40a.png" alt="ES_COMPANY Logo">
+                    <h1>ES<span>_COMPANY</span></h1>
+                </a>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-home"></i> Accueil</a></li>
+                        <li><a href="index.html#services"><i class="fas fa-shopping-cart"></i> Services</a></li>
+                        <li><a href="index.html#products"><i class="fas fa-gem"></i> Produits</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+                    </ul>
+                </nav>
+                
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="contact-hero">
+        <div class="container">
+            <h1>Contactez ES_COMPANY</h1>
+            <p>Nous sommes là pour répondre à toutes vos questions. Contactez-nous pour toute demande concernant nos services ou pour obtenir de l'aide.</p>
+        </div>
+    </section>
+
+    <!-- Contact Content -->
+    <section class="container">
+        <div class="contact-content">
+            <!-- Contact Information -->
+            <div class="contact-info">
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Informations de contact</h3>
+                    <p><i class="fas fa-envelope"></i> contact@escompany.com</p>
+                    <p><i class="fas fa-phone"></i> +509 48 00 0000</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Port-au-Prince, Haïti</p>
+                    <p><i class="fas fa-clock"></i> Lundi - Vendredi: 9h - 18h</p>
+                    <p><i class="fas fa-clock"></i> Samedi: 10h - 16h</p>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Réseaux sociaux</h3>
+                    <p>Suivez-nous et contactez-nous via nos réseaux sociaux pour des réponses rapides.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://wa.me/50948000000" class="social-link whatsapp-link" target="_blank">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Support client</h3>
+                    <p>Notre équipe de support est disponible pour vous aider avec :</p>
+                    <p><i class="fas fa-check"></i> Problèmes de commande</p>
+                    <p><i class="fas fa-check"></i> Assistance technique</p>
+                    <p><i class="fas fa-check"></i> Questions sur les services</p>
+                    <p><i class="fas fa-check"></i> Demandes spéciales</p>
+                </div>
+            </div>
+            
+            <!-- Contact Form -->
+            <div class="contact-form-container">
+                <h2 class="form-title">Envoyez-nous un message</h2>
+                <div class="success-message" id="successMessage">
+                    <i class="fas fa-check-circle"></i> Votre message a été envoyé avec succès ! Nous vous répondrons dans les plus brefs délais.
+                </div>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="fullName">Nom complet <span class="required">*</span></label>
+                            <input type="text" id="fullName" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="phoneNumber">Numéro de téléphone <span class="required">*</span></label>
+                            <input type="tel" id="phoneNumber" class="form-input" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="email">Adresse email <span class="required">*</span></label>
+                        <input type="email" id="email" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="about">Sujet <span class="required">*</span></label>
+                        <select id="about" class="form-input" required>
+                            <option value="" disabled selected>Sélectionnez un sujet</option>
+                            <option value="freefire">Diamants FreeFire</option>
+                            <option value="netflix">Abonnement Netflix</option>
+                            <option value="paypal">Création compte PayPal</option>
+                            <option value="wise">Recharge compte WISE</option>
+                            <option value="technical">Problème technique</option>
+                            <option value="payment">Problème de paiement</option>
+                            <option value="other">Autre</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="message">Message <span class="required">*</span></label>
+                        <textarea id="message" class="form-textarea" required placeholder="Décrivez votre demande en détail..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-full btn-large">
+                        <i class="fas fa-paper-plane"></i> Envoyer le message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="container">
+        <div class="faq-section">
+            <h2 class="section-title">Questions fréquemment posées</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Combien de temps faut-il pour recevoir mes diamants FreeFire après paiement?</h3>
+                        <i class="fas fa-plus faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>La livraison des diamants FreeFire est instantanée dans la plupart des cas. Immédiatement après confirmation de votre paiement, nous procédons à l'envoi. Le délai maximum est de 30 minutes pendant les heures d'ouverture.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Comment fonctionne la création de compte PayPal?</h3>
+                        <i class="fas fa-plus faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Nous créons un compte PayPal entièrement fonctionnel et vérifié pour vous. Le processus prend 24 à 48 heures. Vous recevrez toutes les informations d'accès (email et mot de passe) une fois le compte prêt. Nous fournissons également une assistance pour l'utilisation du compte.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Quels sont les délais d'activation pour Netflix?</h3>
+                        <i class="fas fa-plus faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Les abonnements Netflix sont activés dans les 30 minutes suivant la confirmation de paiement. Pour les comptes complets (option revendeur), l'activation est immédiate après réception des informations d'accès.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Quelle est la durée de validité du taux de change pour WISE?</h3>
+                        <i class="fas fa-plus faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Notre taux spécial de 148 GDS pour 1 USD est garanti pendant 24 heures après votre demande. Après cette période, le taux peut être ajusté selon les fluctuations du marché.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Comment puis-je devenir revendeur de vos services?</h3>
+                        <i class="fas fa-plus faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Pour devenir revendeur, contactez-nous via WhatsApp ou email avec votre demande. Nous vous fournirons tous les détails sur les prix de gros, les conditions et le support que nous offrons à nos revendeurs.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Quelle est votre politique de remboursement?</h3>
+                        <i class="fas fa-plus faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Nous offrons des remboursements dans les cas suivants : service non livré dans les délais convenus, problème technique de notre côté, ou erreur de notre part. Les remboursements sont traités sous 3 à 5 jours ouvrables.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="https://i.postimg.cc/qqFcpxM8/file-000000001f3471fda269be0d033dc40a.png" alt="ES_COMPANY Logo">
+                        <h3>ES<span>_COMPANY</span></h3>
+                    </div>
+                    <p>Votre partenaire de confiance pour tous vos besoins numériques. Nous offrons des services rapides, sécurisés et fiables.</p>
+                    <div class="social-links">
+                        <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Liens rapides</h4>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="index.html#services">Nos Services</a></li>
+                        <li><a href="index.html#products">Produits</a></li>
+                        <li><a href="politique-confidentialite.html">Politique de confidentialité</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h4>Contactez-nous</h4>
+                    <p><i class="fas fa-envelope"></i> contact@escompany.com</p>
+                    <p><i class="fas fa-phone"></i> +509 48 00 0000</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Port-au-Prince, Haïti</p>
+                    <p><i class="fas fa-clock"></i> Lundi - Vendredi: 9h - 18h</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 ES_COMPANY. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+        });
+        
+        // FAQ functionality
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('click', () => {
+                // Close all other FAQ items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current FAQ item
+                item.classList.toggle('active');
+            });
+        });
+        
+        // Contact form submission
+        const contactForm = document.getElementById('contactForm');
+        const successMessage = document.getElementById('successMessage');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form data
+            const fullName = document.getElementById('fullName').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const email = document.getElementById('email').value;
+            const about = document.getElementById('about').value;
+            const message = document.getElementById('message').value;
+            
+            // In a real application, you would send this data to a server
+            // For demonstration, we'll show a success message
+            
+            // Show success message
+            successMessage.classList.add('active');
+            
+            // Scroll to success message
+            successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Reset form after 3 seconds
+            setTimeout(() => {
+                contactForm.reset();
+                successMessage.classList.remove('active');
+            }, 5000);
+            
+            // Log form data (for debugging)
+            console.log('Form submitted:', {
+                fullName,
+                phoneNumber,
+                email,
+                about,
+                message
+            });
+        });
+        
+        // WhatsApp link with pre-filled message
+        const whatsappLink = document.querySelector('.whatsapp-link');
+        
+        // Update WhatsApp link with current page context
+        whatsappLink.addEventListener('click', function(e) {
+            // This would normally open WhatsApp with a pre-filled message
+            // The link already has the WhatsApp number
+        });
+    </script>
+</body>
+</html>
