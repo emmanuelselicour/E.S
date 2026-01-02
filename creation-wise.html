@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recharge Compte WISE - ES_COMPANY</title>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/qqFcpxM8/file-000000001f3471fda269be0d033dc40a.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2a2a72;
+            --secondary: #009ffd;
+            --accent: #ff6b6b;
+            --wise-color: #00b9ff;
+            --light: #f8f9fa;
+            --dark: #232528;
+            --success: #28a745;
+            --warning: #ffc107;
+            --gray: #6c757d;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), #1a1a52);
+            color: white;
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+        
+        nav a:hover {
+            color: var(--secondary);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        
+        .back-btn:hover {
+            color: var(--secondary);
+        }
+        
+        /* Hero Section */
+        .wise-hero {
+            background: linear-gradient(rgba(0, 185, 255, 0.9), rgba(0, 0, 0, 0.9)), url('https://images.unsplash.com/photo-1611605698335-8b1569810432?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .wise-hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .wise-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .wise-logo {
+            height: 80px;
+            margin-bottom: 20px;
+        }
+        
+        /* Taux Section */
+        .taux-section {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            text-align: center;
+            border: 2px solid var(--wise-color);
+        }
+        
+        .taux-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .taux-value {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--wise-color);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .taux-description {
+            color: var(--gray);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        
+        /* Calculator Section */
+        .calculator-section {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: var(--wise-color);
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+        
+        .calculator-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .calculator-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .calculator-row {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .calculator-label {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+        
+        .calculator-input {
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1.2rem;
+            transition: border-color 0.3s;
+            width: 100%;
+        }
+        
+        .calculator-input:focus {
+            border-color: var(--wise-color);
+            outline: none;
+        }
+        
+        .calculator-info {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        .range-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .range-slider {
+            flex: 1;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: #ddd;
+            border-radius: 4px;
+            outline: none;
+        }
+        
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--wise-color);
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .range-value {
+            font-weight: 600;
+            color: var(--primary);
+            min-width: 60px;
+            text-align: right;
+        }
+        
+        .calculator-results {
+            background-color: #f8f9ff;
+            border-radius: var(--radius);
+            padding: 30px;
+            border: 2px solid var(--wise-color);
+        }
+        
+        .results-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #aaa;
+        }
+        
+        .result-row.total {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--wise-color);
+            border-bottom: 2px solid var(--primary);
+            margin-top: 10px;
+            padding-top: 10px;
+        }
+        
+        /* Payment Dialog */
+        .dialog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        
+        .dialog-overlay.active {
+            display: flex;
+        }
+        
+        .dialog-box {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: dialogAppear 0.3s ease-out;
+            position: relative;
+        }
+        
+        @keyframes dialogAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .dialog-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--wise-color), #0099cc);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+        }
+        
+        .dialog-icon i {
+            font-size: 2.5rem;
+            color: white;
+        }
+        
+        .dialog-title {
+            font-size: 2rem;
+            color: var(--wise-color);
+            margin-bottom: 15px;
+        }
+        
+        .dialog-message {
+            color: var(--gray);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .payment-info {
+            background-color: #e8f7ff;
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-bottom: 25px;
+            text-align: left;
+            border-left: 4px solid var(--wise-color);
+        }
+        
+        .payment-info h4 {
+            color: var(--wise-color);
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.3rem;
+        }
+        
+        .payment-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed #aaa;
+        }
+        
+        .payment-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .payment-methods {
+            margin-top: 25px;
+            margin-bottom: 25px;
+        }
+        
+        .payment-methods h4 {
+            font-size: 1.2rem;
+            color: var(--wise-color);
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .payment-option {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 15px;
+            border: 2px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .payment-option.active {
+            border-color: var(--wise-color);
+            background-color: #e8f7ff;
+        }
+        
+        .payment-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .payment-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--radius);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            padding: 5px;
+        }
+        
+        .payment-logo img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
+        .payment-info-detail h5 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: var(--wise-color);
+        }
+        
+        .payment-number {
+            background-color: #f0f9ff;
+            border-radius: var(--radius);
+            padding: 12px;
+            margin-top: 10px;
+            font-weight: 600;
+            color: var(--wise-color);
+            text-align: center;
+            border: 1px dashed var(--wise-color);
+        }
+        
+        .dialog-instructions {
+            background-color: #fff8e1;
+            border-radius: var(--radius);
+            padding: 20px;
+            margin: 25px 0;
+            text-align: left;
+            border-left: 4px solid var(--warning);
+        }
+        
+        .dialog-instructions h4 {
+            color: var(--wise-color);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .dialog-instructions ol {
+            padding-left: 20px;
+        }
+        
+        .dialog-instructions li {
+            margin-bottom: 8px;
+        }
+        
+        .close-dialog {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-dialog:hover {
+            color: var(--accent);
+        }
+        
+        /* Benefits Section */
+        .benefits-section {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 60px 40px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .benefit-card {
+            background-color: #f8f9ff;
+            border-radius: var(--radius);
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid var(--wise-color);
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+        
+        .benefit-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--wise-color), #0099cc);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 1.8rem;
+        }
+        
+        .benefit-card h3 {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            background: linear-gradient(to right, var(--wise-color), #0099cc);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            border: 2px solid var(--wise-color);
+        }
+        
+        .btn:hover {
+            background: linear-gradient(to right, #0099cc, var(--wise-color));
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 185, 255, 0.2);
+        }
+        
+        .btn-large {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+        }
+        
+        .btn-full {
+            width: 100%;
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary), #1a1a52);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo img {
+            height: 40px;
+        }
+        
+        .footer-logo h3 {
+            font-size: 1.5rem;
+        }
+        
+        .footer-logo span {
+            color: var(--secondary);
+        }
+        
+        .footer-about p {
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        
+        .footer-links h4, .footer-contact h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .footer-contact p {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .wise-hero h2 {
+                font-size: 2.3rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .taux-value {
+                font-size: 3.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav {
+                width: 100%;
+                order: 3;
+                margin-top: 20px;
+                display: none;
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .wise-hero h2 {
+                font-size: 2rem;
+            }
+            
+            .wise-hero p {
+                font-size: 1rem;
+            }
+            
+            .calculator-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .payment-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .dialog-buttons {
+                flex-direction: column;
+            }
+            
+            .dialog-box {
+                padding: 25px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .wise-hero {
+                padding: 60px 0 40px;
+            }
+            
+            .taux-section, .calculator-section, .benefits-section {
+                padding: 30px 20px;
+            }
+            
+            .taux-value {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <img src="https://i.postimg.cc/qqFcpxM8/file-000000001f3471fda269be0d033dc40a.png" alt="ES_COMPANY Logo">
+                    <h1>ES<span>_COMPANY</span></h1>
+                </a>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-home"></i> Accueil</a></li>
+                        <li><a href="index.html#services"><i class="fas fa-shopping-cart"></i> Services</a></li>
+                        <li><a href="index.html#products"><i class="fas fa-gem"></i> Produits</a></li>
+                        <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+                    </ul>
+                </nav>
+                
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="wise-hero">
+        <div class="container">
+            <img src="https://i.postimg.cc/C16KzPyj/images-(2).png" alt="WISE Logo" class="wise-logo">
+            <h2>Recharge de Compte WISE</h2>
+            <p>Rechargez votre compte WISE rapidement et profitez du meilleur taux de change : 148 GDS pour 1 USD. Service rapide et sécurisé.</p>
+        </div>
+    </section>
+
+    <!-- Taux Section -->
+    <section class="container">
+        <div class="taux-section">
+            <h2 class="taux-title">Taux de change spécial WISE</h2>
+            <div class="taux-value">148 GDS</div>
+            <p class="taux-description">Profitez de notre taux exceptionnel pour recharger votre compte WISE. Meilleur taux garanti sur le marché.</p>
+            <p><strong>1 USD = 148 GDS</strong> | Pas de frais cachés | Transfert rapide</p>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section class="calculator-section">
+        <div class="container">
+            <h2 class="section-title">Calculateur de Recharge WISE</h2>
+            <div class="calculator-container">
+                <div class="calculator-controls">
+                    <div class="calculator-row">
+                        <label class="calculator-label">Montant en USD ($) :</label>
+                        <input type="number" id="wiseAmount" class="calculator-input" min="30" value="30" step="5">
+                        <div class="calculator-info">Minimum: $30 | Maximum: $500</div>
+                    </div>
+                    
+                    <div class="calculator-row">
+                        <label class="calculator-label">Réglez avec le curseur :</label>
+                        <div class="range-container">
+                            <input type="range" id="wiseRange" class="range-slider" min="30" max="500" value="30" step="5">
+                            <div class="range-value" id="rangeValue">$30</div>
+                        </div>
+                    </div>
+                    
+                    <div class="calculator-row">
+                        <label class="calculator-label">Taux de change :</label>
+                        <input type="text" id="exchangeRate" class="calculator-input" value="148 GDS = 1 USD" readonly>
+                    </div>
+                    
+                    <div class="calculator-row" style="margin-top: 20px;">
+                        <button class="btn btn-large btn-full" id="rechargeBtn">
+                            <i class="fas fa-credit-card"></i> Recharger maintenant
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="calculator-results">
+                    <h3 class="results-title">Résumé de votre recharge</h3>
+                    <div class="result-row">
+                        <span>Montant USD :</span>
+                        <span id="resultAmount">$30</span>
+                    </div>
+                    <div class="result-row">
+                        <span>Taux de change :</span>
+                        <span>148 GDS = 1 USD</span>
+                    </div>
+                    <div class="result-row">
+                        <span>Conversion :</span>
+                        <span id="resultConversion">4,440 GDS</span>
+                    </div>
+                    <div class="result-row">
+                        <span>Frais de service :</span>
+                        <span>0 GDS</span>
+                    </div>
+                    <div class="result-row total">
+                        <span>Total à payer :</span>
+                        <span id="resultTotal">4,440 GDS</span>
+                    </div>
+                    
+                    <div style="margin-top: 30px; padding: 15px; background-color: #e8f7ff; border-radius: var(--radius); font-size: 0.9rem;">
+                        <p><i class="fas fa-info-circle"></i> <strong>Note :</strong> Le montant sera crédité sur votre compte WISE dans les 30 minutes après confirmation de paiement.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <div class="container">
+            <h2 class="section-title">Pourquoi recharger avec ES_COMPANY ?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Rapidité</h3>
+                    <p>Recharge créditée en moins de 30 minutes après confirmation de paiement. Service disponible 24h/24.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Sécurité</h3>
+                    <p>Transactions 100% sécurisées. Vos informations sont protégées et nous garantissons la confidentialité.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <h3>Meilleur Taux</h3>
+                    <p>Taux fixe de 148 GDS pour 1 USD. Pas de frais cachés, pas de commissions surprises.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Support 24/7</h3>
+                    <p>Assistance disponible à tout moment via WhatsApp pour répondre à toutes vos questions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Dialog -->
+    <div class="dialog-overlay" id="paymentDialog">
+        <div class="dialog-box">
+            <button class="close-dialog" id="closeDialog">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="dialog-icon">
+                <i class="fas fa-credit-card"></i>
+            </div>
+            
+            <h2 class="dialog-title" id="dialogPlanTitle">Recharge WISE</h2>
+            
+            <p class="dialog-message" id="dialogPlanDescription">
+                Pour finaliser votre recharge WISE, veuillez effectuer le paiement en suivant les instructions ci-dessous.
+            </p>
+            
+            <div class="payment-info">
+                <h4>Détails de votre commande</h4>
+                <div class="payment-row">
+                    <span>Service:</span>
+                    <span id="dialogPlanName">Recharge Compte WISE</span>
+                </div>
+                <div class="payment-row">
+                    <span>Montant USD:</span>
+                    <span id="dialogPlanDuration">$30</span>
+                </div>
+                <div class="payment-row">
+                    <span>Taux:</span>
+                    <span>148 GDS = 1 USD</span>
+                </div>
+                <div class="payment-row">
+                    <span>Prix total en GDS:</span>
+                    <span id="dialogPlanPrice" style="color: var(--wise-color); font-weight: 600;">4,440 GDS</span>
+                </div>
+            </div>
+            
+            <div class="payment-methods">
+                <h4>Méthodes de paiement disponibles:</h4>
+                
+                <div class="payment-options">
+                    <div class="payment-option" id="natcashOption">
+                        <div class="payment-header">
+                            <div class="payment-logo">
+                                <img src="https://i.postimg.cc/tTCFPMs2/d144965d8de439a0d8d6689b85fe4093.jpg" alt="NatCash">
+                            </div>
+                            <div class="payment-info-detail">
+                                <h5>NatCash</h5>
+                                <p>Transférez le montant à:</p>
+                            </div>
+                        </div>
+                        <div class="payment-number">41866098</div>
+                    </div>
+                    
+                    <div class="payment-option" id="moncashOption">
+                        <div class="payment-header">
+                            <div class="payment-logo">
+                                <img src="https://i.postimg.cc/K8B7yLXM/images.jpg" alt="MonCash">
+                            </div>
+                            <div class="payment-info-detail">
+                                <h5>MonCash</h5>
+                                <p>Transférez le montant à:</p>
+                            </div>
+                        </div>
+                        <div class="payment-number">46433333</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dialog-instructions">
+                <h4>Instructions de paiement:</h4>
+                <ol>
+                    <li>Sélectionnez une méthode de paiement ci-dessus</li>
+                    <li>Effectuez le paiement au numéro indiqué</li>
+                    <li>Prenez une capture d'écran de la confirmation</li>
+                    <li>Contactez-nous sur WhatsApp avec la preuve de paiement et votre email WISE</li>
+                    <li>Votre compte sera rechargé dans les 30 minutes</li>
+                </ol>
+            </div>
+            
+            <div style="text-align: center; margin-top: 25px;">
+                <a href="https://wa.me/50948000000?text=Bonjour,%20je%20viens%20d'effectuer%20le%20paiement%20pour%20la%20recharge%20WISE%20de%20$30%20USD%20(4,440%20GDS)" class="btn btn-full" target="_blank" id="whatsappLink">
+                    <i class="fab fa-whatsapp"></i> Contacter sur WhatsApp
+                </a>
+            </div>
+            
+            <div class="dialog-buttons" style="margin-top: 20px;">
+                <button class="btn btn-full" id="closePaymentDialog" style="background: linear-gradient(to right, var(--gray), #6c757d); border-color: var(--gray);">
+                    <i class="fas fa-times"></i> Fermer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="https://i.postimg.cc/qqFcpxM8/file-000000001f3471fda269be0d033dc40a.png" alt="ES_COMPANY Logo">
+                        <h3>ES<span>_COMPANY</span></h3>
+                    </div>
+                    <p>Votre partenaire de confiance pour tous vos besoins numériques. Nous offrons des services rapides, sécurisés et fiables.</p>
+                    <div class="social-links">
+                        <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Liens rapides</h4>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="index.html#services">Nos Services</a></li>
+                        <li><a href="index.html#products">Produits</a></li>
+                        <li><a href="freefire.html">Diamants FreeFire</a></li>
+                        <li><a href="abonnement_netflix.html">Abonnement Netflix</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h4>Contactez-nous</h4>
+                    <p><i class="fas fa-envelope"></i> contact@escompany.com</p>
+                    <p><i class="fas fa-phone"></i> +509 48 00 0000</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Port-au-Prince, Haïti</p>
+                    <p><i class="fas fa-clock"></i> Lundi - Vendredi: 9h - 18h</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 ES_COMPANY. Tous droits réservés.</p>
+                <p>WISE est une marque déposée de Wise Payments Limited. Ce service n'est pas affilié à Wise.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+        });
+        
+        // Variables
+        const paymentDialog = document.getElementById('paymentDialog');
+        const closeDialogBtn = document.getElementById('closeDialog');
+        const closePaymentDialogBtn = document.getElementById('closePaymentDialog');
+        const rechargeBtn = document.getElementById('rechargeBtn');
+        const paymentOptions = document.querySelectorAll('.payment-option');
+        const wiseAmountInput = document.getElementById('wiseAmount');
+        const wiseRangeInput = document.getElementById('wiseRange');
+        const rangeValueDisplay = document.getElementById('rangeValue');
+        const resultAmountDisplay = document.getElementById('resultAmount');
+        const resultConversionDisplay = document.getElementById('resultConversion');
+        const resultTotalDisplay = document.getElementById('resultTotal');
+        const whatsappLink = document.getElementById('whatsappLink');
+        
+        let selectedPaymentMethod = null;
+        let currentAmount = 30;
+        const exchangeRate = 148;
+        
+        // Calculate WISE recharge
+        function calculateWiseRecharge() {
+            const amount = currentAmount;
+            const totalGDS = amount * exchangeRate;
+            
+            // Format numbers with thousands separator
+            const formattedAmount = `$${amount}`;
+            const formattedTotal = totalGDS.toLocaleString('fr-FR') + ' GDS';
+            const formattedConversion = (amount * exchangeRate).toLocaleString('fr-FR') + ' GDS';
+            
+            // Update displays
+            rangeValueDisplay.textContent = formattedAmount;
+            resultAmountDisplay.textContent = formattedAmount;
+            resultConversionDisplay.textContent = formattedConversion;
+            resultTotalDisplay.textContent = formattedTotal;
+            
+            // Update WhatsApp link
+            const whatsappMessage = `Bonjour, je viens d'effectuer le paiement pour la recharge WISE de ${formattedAmount} USD (${formattedTotal}). Voici la preuve de paiement:`;
+            whatsappLink.href = `https://wa.me/50948000000?text=${encodeURIComponent(whatsappMessage)}`;
+            
+            return { amount, totalGDS };
+        }
+        
+        // Update amount from input
+        wiseAmountInput.addEventListener('input', () => {
+            let amount = parseInt(wiseAmountInput.value) || 30;
+            
+            // Validate range
+            if (amount < 30) amount = 30;
+            if (amount > 500) amount = 500;
+            
+            wiseAmountInput.value = amount;
+            wiseRangeInput.value = amount;
+            currentAmount = amount;
+            
+            calculateWiseRecharge();
+        });
+        
+        // Update amount from range slider
+        wiseRangeInput.addEventListener('input', () => {
+            const amount = parseInt(wiseRangeInput.value);
+            
+            wiseAmountInput.value = amount;
+            currentAmount = amount;
+            
+            calculateWiseRecharge();
+        });
+        
+        // Recharge button click handler
+        rechargeBtn.addEventListener('click', () => {
+            const { amount, totalGDS } = calculateWiseRecharge();
+            
+            // Format for display
+            const formattedTotal = totalGDS.toLocaleString('fr-FR');
+            
+            // Update dialog content
+            document.getElementById('dialogPlanTitle').textContent = `Recharge WISE de $${amount} USD`;
+            document.getElementById('dialogPlanDescription').textContent = `Pour finaliser votre recharge WISE de $${amount} USD, veuillez effectuer le paiement de ${formattedTotal} GDS.`;
+            document.getElementById('dialogPlanName').textContent = `Recharge WISE - $${amount} USD`;
+            document.getElementById('dialogPlanDuration').textContent = `$${amount} USD`;
+            document.getElementById('dialogPlanPrice').textContent = `${formattedTotal} GDS`;
+            
+            // Update WhatsApp link with current amount
+            const whatsappMessage = `Bonjour, je viens d'effectuer le paiement pour la recharge WISE de $${amount} USD (${formattedTotal} GDS). Voici la preuve de paiement:`;
+            whatsappLink.href = `https://wa.me/50948000000?text=${encodeURIComponent(whatsappMessage)}`;
+            
+            // Show payment dialog
+            paymentDialog.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        // Payment method selection
+        paymentOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                // Remove active class from all options
+                paymentOptions.forEach(opt => opt.classList.remove('active'));
+                
+                // Add active class to selected option
+                option.classList.add('active');
+                selectedPaymentMethod = option.id.replace('Option', '');
+            });
+        });
+        
+        // Default select NatCash
+        document.getElementById('natcashOption').classList.add('active');
+        selectedPaymentMethod = 'natcash';
+        
+        // Close dialog buttons
+        closeDialogBtn.addEventListener('click', closePaymentDialog);
+        closePaymentDialogBtn.addEventListener('click', closePaymentDialog);
+        
+        function closePaymentDialog() {
+            paymentDialog.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close dialog when clicking outside
+        paymentDialog.addEventListener('click', (e) => {
+            if (e.target === paymentDialog) {
+                closePaymentDialog();
+            }
+        });
+        
+        // Initialize calculation on page load
+        calculateWiseRecharge();
+    </script>
+</body>
+</html>
