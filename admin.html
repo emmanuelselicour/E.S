@@ -34,6 +34,29 @@
             color: var(--dark);
             line-height: 1.6;
             min-height: 100vh;
+            /* Empêche le débordement horizontal */
+            overflow-x: hidden;
+            /* Texte de fond Admin_Panel - corrigé pour éviter le débordement */
+            position: relative;
+        }
+        
+        body::before {
+            content: "# Admin_Panel";
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 8rem;
+            font-weight: 900;
+            color: rgba(42, 42, 114, 0.03); /* var(--primary) avec très faible opacité */
+            z-index: -1;
+            white-space: nowrap;
+            pointer-events: none;
+            /* Limite la largeur maximale pour éviter le débordement */
+            max-width: 100vw;
+            overflow: hidden;
+            text-overflow: clip;
+            padding: 0 20px;
         }
         
         .container {
@@ -970,6 +993,12 @@
             .comments-container {
                 grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             }
+            
+            /* Texte de fond plus petit sur mobile */
+            body::before {
+                font-size: 4rem;
+                opacity: 0.02;
+            }
         }
         
         @media (max-width: 768px) {
@@ -1022,6 +1051,11 @@
                 width: 100%;
                 justify-content: center;
             }
+            
+            /* Texte de fond encore plus petit */
+            body::before {
+                font-size: 3rem;
+            }
         }
         
         @media (max-width: 576px) {
@@ -1055,6 +1089,12 @@
             .dashboard-welcome h2 {
                 font-size: 1.8rem;
             }
+            
+            /* Texte de fond caché sur très petits écrans */
+            body::before {
+                font-size: 2rem;
+                opacity: 0.01;
+            }
         }
         
         @media (max-width: 400px) {
@@ -1076,6 +1116,11 @@
                 width: 40px;
                 height: 40px;
                 font-size: 1rem;
+            }
+            
+            /* Cacher le texte de fond sur très petits écrans */
+            body::before {
+                display: none;
             }
         }
     </style>
