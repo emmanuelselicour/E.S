@@ -318,7 +318,7 @@
             padding-top: 10px;
         }
         
-        /* Payment Dialog */
+        /* Customer Info Dialog */
         .dialog-overlay {
             position: fixed;
             top: 0;
@@ -362,7 +362,6 @@
         .dialog-icon {
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, var(--wise-color), #0099cc);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -377,7 +376,7 @@
         
         .dialog-title {
             font-size: 2rem;
-            color: var(--wise-color);
+            color: var(--primary);
             margin-bottom: 15px;
         }
         
@@ -388,6 +387,34 @@
             line-height: 1.6;
         }
         
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-input:focus {
+            border-color: var(--wise-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 185, 255, 0.1);
+        }
+        
+        /* Payment Dialog */
         .payment-info {
             background-color: #e8f7ff;
             border-radius: var(--radius);
@@ -921,18 +948,70 @@
         </div>
     </section>
 
-    <!-- Payment Dialog -->
-    <div class="dialog-overlay" id="paymentDialog">
+    <!-- Customer Info Dialog -->
+    <div class="dialog-overlay" id="customerInfoDialog">
         <div class="dialog-box">
-            <button class="close-dialog" id="closeDialog">
+            <button class="close-dialog" id="closeCustomerDialog">
                 <i class="fas fa-times"></i>
             </button>
             
-            <div class="dialog-icon">
+            <div class="dialog-icon" style="background: linear-gradient(135deg, var(--wise-color), #0099cc);">
+                <i class="fas fa-user-check"></i>
+            </div>
+            
+            <h2 class="dialog-title" style="color: var(--wise-color);">Informations Personnelles</h2>
+            
+            <p class="dialog-message">
+                Veuillez remplir vos informations personnelles pour continuer avec votre recharge WISE.
+            </p>
+            
+            <form id="customerInfoForm">
+                <div class="form-group">
+                    <label class="form-label" for="customerName">Nom complet *</label>
+                    <input type="text" id="customerName" class="form-input" placeholder="Votre nom et prénom" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="customerEmail">Adresse email *</label>
+                    <input type="email" id="customerEmail" class="form-input" placeholder="exemple@email.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="customerPhone">Numéro de téléphone *</label>
+                    <input type="tel" id="customerPhone" class="form-input" placeholder="+509XXXXXXXX" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="wiseEmail">Email WISE *</label>
+                    <input type="email" id="wiseEmail" class="form-input" placeholder="votreadresse@wise.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="customerNotes">Notes supplémentaires (optionnel)</label>
+                    <textarea id="customerNotes" class="form-input" placeholder="Informations supplémentaires pour votre recharge..." rows="3"></textarea>
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <button type="submit" class="btn" style="background: linear-gradient(to right, var(--wise-color), #0099cc); border-color: var(--wise-color);">
+                        <i class="fas fa-arrow-right"></i> Continuer vers le paiement
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Payment Dialog -->
+    <div class="dialog-overlay" id="paymentDialog">
+        <div class="dialog-box">
+            <button class="close-dialog" id="closePaymentDialog">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="dialog-icon" style="background: linear-gradient(135deg, var(--wise-color), #0099cc);">
                 <i class="fas fa-credit-card"></i>
             </div>
             
-            <h2 class="dialog-title" id="dialogPlanTitle">Recharge WISE</h2>
+            <h2 class="dialog-title" style="color: var(--wise-color);" id="dialogPlanTitle">Recharge WISE</h2>
             
             <p class="dialog-message" id="dialogPlanDescription">
                 Pour finaliser votre recharge WISE, veuillez effectuer le paiement en suivant les instructions ci-dessous.
@@ -949,8 +1028,12 @@
                     <span id="dialogPlanDuration">$30</span>
                 </div>
                 <div class="payment-row">
-                    <span>Taux:</span>
-                    <span>148 GDS = 1 USD</span>
+                    <span>Client:</span>
+                    <span id="dialogCustomerName">-</span>
+                </div>
+                <div class="payment-row">
+                    <span>Email WISE:</span>
+                    <span id="dialogWiseEmail">-</span>
                 </div>
                 <div class="payment-row">
                     <span>Prix total en GDS:</span>
@@ -1003,14 +1086,14 @@
             
             <div style="text-align: center; margin-top: 25px;">
                 <!-- WhatsApp avec le numéro +1 510-281 7365 -->
-                <a href="https://wa.me/15102817365?text=Bonjour,%20je%20viens%20d'effectuer%20le%20paiement%20pour%20la%20recharge%20WISE%20de%20$30%20USD%20(4,440%20GDS)" class="btn btn-full" target="_blank" id="whatsappLink">
+                <a href="https://wa.me/15102817365?text=Bonjour,%20je%20viens%20d'effectuer%20le%20paiement%20pour%20la%20recharge%20WISE%20de%20$30%20USD%20(4,440%20GDS)" class="btn btn-full" target="_blank" id="whatsappLink" style="background: linear-gradient(to right, var(--wise-color), #0099cc); border-color: var(--wise-color);">
                     <i class="fab fa-whatsapp"></i> Contacter sur WhatsApp
                 </a>
             </div>
             
             <div class="dialog-buttons" style="margin-top: 20px;">
-                <button class="btn btn-full" id="closePaymentDialog" style="background: linear-gradient(to right, var(--gray), #6c757d); border-color: var(--gray);">
-                    <i class="fas fa-times"></i> Fermer
+                <button class="btn btn-full" id="backToCustomerInfo" style="background: linear-gradient(to right, var(--secondary), #00b7ff); border-color: var(--secondary);">
+                    <i class="fas fa-arrow-left"></i> Retour aux informations
                 </button>
             </div>
         </div>
@@ -1072,9 +1155,11 @@
         });
         
         // Variables
+        const customerInfoDialog = document.getElementById('customerInfoDialog');
         const paymentDialog = document.getElementById('paymentDialog');
-        const closeDialogBtn = document.getElementById('closeDialog');
+        const closeCustomerDialogBtn = document.getElementById('closeCustomerDialog');
         const closePaymentDialogBtn = document.getElementById('closePaymentDialog');
+        const backToCustomerInfoBtn = document.getElementById('backToCustomerInfo');
         const rechargeBtn = document.getElementById('rechargeBtn');
         const paymentOptions = document.querySelectorAll('.payment-option');
         const wiseAmountInput = document.getElementById('wiseAmount');
@@ -1083,10 +1168,13 @@
         const resultAmountDisplay = document.getElementById('resultAmount');
         const resultConversionDisplay = document.getElementById('resultConversion');
         const resultTotalDisplay = document.getElementById('resultTotal');
+        const customerInfoForm = document.getElementById('customerInfoForm');
         const whatsappLink = document.getElementById('whatsappLink');
         
         let selectedPaymentMethod = null;
         let currentAmount = 30;
+        let currentWiseData = null;
+        let customerData = null;
         const exchangeRate = 148;
         
         // Calculate WISE recharge
@@ -1105,9 +1193,14 @@
             resultConversionDisplay.textContent = formattedConversion;
             resultTotalDisplay.textContent = formattedTotal;
             
-            // Update WhatsApp link avec le numéro +1 510-281 7365
-            const whatsappMessage = `Bonjour, je viens d'effectuer le paiement pour la recharge WISE de ${formattedAmount} USD (${formattedTotal}). Voici la preuve de paiement:`;
-            whatsappLink.href = `https://wa.me/15102817365?text=${encodeURIComponent(whatsappMessage)}`;
+            // Sauvegarder les données actuelles
+            currentWiseData = {
+                amount: amount,
+                amountFormatted: formattedAmount,
+                totalGDS: totalGDS,
+                totalFormatted: formattedTotal,
+                conversionFormatted: formattedConversion
+            };
             
             return { amount, totalGDS };
         }
@@ -1139,26 +1232,122 @@
         
         // Recharge button click handler
         rechargeBtn.addEventListener('click', () => {
-            const { amount, totalGDS } = calculateWiseRecharge();
+            calculateWiseRecharge();
             
-            // Format for display
+            // Afficher la boîte de dialogue d'informations client
+            customerInfoDialog.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        // Customer info form submission
+        customerInfoForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Récupérer les données du formulaire
+            customerData = {
+                name: document.getElementById('customerName').value,
+                email: document.getElementById('customerEmail').value,
+                phone: document.getElementById('customerPhone').value,
+                wiseEmail: document.getElementById('wiseEmail').value,
+                notes: document.getElementById('customerNotes').value
+            };
+            
+            // Valider les données
+            if (!customerData.name || customerData.name.trim() === '') {
+                alert("Veuillez entrer votre nom complet");
+                return;
+            }
+            
+            if (!customerData.email || customerData.email.trim() === '') {
+                alert("Veuillez entrer votre email");
+                return;
+            }
+            
+            if (!customerData.phone || customerData.phone.trim() === '') {
+                alert("Veuillez entrer votre numéro de téléphone");
+                return;
+            }
+            
+            if (!customerData.wiseEmail || customerData.wiseEmail.trim() === '') {
+                alert("Veuillez entrer votre email WISE");
+                return;
+            }
+            
+            // Cacher la boîte de dialogue client
+            customerInfoDialog.classList.remove('active');
+            
+            // Préparer les données pour la boîte de dialogue de paiement
+            preparePaymentDialog();
+        });
+        
+        // Préparer la boîte de dialogue de paiement
+        function preparePaymentDialog() {
+            const { amount, totalGDS } = calculateWiseRecharge();
             const formattedTotal = totalGDS.toLocaleString('fr-FR');
             
-            // Update dialog content
+            // Mettre à jour le contenu de la boîte de dialogue de paiement
             document.getElementById('dialogPlanTitle').textContent = `Recharge WISE de $${amount} USD`;
             document.getElementById('dialogPlanDescription').textContent = `Pour finaliser votre recharge WISE de $${amount} USD, veuillez effectuer le paiement de ${formattedTotal} GDS.`;
             document.getElementById('dialogPlanName').textContent = `Recharge WISE - $${amount} USD`;
             document.getElementById('dialogPlanDuration').textContent = `$${amount} USD`;
             document.getElementById('dialogPlanPrice').textContent = `${formattedTotal} GDS`;
+            document.getElementById('dialogCustomerName').textContent = customerData.name;
+            document.getElementById('dialogWiseEmail').textContent = customerData.wiseEmail;
             
-            // Update WhatsApp link avec le numéro +1 510-281 7365
-            const whatsappMessage = `Bonjour, je viens d'effectuer le paiement pour la recharge WISE de $${amount} USD (${formattedTotal} GDS). Voici la preuve de paiement:`;
+            // Préparer le message WhatsApp
+            const whatsappMessage = `Bonjour, je viens d'effectuer le paiement pour la recharge WISE de $${amount} USD (${formattedTotal} GDS).\n\nInformations client:\nNom: ${customerData.name}\nEmail: ${customerData.email}\nTéléphone: ${customerData.phone}\nEmail WISE: ${customerData.wiseEmail}\n\n${customerData.notes ? 'Notes: ' + customerData.notes + '\n\n' : ''}Voici la preuve de paiement:`;
+            
             whatsappLink.href = `https://wa.me/15102817365?text=${encodeURIComponent(whatsappMessage)}`;
             
-            // Show payment dialog
+            // Enregistrer la commande dans localStorage
+            saveOrderToLocalStorage();
+            
+            // Afficher la boîte de dialogue de paiement
             paymentDialog.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
+        }
+        
+        // Fonction pour sauvegarder la commande dans localStorage
+        function saveOrderToLocalStorage() {
+            try {
+                // Générer un ID unique pour la commande
+                const orderId = 'wise_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                const orderNumber = 'WISE' + Date.now().toString().substr(-6);
+                
+                const orderData = {
+                    id: orderId,
+                    orderNumber: orderNumber,
+                    customerName: customerData.name,
+                    customerEmail: customerData.email,
+                    customerPhone: customerData.phone,
+                    wiseEmail: customerData.wiseEmail,
+                    customerNotes: customerData.notes,
+                    amountUSD: currentWiseData.amount,
+                    amountFormatted: currentWiseData.amountFormatted,
+                    totalGDS: currentWiseData.totalGDS,
+                    totalFormatted: currentWiseData.totalFormatted,
+                    exchangeRate: exchangeRate,
+                    paymentMethod: selectedPaymentMethod === 'natcash' ? 'NatCash' : 'MonCash',
+                    paymentNumber: selectedPaymentMethod === 'natcash' ? '41866098' : '46433333',
+                    status: 'pending',
+                    date: new Date().toISOString(),
+                    type: 'wise'
+                };
+                
+                // Récupérer les commandes existantes
+                const existingOrders = JSON.parse(localStorage.getItem('wise_orders')) || [];
+                
+                // Ajouter la nouvelle commande
+                existingOrders.push(orderData);
+                
+                // Sauvegarder dans localStorage
+                localStorage.setItem('wise_orders', JSON.stringify(existingOrders));
+                
+                console.log('Commande WISE enregistrée:', orderData);
+                
+            } catch (error) {
+                console.error('Erreur lors de l\'enregistrement de la commande:', error);
+            }
+        }
         
         // Payment method selection
         paymentOptions.forEach(option => {
@@ -1176,21 +1365,49 @@
         document.getElementById('natcashOption').classList.add('active');
         selectedPaymentMethod = 'natcash';
         
-        // Close dialog buttons
-        closeDialogBtn.addEventListener('click', closePaymentDialog);
-        closePaymentDialogBtn.addEventListener('click', closePaymentDialog);
+        // Close customer dialog button
+        closeCustomerDialogBtn.addEventListener('click', function() {
+            customerInfoDialog.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            currentWiseData = null;
+        });
         
-        function closePaymentDialog() {
+        // Close payment dialog button
+        closePaymentDialogBtn.addEventListener('click', function() {
             paymentDialog.classList.remove('active');
             document.body.style.overflow = 'auto';
-        }
+            resetForms();
+        });
         
-        // Close dialog when clicking outside
-        paymentDialog.addEventListener('click', (e) => {
-            if (e.target === paymentDialog) {
-                closePaymentDialog();
+        // Back to customer info button
+        backToCustomerInfoBtn.addEventListener('click', function() {
+            paymentDialog.classList.remove('active');
+            customerInfoDialog.classList.add('active');
+        });
+        
+        // Close dialogs when clicking outside
+        customerInfoDialog.addEventListener('click', (e) => {
+            if (e.target === customerInfoDialog) {
+                customerInfoDialog.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                currentWiseData = null;
             }
         });
+        
+        paymentDialog.addEventListener('click', (e) => {
+            if (e.target === paymentDialog) {
+                paymentDialog.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                resetForms();
+            }
+        });
+        
+        // Fonction pour réinitialiser les formulaires
+        function resetForms() {
+            customerInfoForm.reset();
+            currentWiseData = null;
+            customerData = null;
+        }
         
         // Initialize calculation on page load
         calculateWiseRecharge();
