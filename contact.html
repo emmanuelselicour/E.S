@@ -457,6 +457,31 @@
             opacity: 0.9;
         }
         
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
         .footer-links h4, .footer-contact h4 {
             font-size: 1.2rem;
             margin-bottom: 20px;
@@ -482,10 +507,16 @@
         }
         
         .footer-contact p {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 10px;
+            line-height: 1.5;
+        }
+        
+        .footer-contact i {
+            margin-top: 3px;
+            min-width: 20px;
         }
         
         .footer-bottom {
@@ -611,8 +642,7 @@
                     <ul>
                         <li><a href="index.html"><i class="fas fa-home"></i> Accueil</a></li>
                         <li><a href="index.html#services"><i class="fas fa-shopping-cart"></i> Services</a></li>
-                        <li><a href="index.html#products"><i class="fas fa-gem"></i> Produits</a></li>
-                        <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+                        <li><a href="index.html#contact"><i class="fas fa-envelope"></i> Contact</a></li>
                     </ul>
                 </nav>
                 
@@ -641,11 +671,12 @@
                         <i class="fas fa-envelope"></i>
                     </div>
                     <h3>Informations de contact</h3>
-                    <p><i class="fas fa-envelope"></i> contact@escompany.com</p>
-                    <p><i class="fas fa-phone"></i> +509 48 00 0000</p>
-                    <p><i class="fas fa-map-marker-alt"></i> Port-au-Prince, Haïti</p>
+                    <!-- MODIFICATION ICI: Vos coordonnées -->
+                    <p><i class="fas fa-envelope"></i> contact.escompany@gmail.com</p>
+                    <p><i class="fas fa-phone"></i> +1 510-281 7365</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Nord-Est, Haïti</p>
                     <p><i class="fas fa-clock"></i> Lundi - Vendredi: 9h - 18h</p>
-                    <p><i class="fas fa-clock"></i> Samedi: 10h - 16h</p>
+                    <p><i class="fas fa-clock"></i> Samedi: 9h - 13h</p>
                 </div>
                 
                 <div class="info-card">
@@ -661,7 +692,8 @@
                         <a href="#" class="social-link">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="https://wa.me/50948000000" class="social-link whatsapp-link" target="_blank">
+                        <!-- MODIFICATION ICI: Lien WhatsApp avec votre numéro -->
+                        <a href="https://wa.me/15102817365" class="social-link whatsapp-link" target="_blank">
                             <i class="fab fa-whatsapp"></i>
                         </a>
                         <a href="#" class="social-link">
@@ -812,10 +844,17 @@
                         <h3>ES<span>_COMPANY</span></h3>
                     </div>
                     <p>Votre partenaire de confiance pour tous vos besoins numériques. Nous offrons des services rapides, sécurisés et fiables.</p>
-                    <div class="social-links">
-                        <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-facebook"></i></a>
-                        <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-instagram"></i></a>
-                        <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-whatsapp"></i></a>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <!-- MODIFICATION ICI: Lien WhatsApp avec votre numéro -->
+                        <a href="https://wa.me/15102817365" target="_blank" aria-label="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
                     </div>
                 </div>
                 
@@ -824,18 +863,31 @@
                     <ul>
                         <li><a href="index.html">Accueil</a></li>
                         <li><a href="index.html#services">Nos Services</a></li>
-                        <li><a href="index.html#products">Produits</a></li>
+                        <li><a href="#contact">Contact</a></li>
                         <li><a href="privacy.html">Politique de confidentialité</a></li>
-                        <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-contact">
                     <h4>Contactez-nous</h4>
-                    <p><i class="fas fa-envelope"></i> contact@escompany.com</p>
-                    <p><i class="fas fa-phone"></i> +509 48 00 0000</p>
-                    <p><i class="fas fa-map-marker-alt"></i> Port-au-Prince, Haïti</p>
-                    <p><i class="fas fa-clock"></i> Lundi - Vendredi: 9h - 18h</p>
+                    <!-- MODIFICATION ICI: Vos coordonnées -->
+                    <p>
+                        <i class="fas fa-envelope"></i> 
+                        <span>contact.escompany@gmail.com</span>
+                    </p>
+                    <p>
+                        <i class="fas fa-phone"></i> 
+                        <span>+1 510-281 7365</span>
+                    </p>
+                    <p>
+                        <i class="fas fa-map-marker-alt"></i> 
+                        <span>Nord-Est, Haïti</span>
+                    </p>
+                    <p>
+                        <i class="fas fa-clock"></i> 
+                        <span>Lundi - Vendredi: 9h - 18h<br>
+                        Samedi: 9h - 13h</span>
+                    </p>
                 </div>
             </div>
             
@@ -910,15 +962,6 @@
                 about,
                 message
             });
-        });
-        
-        // WhatsApp link with pre-filled message
-        const whatsappLink = document.querySelector('.whatsapp-link');
-        
-        // Update WhatsApp link with current page context
-        whatsappLink.addEventListener('click', function(e) {
-            // This would normally open WhatsApp with a pre-filled message
-            // The link already has the WhatsApp number
         });
     </script>
 </body>
