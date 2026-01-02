@@ -1002,7 +1002,8 @@
             </div>
             
             <div style="text-align: center; margin-top: 25px;">
-                <a href="https://wa.me/50948000000?text=Bonjour,%20je%20viens%20d'effectuer%20le%20paiement%20pour%20la%20recharge%20WISE%20de%20$30%20USD%20(4,440%20GDS)" class="btn btn-full" target="_blank" id="whatsappLink">
+                <!-- WhatsApp avec le numéro +1 510-281 7365 -->
+                <a href="https://wa.me/15102817365?text=Bonjour,%20je%20viens%20d'effectuer%20le%20paiement%20pour%20la%20recharge%20WISE%20de%20$30%20USD%20(4,440%20GDS)" class="btn btn-full" target="_blank" id="whatsappLink">
                     <i class="fab fa-whatsapp"></i> Contacter sur WhatsApp
                 </a>
             </div>
@@ -1026,9 +1027,10 @@
                     </div>
                     <p>Votre partenaire de confiance pour tous vos besoins numériques. Nous offrons des services rapides, sécurisés et fiables.</p>
                     <div class="social-links">
+                        <!-- WhatsApp avec le numéro +1 510-281 7365 -->
+                        <a href="https://wa.me/15102817365" target="_blank" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-whatsapp"></i></a>
                         <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-facebook"></i></a>
                         <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-instagram"></i></a>
-                        <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
                 
@@ -1045,10 +1047,11 @@
                 
                 <div class="footer-contact">
                     <h4>Contactez-nous</h4>
-                    <p><i class="fas fa-envelope"></i> contact@escompany.com</p>
-                    <p><i class="fas fa-phone"></i> +509 48 00 0000</p>
-                    <p><i class="fas fa-map-marker-alt"></i> Port-au-Prince, Haïti</p>
-                    <p><i class="fas fa-clock"></i> Lundi - Vendredi: 9h - 18h</p>
+                    <!-- Vos coordonnées ajoutées ici -->
+                    <p><i class="fas fa-envelope"></i> contact.escompany@gmail.com</p>
+                    <p><i class="fas fa-phone"></i> +1 510-281 7365</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Nord-Est, Haïti</p>
+                    <p><i class="fas fa-clock"></i> Lundi - Dimanche: 24h/24</p>
                 </div>
             </div>
             
@@ -1102,9 +1105,9 @@
             resultConversionDisplay.textContent = formattedConversion;
             resultTotalDisplay.textContent = formattedTotal;
             
-            // Update WhatsApp link
+            // Update WhatsApp link avec le numéro +1 510-281 7365
             const whatsappMessage = `Bonjour, je viens d'effectuer le paiement pour la recharge WISE de ${formattedAmount} USD (${formattedTotal}). Voici la preuve de paiement:`;
-            whatsappLink.href = `https://wa.me/50948000000?text=${encodeURIComponent(whatsappMessage)}`;
+            whatsappLink.href = `https://wa.me/15102817365?text=${encodeURIComponent(whatsappMessage)}`;
             
             return { amount, totalGDS };
         }
@@ -1148,9 +1151,9 @@
             document.getElementById('dialogPlanDuration').textContent = `$${amount} USD`;
             document.getElementById('dialogPlanPrice').textContent = `${formattedTotal} GDS`;
             
-            // Update WhatsApp link with current amount
+            // Update WhatsApp link avec le numéro +1 510-281 7365
             const whatsappMessage = `Bonjour, je viens d'effectuer le paiement pour la recharge WISE de $${amount} USD (${formattedTotal} GDS). Voici la preuve de paiement:`;
-            whatsappLink.href = `https://wa.me/50948000000?text=${encodeURIComponent(whatsappMessage)}`;
+            whatsappLink.href = `https://wa.me/15102817365?text=${encodeURIComponent(whatsappMessage)}`;
             
             // Show payment dialog
             paymentDialog.classList.add('active');
