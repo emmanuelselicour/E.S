@@ -265,12 +265,13 @@
             font-weight: 500;
         }
         
-        /* Comments Table */
-        .comments-section {
+        /* Comments Grid - NOUVEAU DESIGN RESPONSIVE */
+        .comments-grid {
             background-color: white;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             overflow: hidden;
+            min-height: 400px;
         }
         
         .section-header {
@@ -312,42 +313,91 @@
             border-color: var(--secondary);
         }
         
-        .comments-table {
-            width: 100%;
-            border-collapse: collapse;
+        /* Grille des commentaires */
+        .comments-container {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
         }
         
-        .comments-table th {
-            background-color: #f8f9fa;
-            color: var(--primary);
-            text-align: left;
-            padding: 15px 25px;
-            font-weight: 600;
+        /* Carte de commentaire */
+        .comment-card {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--secondary);
+            transition: all 0.3s;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .comment-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .comment-card.new {
+            border-left-color: var(--danger);
+            background-color: rgba(255, 107, 107, 0.05);
+        }
+        
+        .comment-card.read {
+            border-left-color: var(--success);
+            background-color: rgba(40, 167, 69, 0.05);
+        }
+        
+        .comment-card.pending {
+            border-left-color: var(--warning);
+            background-color: rgba(255, 193, 7, 0.05);
+        }
+        
+        /* Numérotation */
+        .comment-number {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: white;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+        
+        .comment-number.new {
+            background: linear-gradient(135deg, var(--danger), #ff8a8a);
+        }
+        
+        .comment-number.read {
+            background: linear-gradient(135deg, var(--success), #5cd85c);
+        }
+        
+        /* En-tête carte */
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
             border-bottom: 1px solid var(--light-gray);
-        }
-        
-        .comments-table td {
-            padding: 15px 25px;
-            border-bottom: 1px solid var(--light-gray);
-        }
-        
-        .comments-table tr:hover {
-            background-color: #f8f9fa;
-        }
-        
-        .comments-table tr:last-child td {
-            border-bottom: none;
         }
         
         .comment-user {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
         
         .user-avatar {
-            width: 35px;
-            height: 35px;
+            width: 45px;
+            height: 45px;
             background: linear-gradient(135deg, var(--secondary), #0088e0);
             border-radius: 50%;
             display: flex;
@@ -355,63 +405,98 @@
             justify-content: center;
             color: white;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 1.1rem;
         }
         
         .user-info h4 {
             color: var(--primary);
-            margin-bottom: 3px;
+            margin-bottom: 4px;
+            font-size: 1.1rem;
         }
         
         .user-info p {
             color: var(--gray);
             font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         
-        .comment-subject {
-            font-weight: 500;
-            color: var(--dark);
-        }
-        
-        .comment-message {
-            max-width: 300px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            color: var(--gray);
-        }
-        
-        .status-badge {
+        .comment-status {
             display: inline-block;
-            padding: 5px 10px;
+            padding: 4px 10px;
             border-radius: 50px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 600;
+            text-transform: uppercase;
         }
         
         .status-new {
-            background-color: rgba(0, 184, 148, 0.1);
-            color: #00b894;
+            background-color: rgba(220, 53, 69, 0.1);
+            color: var(--danger);
         }
         
         .status-pending {
-            background-color: rgba(253, 203, 110, 0.1);
-            color: #fdcb6e;
+            background-color: rgba(255, 193, 7, 0.1);
+            color: var(--warning);
         }
         
         .status-responded {
-            background-color: rgba(0, 159, 253, 0.1);
-            color: var(--secondary);
+            background-color: rgba(40, 167, 69, 0.1);
+            color: var(--success);
         }
         
-        .action-buttons {
+        /* Corps carte */
+        .comment-body {
+            margin-bottom: 15px;
+        }
+        
+        .comment-subject {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .comment-message {
+            color: var(--dark);
+            line-height: 1.5;
+            font-size: 0.95rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        /* Pied carte */
+        .comment-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid var(--light-gray);
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+        
+        .comment-date {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .comment-actions {
             display: flex;
             gap: 8px;
         }
         
         .action-btn {
-            width: 35px;
-            height: 35px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -419,6 +504,7 @@
             cursor: pointer;
             transition: all 0.3s;
             border: none;
+            font-size: 0.9rem;
         }
         
         .view-btn {
@@ -431,16 +517,6 @@
             color: white;
         }
         
-        .delete-btn {
-            background-color: rgba(220, 53, 69, 0.1);
-            color: var(--danger);
-        }
-        
-        .delete-btn:hover {
-            background-color: var(--danger);
-            color: white;
-        }
-        
         .mark-btn {
             background-color: rgba(40, 167, 69, 0.1);
             color: var(--success);
@@ -449,6 +525,27 @@
         .mark-btn:hover {
             background-color: var(--success);
             color: white;
+        }
+        
+        /* Aucun commentaire */
+        .no-comments {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray);
+        }
+        
+        .no-comments i {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--light-gray);
+            display: block;
+        }
+        
+        .no-comments h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.5rem;
         }
         
         /* Modal */
@@ -473,7 +570,7 @@
             background-color: white;
             border-radius: var(--radius);
             width: 90%;
-            max-width: 600px;
+            max-width: 700px;
             max-height: 90vh;
             overflow-y: auto;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
@@ -485,24 +582,29 @@
             align-items: center;
             padding: 20px 25px;
             border-bottom: 1px solid var(--light-gray);
+            background: linear-gradient(135deg, var(--primary), #1a1a52);
+            color: white;
+            border-radius: var(--radius) var(--radius) 0 0;
         }
         
         .modal-header h3 {
-            color: var(--primary);
             font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         .close-modal {
             background: none;
             border: none;
             font-size: 1.5rem;
-            color: var(--gray);
+            color: white;
             cursor: pointer;
             transition: color 0.3s;
         }
         
         .close-modal:hover {
-            color: var(--accent);
+            color: var(--secondary);
         }
         
         .modal-body {
@@ -529,6 +631,7 @@
             color: var(--gray);
             font-size: 0.9rem;
             margin-bottom: 5px;
+            font-weight: 600;
         }
         
         .detail-value {
@@ -547,6 +650,8 @@
             white-space: pre-wrap;
             line-height: 1.6;
             border-left: 3px solid var(--secondary);
+            max-height: 300px;
+            overflow-y: auto;
         }
         
         .response-section {
@@ -556,6 +661,9 @@
         .response-section h4 {
             color: var(--primary);
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         .response-textarea {
@@ -734,6 +842,12 @@
         }
         
         /* Responsive */
+        @media (max-width: 1200px) {
+            .comments-container {
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            }
+        }
+        
         @media (max-width: 992px) {
             .admin-dashboard {
                 grid-template-columns: 1fr;
@@ -761,6 +875,10 @@
                 font-size: 1.5rem;
                 cursor: pointer;
             }
+            
+            .comments-container {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
         }
         
         @media (max-width: 768px) {
@@ -777,15 +895,13 @@
                 gap: 15px;
             }
             
-            .comments-table {
-                display: block;
-                overflow-x: auto;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .stats-cards {
+            .comments-container {
                 grid-template-columns: 1fr;
+                padding: 15px;
+            }
+            
+            .comment-card {
+                padding: 15px;
             }
             
             .section-header {
@@ -796,6 +912,62 @@
             
             .table-filters {
                 flex-wrap: wrap;
+            }
+            
+            .modal-content {
+                width: 95%;
+                max-width: 95%;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .stats-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .comment-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .comment-footer {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+            
+            .comment-actions {
+                align-self: flex-end;
+            }
+            
+            .modal-footer {
+                flex-direction: column;
+            }
+            
+            .modal-footer .btn {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .comments-container {
+                padding: 10px;
+            }
+            
+            .comment-card {
+                padding: 12px;
+            }
+            
+            .comment-user {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .user-avatar {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
             }
         }
     </style>
@@ -951,8 +1123,8 @@
                 <p>Chargement des commentaires...</p>
             </div>
             
-            <!-- Comments Table -->
-            <div class="comments-section" id="commentsSection" style="display: none;">
+            <!-- Comments Grid -->
+            <div class="comments-grid" id="commentsGrid" style="display: none;">
                 <div class="section-header">
                     <h2><i class="fas fa-list"></i> Liste des Commentaires</h2>
                     <div class="table-filters">
@@ -963,28 +1135,14 @@
                     </div>
                 </div>
                 
-                <table class="comments-table">
-                    <thead>
-                        <tr>
-                            <th>Utilisateur</th>
-                            <th>Sujet</th>
-                            <th>Message</th>
-                            <th>Date</th>
-                            <th>Statut</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="commentsTableBody">
-                        <!-- Comments will be dynamically inserted here -->
-                        <tr id="noCommentsRow">
-                            <td colspan="6" style="text-align: center; padding: 40px; color: var(--gray);">
-                                <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 15px; display: block;"></i>
-                                <h3 style="color: var(--primary); margin-bottom: 10px;">Aucun commentaire</h3>
-                                <p>Les commentaires envoyés via le formulaire de contact apparaîtront ici.</p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="comments-container" id="commentsContainer">
+                    <!-- Comment cards will be inserted here -->
+                    <div class="no-comments" id="noComments">
+                        <i class="fas fa-inbox"></i>
+                        <h3>Aucun commentaire</h3>
+                        <p>Les commentaires envoyés via le formulaire de contact apparaîtront ici.</p>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
@@ -993,7 +1151,7 @@
     <div class="modal" id="commentModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3><i class="fas fa-eye"></i> Détail du Commentaire</h3>
+                <h3><i class="fas fa-eye"></i> Détail du Commentaire <span id="modalCommentNumber" style="background: white; color: var(--primary); padding: 2px 10px; border-radius: 20px; font-size: 0.9rem;">#0</span></h3>
                 <button class="close-modal" id="closeModal">&times;</button>
             </div>
             
@@ -1026,9 +1184,15 @@
                         <div class="message-full" id="modalMessage">-</div>
                     </div>
                     
-                    <div class="detail-item">
-                        <span class="detail-label">Date d'envoi</span>
-                        <div class="detail-value" id="modalDate">-</div>
+                    <div class="detail-row">
+                        <div class="detail-item">
+                            <span class="detail-label">Date d'envoi</span>
+                            <div class="detail-value" id="modalDate">-</div>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Statut</span>
+                            <div class="detail-value" id="modalStatus">-</div>
+                        </div>
                     </div>
                     
                     <div class="response-section">
@@ -1073,10 +1237,10 @@
         const logoutBtn = document.getElementById('logoutBtn');
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const adminSidebar = document.getElementById('adminSidebar');
-        const commentsTableBody = document.getElementById('commentsTableBody');
-        const noCommentsRow = document.getElementById('noCommentsRow');
+        const commentsContainer = document.getElementById('commentsContainer');
+        const noComments = document.getElementById('noComments');
         const filterButtons = document.querySelectorAll('.filter-btn');
-        const commentsSection = document.getElementById('commentsSection');
+        const commentsGrid = document.getElementById('commentsGrid');
         const commentsLoading = document.getElementById('commentsLoading');
         const commentModal = document.getElementById('commentModal');
         const closeModalBtn = document.getElementById('closeModalBtn');
@@ -1087,6 +1251,8 @@
         const modalSubject = document.getElementById('modalSubject');
         const modalMessage = document.getElementById('modalMessage');
         const modalDate = document.getElementById('modalDate');
+        const modalStatus = document.getElementById('modalStatus');
+        const modalCommentNumber = document.getElementById('modalCommentNumber');
         const markAsRespondedBtn = document.getElementById('markAsRespondedBtn');
         const sendResponseBtn = document.getElementById('sendResponseBtn');
         const adminUserName = document.getElementById('adminUserName');
@@ -1223,7 +1389,7 @@
                 }
                 
                 commentsLoading.classList.add('active');
-                commentsSection.style.display = 'none';
+                commentsGrid.style.display = 'none';
                 
                 const response = await fetch(API_CONFIG.BASE_URL + API_CONFIG.ENDPOINTS.COMMENTS, {
                     headers: {
@@ -1242,15 +1408,15 @@
                 
                 if (data.success) {
                     commentsData = data.comments || [];
-                    updateCommentsTable();
+                    updateCommentsGrid();
                     updateStats();
                     
                     if (commentsData.length > 0) {
-                        commentsSection.style.display = 'block';
-                        noCommentsRow.style.display = 'none';
+                        commentsGrid.style.display = 'block';
+                        noComments.style.display = 'none';
                     } else {
-                        commentsSection.style.display = 'none';
-                        noCommentsRow.style.display = 'table-row';
+                        commentsGrid.style.display = 'block';
+                        noComments.style.display = 'block';
                     }
                     
                     console.log(`${commentsData.length} commentaires chargés depuis l'API`);
@@ -1278,8 +1444,8 @@
             respondedCommentsEl.textContent = responded;
         }
 
-        // Update comments table
-        function updateCommentsTable() {
+        // Update comments grid (NOUVELLE FONCTION)
+        function updateCommentsGrid() {
             let filteredComments = [...commentsData];
             
             // Apply filter
@@ -1290,26 +1456,26 @@
             // Sort by date (newest first)
             filteredComments.sort((a, b) => new Date(b.date) - new Date(a.date));
             
-            // Clear table
-            commentsTableBody.innerHTML = '';
+            // Clear container
+            commentsContainer.innerHTML = '';
             
-            // Add comments to table
+            // Add comment cards
             if (filteredComments.length === 0) {
-                noCommentsRow.style.display = 'table-row';
-                commentsTableBody.appendChild(noCommentsRow);
+                noComments.style.display = 'block';
+                commentsContainer.appendChild(noComments);
             } else {
-                noCommentsRow.style.display = 'none';
+                noComments.style.display = 'none';
                 
-                filteredComments.forEach(comment => {
-                    const row = document.createElement('tr');
+                filteredComments.forEach((comment, index) => {
+                    const card = document.createElement('div');
+                    card.className = `comment-card ${comment.read ? 'read' : 'new'} ${comment.status}`;
                     
-                    // Format date for display
+                    // Format date
                     const commentDate = new Date(comment.date);
                     const formattedDate = commentDate.toLocaleDateString('fr-FR', {
                         day: '2-digit',
                         month: '2-digit',
-                        year: 'numeric'
-                    }) + ' ' + commentDate.toLocaleTimeString('fr-FR', {
+                        year: 'numeric',
                         hour: '2-digit',
                         minute: '2-digit'
                     });
@@ -1317,73 +1483,99 @@
                     // Get first letter for avatar
                     const firstLetter = comment.fullName ? comment.fullName.charAt(0).toUpperCase() : '?';
                     
-                    // Status badge text
+                    // Status text
                     let statusText = '';
                     let statusClass = '';
                     
                     switch(comment.status) {
                         case 'new':
-                            statusText = 'Nouveau';
+                            statusText = 'NOUVEAU';
                             statusClass = 'status-new';
                             break;
                         case 'pending':
-                            statusText = 'En attente';
+                            statusText = 'EN ATTENTE';
                             statusClass = 'status-pending';
                             break;
                         case 'responded':
-                            statusText = 'Répondu';
+                            statusText = 'RÉPONDU';
                             statusClass = 'status-responded';
                             break;
                         default:
-                            statusText = 'Nouveau';
+                            statusText = 'NOUVEAU';
                             statusClass = 'status-new';
                     }
                     
-                    // Truncate message for display
-                    const truncatedMessage = comment.message.length > 50 
-                        ? comment.message.substring(0, 50) + '...' 
+                    // Numéro du commentaire (position dans la liste totale)
+                    const commentNumber = commentsData.findIndex(c => c.id === comment.id) + 1;
+                    
+                    // Numérotation rouge pour non lu, vert pour lu
+                    const numberClass = comment.read ? 'read' : 'new';
+                    
+                    // Truncate message
+                    const truncatedMessage = comment.message.length > 150 
+                        ? comment.message.substring(0, 150) + '...' 
                         : comment.message;
                     
-                    row.innerHTML = `
-                        <td>
+                    card.innerHTML = `
+                        <div class="comment-number ${numberClass}">${commentNumber}</div>
+                        
+                        <div class="comment-header">
                             <div class="comment-user">
                                 <div class="user-avatar">${firstLetter}</div>
                                 <div class="user-info">
                                     <h4>${comment.fullName || 'Non renseigné'}</h4>
-                                    <p>${comment.email || 'Pas d\'email'}</p>
+                                    <p><i class="fas fa-envelope"></i> ${comment.email || 'Pas d\'email'}</p>
                                 </div>
                             </div>
-                        </td>
-                        <td class="comment-subject">${comment.subject || 'Autre'}</td>
-                        <td class="comment-message" title="${comment.message}">${truncatedMessage}</td>
-                        <td>${formattedDate}</td>
-                        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="action-btn view-btn" data-id="${comment.id}" title="Voir">
+                            <span class="comment-status ${statusClass}">${statusText}</span>
+                        </div>
+                        
+                        <div class="comment-body">
+                            <div class="comment-subject">
+                                <i class="fas fa-tag"></i> ${comment.subject || 'Autre'}
+                            </div>
+                            <div class="comment-message">${truncatedMessage}</div>
+                        </div>
+                        
+                        <div class="comment-footer">
+                            <div class="comment-date">
+                                <i class="far fa-clock"></i> ${formattedDate}
+                            </div>
+                            <div class="comment-actions">
+                                <button class="action-btn view-btn" data-id="${comment.id}" title="Voir le détail">
                                     <i class="fas fa-eye"></i>
                                 </button>
                                 <button class="action-btn mark-btn" data-id="${comment.id}" title="Marquer comme répondu">
                                     <i class="fas fa-check"></i>
                                 </button>
                             </div>
-                        </td>
+                        </div>
                     `;
                     
-                    commentsTableBody.appendChild(row);
+                    // Ajouter l'événement click sur toute la carte
+                    card.addEventListener('click', function(e) {
+                        // Ne pas déclencher si on clique sur un bouton
+                        if (!e.target.closest('.action-btn')) {
+                            viewComment(comment.id);
+                        }
+                    });
+                    
+                    commentsContainer.appendChild(card);
                 });
             }
             
             // Add event listeners to action buttons
             document.querySelectorAll('.view-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
                     const commentId = parseInt(this.getAttribute('data-id'));
                     viewComment(commentId);
                 });
             });
             
             document.querySelectorAll('.mark-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
                     const commentId = parseInt(this.getAttribute('data-id'));
                     markAsResponded(commentId);
                 });
@@ -1417,6 +1609,10 @@
             modalSubject.textContent = comment.subject || 'Autre';
             modalMessage.textContent = comment.message || 'Pas de message';
             
+            // Numéro du commentaire
+            const commentNumber = commentsData.findIndex(c => c.id === comment.id) + 1;
+            modalCommentNumber.textContent = `#${commentNumber}`;
+            
             // Format date
             const commentDate = new Date(comment.date);
             modalDate.textContent = commentDate.toLocaleString('fr-FR', {
@@ -1428,8 +1624,53 @@
                 second: '2-digit'
             });
             
+            // Status
+            let statusText = '';
+            switch(comment.status) {
+                case 'new': statusText = 'Nouveau'; break;
+                case 'pending': statusText = 'En attente'; break;
+                case 'responded': statusText = 'Répondu'; break;
+                default: statusText = 'Nouveau';
+            }
+            modalStatus.textContent = statusText;
+            modalStatus.style.color = comment.status === 'new' ? 'var(--danger)' : 
+                                     comment.status === 'pending' ? 'var(--warning)' : 'var(--success)';
+            
             // Show modal
             commentModal.classList.add('active');
+            
+            // Marquer comme lu si ce n'est pas déjà fait
+            if (!comment.read) {
+                markAsRead(commentId);
+            }
+        }
+
+        // Marquer comme lu
+        async function markAsRead(commentId) {
+            try {
+                const token = localStorage.getItem('admin_token');
+                const response = await fetch(`${API_CONFIG.BASE_URL}/api/comments/${commentId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        read: true
+                    })
+                });
+                
+                if (response.ok) {
+                    // Mettre à jour localement
+                    const commentIndex = commentsData.findIndex(c => c.id === commentId);
+                    if (commentIndex !== -1) {
+                        commentsData[commentIndex].read = true;
+                        updateCommentsGrid();
+                    }
+                }
+            } catch (error) {
+                console.error('Erreur marquer comme lu:', error);
+            }
         }
 
         // Mark comment as responded
@@ -1460,7 +1701,7 @@
                     if (commentIndex !== -1) {
                         commentsData[commentIndex].status = 'responded';
                         commentsData[commentIndex].read = true;
-                        updateCommentsTable();
+                        updateCommentsGrid();
                         updateStats();
                         
                         // Si modal est ouvert pour ce commentaire, fermer
@@ -1483,7 +1724,7 @@
         filterButtons.forEach(btn => {
             btn.addEventListener('click', function() {
                 currentFilter = this.getAttribute('data-filter');
-                updateCommentsTable();
+                updateCommentsGrid();
             });
         });
 
@@ -1592,7 +1833,7 @@
                                 const oldCount = commentsData.length;
                                 commentsData = data.comments || [];
                                 if (commentsData.length !== oldCount) {
-                                    updateCommentsTable();
+                                    updateCommentsGrid();
                                     updateStats();
                                     console.log('Commentaires rafraîchis automatiquement');
                                 }
