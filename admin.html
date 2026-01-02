@@ -607,6 +607,15 @@
             display: block;
         }
         
+        /* Netflix Orders Page */
+        .netflix-orders-page {
+            display: none;
+        }
+        
+        .netflix-orders-page.active {
+            display: block;
+        }
+        
         /* Comments Header */
         .comments-header {
             display: flex;
@@ -1186,6 +1195,27 @@
                             <span class="nav-badge" id="commentsBadge">0</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="#" data-page="netflix-orders">
+                            <i class="fab fa-netflix"></i> Commandes Netflix
+                            <span class="nav-badge" id="netflixOrdersBadge">0</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-page="freefire-orders">
+                            <i class="fas fa-gamepad"></i> Free Fire
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-page="paypal-orders">
+                            <i class="fab fa-paypal"></i> Comptes PayPal
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-page="wise-orders">
+                            <i class="fas fa-money-bill-wave"></i> Recharges Wise
+                        </a>
+                    </li>
                 </ul>
             </nav>
             
@@ -1209,7 +1239,7 @@
                 
                 <div class="welcome-card">
                     <h2>Bonjour, <span id="welcomeName">Administrateur</span> !</h2>
-                    <p>Gérez vos commentaires et suivez les activités de votre site depuis ce panel.</p>
+                    <p>Gérez vos commentaires et commandes depuis ce panel.</p>
                 </div>
                 
                 <h2 class="section-title">
@@ -1244,7 +1274,7 @@
                             </div>
                             <div class="stat-value" id="pendingComments">0</div>
                         </div>
-                        <div class="stat-label">En attente</div>
+                        <div class="stat-label">Commentaires en attente</div>
                     </div>
                     
                     <div class="stat-card responded" data-page="comments" data-filter="responded">
@@ -1280,11 +1310,11 @@
                             </div>
                         </button>
                         
-                        <button class="action-btn" data-page="comments" data-filter="pending">
-                            <i class="fas fa-clock"></i>
+                        <button class="action-btn primary" data-page="netflix-orders">
+                            <i class="fab fa-netflix"></i>
                             <div>
-                                <strong>Commentaires en attente</strong>
-                                <small>Nécessitent une réponse</small>
+                                <strong>Commandes Netflix</strong>
+                                <small>Gérer les abonnements Netflix</small>
                             </div>
                         </button>
                     </div>
@@ -1340,6 +1370,136 @@
                     <button class="btn" id="backToDashboard" style="background-color: #f8f9fa; color: var(--dark);">
                         <i class="fas fa-arrow-left"></i> Retour au tableau de bord
                     </button>
+                </div>
+            </div>
+            
+            <!-- Netflix Orders Page -->
+            <div id="netflixOrdersPage" class="comments-page">
+                <div class="page-header">
+                    <h1 class="page-title">
+                        <i class="fab fa-netflix"></i> Commandes Netflix
+                    </h1>
+                    <p class="page-subtitle">Gérez les commandes d'abonnements Netflix</p>
+                </div>
+                
+                <div class="comments-header">
+                    <div class="comments-filters">
+                        <button class="filter-btn active" data-filter="all">Toutes</button>
+                        <button class="filter-btn" data-filter="pending">En attente</button>
+                        <button class="filter-btn" data-filter="processing">En traitement</button>
+                        <button class="filter-btn" data-filter="completed">Terminées</button>
+                        <button class="filter-btn" data-filter="cancelled">Annulées</button>
+                    </div>
+                    
+                    <button class="btn btn-primary btn-small" id="refreshNetflixOrders">
+                        <i class="fas fa-sync-alt"></i> Rafraîchir
+                    </button>
+                </div>
+                
+                <div class="loading-spinner" id="netflixOrdersLoading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Chargement des commandes Netflix...</p>
+                </div>
+                
+                <div class="stats-grid" style="margin-bottom: 30px;">
+                    <div class="stat-card total">
+                        <div class="stat-header">
+                            <div class="stat-icon total" style="background-color: #6c5ce7;">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div class="stat-value" id="totalNetflixOrders">0</div>
+                        </div>
+                        <div class="stat-label">Total commandes</div>
+                    </div>
+                    
+                    <div class="stat-card new">
+                        <div class="stat-header">
+                            <div class="stat-icon new" style="background-color: #e17055;">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-value" id="pendingNetflixOrders">0</div>
+                        </div>
+                        <div class="stat-label">En attente</div>
+                    </div>
+                    
+                    <div class="stat-card pending">
+                        <div class="stat-header">
+                            <div class="stat-icon pending" style="background-color: #00cec9;">
+                                <i class="fas fa-cog"></i>
+                            </div>
+                            <div class="stat-value" id="processingNetflixOrders">0</div>
+                        </div>
+                        <div class="stat-label">En traitement</div>
+                    </div>
+                    
+                    <div class="stat-card responded">
+                        <div class="stat-header">
+                            <div class="stat-icon responded" style="background-color: #00b894;">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-value" id="completedNetflixOrders">0</div>
+                        </div>
+                        <div class="stat-label">Terminées</div>
+                    </div>
+                </div>
+                
+                <div class="comments-grid" id="netflixOrdersGrid">
+                    <div class="no-comments">
+                        <i class="fab fa-netflix" style="color: #e50914;"></i>
+                        <h3>Aucune commande Netflix</h3>
+                        <p>Les commandes d'abonnements Netflix apparaîtront ici.</p>
+                    </div>
+                </div>
+                
+                <div class="back-btn">
+                    <button class="btn" id="backToDashboardFromNetflix" style="background-color: #f8f9fa; color: var(--dark);">
+                        <i class="fas fa-arrow-left"></i> Retour au tableau de bord
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Free Fire Orders Page (squelette) -->
+            <div id="freefireOrdersPage" class="comments-page">
+                <div class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-gamepad"></i> Commandes Free Fire
+                    </h1>
+                    <p class="page-subtitle">Gérez les commandes de diamants Free Fire</p>
+                </div>
+                <div class="no-comments">
+                    <i class="fas fa-gamepad" style="color: #ff6b6b;"></i>
+                    <h3>Page en développement</h3>
+                    <p>Cette section sera disponible prochainement.</p>
+                </div>
+            </div>
+            
+            <!-- PayPal Accounts Page (squelette) -->
+            <div id="paypalOrdersPage" class="comments-page">
+                <div class="page-header">
+                    <h1 class="page-title">
+                        <i class="fab fa-paypal"></i> Comptes PayPal
+                    </h1>
+                    <p class="page-subtitle">Gérez les commandes de comptes PayPal</p>
+                </div>
+                <div class="no-comments">
+                    <i class="fab fa-paypal" style="color: #003087;"></i>
+                    <h3>Page en développement</h3>
+                    <p>Cette section sera disponible prochainement.</p>
+                </div>
+            </div>
+            
+            <!-- Wise Recharges Page (squelette) -->
+            <div id="wiseOrdersPage" class="comments-page">
+                <div class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-money-bill-wave"></i> Recharges Wise
+                    </h1>
+                    <p class="page-subtitle">Gérez les commandes de recharges Wise</p>
+                </div>
+                <div class="no-comments">
+                    <i class="fas fa-money-bill-wave" style="color: #9b59b6;"></i>
+                    <h3>Page en développement</h3>
+                    <p>Cette section sera disponible prochainement.</p>
                 </div>
             </div>
         </main>
@@ -1399,7 +1559,7 @@
     <script>
         // Configuration de l'API Render
         const API_CONFIG = {
-            BASE_URL: 'https://escompany-api.onrender.com', // REMPLACE AVEC TON URL RENDER
+            BASE_URL: 'https://escompany-api.onrender.com',
             ENDPOINTS: {
                 COMMENTS: '/api/comments',
                 LOGIN: '/api/admin/login',
@@ -1409,7 +1569,9 @@
 
         // Données et état
         let commentsData = [];
+        let netflixOrdersData = [];
         let currentFilter = 'all';
+        let currentNetflixFilter = 'all';
         let selectedCommentId = null;
         let currentPage = 'dashboard';
 
@@ -1426,6 +1588,10 @@
         // Pages
         const dashboardPage = document.getElementById('dashboardPage');
         const commentsPage = document.getElementById('commentsPage');
+        const netflixOrdersPage = document.getElementById('netflixOrdersPage');
+        const freefireOrdersPage = document.getElementById('freefireOrdersPage');
+        const paypalOrdersPage = document.getElementById('paypalOrdersPage');
+        const wiseOrdersPage = document.getElementById('wiseOrdersPage');
         
         // Dashboard elements
         const welcomeName = document.getElementById('welcomeName');
@@ -1435,6 +1601,7 @@
         const respondedCommentsEl = document.getElementById('respondedComments');
         const recentActivity = document.getElementById('recentActivity');
         const commentsBadge = document.getElementById('commentsBadge');
+        const netflixOrdersBadge = document.getElementById('netflixOrdersBadge');
         const backToDashboardBtn = document.getElementById('backToDashboard');
         
         // Comments elements
@@ -1442,6 +1609,16 @@
         const noComments = document.getElementById('noComments');
         const filterButtons = document.querySelectorAll('.filter-btn');
         const commentsLoading = document.getElementById('commentsLoading');
+        
+        // Netflix Orders elements
+        const netflixOrdersGrid = document.getElementById('netflixOrdersGrid');
+        const netflixOrdersLoading = document.getElementById('netflixOrdersLoading');
+        const refreshNetflixOrdersBtn = document.getElementById('refreshNetflixOrders');
+        const backToDashboardFromNetflixBtn = document.getElementById('backToDashboardFromNetflix');
+        const totalNetflixOrdersEl = document.getElementById('totalNetflixOrders');
+        const pendingNetflixOrdersEl = document.getElementById('pendingNetflixOrders');
+        const processingNetflixOrdersEl = document.getElementById('processingNetflixOrders');
+        const completedNetflixOrdersEl = document.getElementById('completedNetflixOrders');
         
         // Modal elements
         const commentModal = document.getElementById('commentModal');
@@ -1461,7 +1638,6 @@
 
         // Initialisation
         document.addEventListener('DOMContentLoaded', function() {
-            // Vérifier l'authentification
             checkAuth();
         });
 
@@ -1602,13 +1778,29 @@
                 switchPage('dashboard');
             });
             
+            // Bouton retour au dashboard depuis Netflix
+            backToDashboardFromNetflixBtn.addEventListener('click', function() {
+                switchPage('dashboard');
+            });
+            
             // Filtres des commentaires
             filterButtons.forEach(btn => {
                 btn.addEventListener('click', function() {
-                    currentFilter = this.getAttribute('data-filter');
-                    updateFilterButtons();
-                    updateCommentsGrid();
+                    if (currentPage === 'comments') {
+                        currentFilter = this.getAttribute('data-filter');
+                        updateFilterButtons();
+                        updateCommentsGrid();
+                    } else if (currentPage === 'netflix-orders') {
+                        currentNetflixFilter = this.getAttribute('data-filter');
+                        updateFilterButtons();
+                        updateNetflixOrdersGrid();
+                    }
                 });
+            });
+            
+            // Rafraîchir les commandes Netflix
+            refreshNetflixOrdersBtn.addEventListener('click', function() {
+                loadNetflixOrdersFromAPI();
             });
             
             // Modal events
@@ -1642,7 +1834,12 @@
             // Cacher toutes les pages
             dashboardPage.style.display = 'none';
             commentsPage.style.display = 'none';
+            netflixOrdersPage.style.display = 'none';
+            freefireOrdersPage.style.display = 'none';
+            paypalOrdersPage.style.display = 'none';
+            wiseOrdersPage.style.display = 'none';
             commentsPage.classList.remove('active');
+            netflixOrdersPage.classList.remove('active');
             
             // Afficher la page sélectionnée
             if (page === 'dashboard') {
@@ -1652,20 +1849,39 @@
                 commentsPage.style.display = 'block';
                 commentsPage.classList.add('active');
                 
-                // Appliquer le filtre si spécifié
                 if (filter) {
                     currentFilter = filter;
                     updateFilterButtons();
                 }
                 
                 loadCommentsFromAPI();
+            } else if (page === 'netflix-orders') {
+                netflixOrdersPage.style.display = 'block';
+                netflixOrdersPage.classList.add('active');
+                
+                if (filter) {
+                    currentNetflixFilter = filter;
+                    updateFilterButtons();
+                }
+                
+                loadNetflixOrdersFromAPI();
+            } else if (page === 'freefire-orders') {
+                freefireOrdersPage.style.display = 'block';
+                freefireOrdersPage.classList.add('active');
+            } else if (page === 'paypal-orders') {
+                paypalOrdersPage.style.display = 'block';
+                paypalOrdersPage.classList.add('active');
+            } else if (page === 'wise-orders') {
+                wiseOrdersPage.style.display = 'block';
+                wiseOrdersPage.classList.add('active');
             }
         }
 
         // Mettre à jour les boutons de filtre
         function updateFilterButtons() {
+            const activeFilter = currentPage === 'comments' ? currentFilter : currentNetflixFilter;
             filterButtons.forEach(btn => {
-                if (btn.getAttribute('data-filter') === currentFilter) {
+                if (btn.getAttribute('data-filter') === activeFilter) {
                     btn.classList.add('active');
                 } else {
                     btn.classList.remove('active');
@@ -1676,6 +1892,7 @@
         // Charger les données initiales
         async function loadInitialData() {
             await loadCommentsFromAPI();
+            await loadNetflixOrdersFromAPI();
             updateDashboard();
         }
 
@@ -1725,8 +1942,6 @@
                             noComments.style.display = 'block';
                         }
                     }
-                    
-                    console.log(`${commentsData.length} commentaires chargés depuis l'API`);
                 } else {
                     alert('Erreur: ' + (data.error || 'Impossible de charger les commentaires'));
                 }
@@ -1740,25 +1955,63 @@
             }
         }
 
+        // Fonction pour charger les commandes Netflix
+        async function loadNetflixOrdersFromAPI() {
+            try {
+                netflixOrdersLoading.classList.add('active');
+                
+                // Charger depuis localStorage
+                const savedOrders = localStorage.getItem('netflix_orders');
+                
+                if (savedOrders) {
+                    netflixOrdersData = JSON.parse(savedOrders);
+                } else {
+                    // Données de démonstration
+                    netflixOrdersData = [];
+                }
+                
+                updateNetflixOrdersGrid();
+                updateNetflixStats();
+                updateDashboard();
+                
+            } catch (error) {
+                console.error('Erreur chargement commandes Netflix:', error);
+                alert('Impossible de charger les commandes Netflix');
+            } finally {
+                netflixOrdersLoading.classList.remove('active');
+            }
+        }
+
         // Update dashboard
         function updateDashboard() {
-            const total = commentsData.length;
+            // Statistiques commentaires
+            const totalComments = commentsData.length;
             const newComments = commentsData.filter(c => c.status === 'new').length;
-            const pending = commentsData.filter(c => c.status === 'pending').length;
-            const responded = commentsData.filter(c => c.status === 'responded').length;
+            const pendingComments = commentsData.filter(c => c.status === 'pending').length;
+            const respondedComments = commentsData.filter(c => c.status === 'responded').length;
             
-            // Mettre à jour les statistiques
-            totalCommentsEl.textContent = total;
+            totalCommentsEl.textContent = totalComments;
             newCommentsEl.textContent = newComments;
-            pendingCommentsEl.textContent = pending;
-            respondedCommentsEl.textContent = responded;
+            pendingCommentsEl.textContent = pendingComments;
+            respondedCommentsEl.textContent = respondedComments;
             
-            // Mettre à jour le badge
+            // Statistiques commandes Netflix
+            const totalNetflix = netflixOrdersData.length;
+            const pendingNetflix = netflixOrdersData.filter(o => o.status === 'pending').length;
+            
+            // Mettre à jour les badges
             if (newComments > 0) {
                 commentsBadge.textContent = newComments;
                 commentsBadge.style.display = 'inline-block';
             } else {
                 commentsBadge.style.display = 'none';
+            }
+            
+            if (pendingNetflix > 0) {
+                netflixOrdersBadge.textContent = pendingNetflix;
+                netflixOrdersBadge.style.display = 'inline-block';
+            } else {
+                netflixOrdersBadge.style.display = 'none';
             }
             
             // Mettre à jour l'activité récente
@@ -1767,7 +2020,28 @@
 
         // Update recent activity
         function updateRecentActivity() {
-            if (commentsData.length === 0) {
+            // Combiner commentaires et commandes pour l'activité récente
+            const allActivities = [];
+            
+            // Ajouter les commentaires
+            commentsData.forEach(comment => {
+                allActivities.push({
+                    type: 'comment',
+                    data: comment,
+                    date: new Date(comment.date)
+                });
+            });
+            
+            // Ajouter les commandes Netflix
+            netflixOrdersData.forEach(order => {
+                allActivities.push({
+                    type: 'netflix',
+                    data: order,
+                    date: new Date(order.date)
+                });
+            });
+            
+            if (allActivities.length === 0) {
                 recentActivity.innerHTML = `
                     <div class="no-activity">
                         <i class="fas fa-inbox"></i>
@@ -1779,34 +2053,62 @@
             }
             
             // Trier par date (plus récent en premier)
-            const recentComments = [...commentsData]
-                .sort((a, b) => new Date(b.date) - new Date(a.date))
-                .slice(0, 5);
+            allActivities.sort((a, b) => b.date - a.date);
+            
+            // Prendre les 5 plus récentes
+            const recentActivities = allActivities.slice(0, 5);
             
             let html = '';
-            recentComments.forEach(comment => {
-                const date = new Date(comment.date);
+            recentActivities.forEach(activity => {
+                const date = activity.date;
                 const timeAgo = getTimeAgo(date);
-                const statusClass = comment.status === 'new' ? 'new' :
-                                  comment.status === 'pending' ? 'pending' : 'responded';
-                const statusIcon = comment.status === 'new' ? 'fas fa-envelope' :
-                                 comment.status === 'pending' ? 'fas fa-clock' :
-                                 'fas fa-check-circle';
                 
-                html += `
-                    <div class="activity-item">
-                        <div class="activity-icon ${statusClass}">
-                            <i class="${statusIcon}"></i>
-                        </div>
-                        <div class="activity-content">
-                            <div class="activity-title">${comment.fullName}</div>
-                            <div class="activity-desc">${comment.subject} - ${comment.message.substring(0, 50)}${comment.message.length > 50 ? '...' : ''}</div>
-                            <div class="activity-time">
-                                <i class="far fa-clock"></i> ${timeAgo}
+                if (activity.type === 'comment') {
+                    const comment = activity.data;
+                    const statusClass = comment.status === 'new' ? 'new' :
+                                      comment.status === 'pending' ? 'pending' : 'responded';
+                    const statusIcon = comment.status === 'new' ? 'fas fa-envelope' :
+                                     comment.status === 'pending' ? 'fas fa-clock' :
+                                     'fas fa-check-circle';
+                    
+                    html += `
+                        <div class="activity-item">
+                            <div class="activity-icon ${statusClass}">
+                                <i class="${statusIcon}"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">${comment.fullName || 'Anonyme'}</div>
+                                <div class="activity-desc">Nouveau commentaire: ${comment.subject || 'Sans sujet'}</div>
+                                <div class="activity-time">
+                                    <i class="far fa-clock"></i> ${timeAgo}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                `;
+                    `;
+                } else if (activity.type === 'netflix') {
+                    const order = activity.data;
+                    const statusClass = order.status === 'pending' ? 'new' :
+                                      order.status === 'processing' ? 'pending' :
+                                      order.status === 'completed' ? 'responded' : 'new';
+                    const statusIcon = order.status === 'pending' ? 'fas fa-clock' :
+                                     order.status === 'processing' ? 'fas fa-cog' :
+                                     'fas fa-check-circle';
+                    
+                    html += `
+                        <div class="activity-item">
+                            <div class="activity-icon ${statusClass}">
+                                <i class="fab fa-netflix"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">${order.customerName}</div>
+                                <div class="activity-desc">Nouvelle commande Netflix: ${order.plan}</div>
+                                <div class="activity-time">
+                                    <i class="far fa-clock"></i> ${timeAgo}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
             });
             
             recentActivity.innerHTML = html;
@@ -1960,6 +2262,215 @@
                     
                     commentsGrid.appendChild(card);
                 });
+            }
+        }
+
+        // Fonction pour mettre à jour les statistiques Netflix
+        function updateNetflixStats() {
+            const total = netflixOrdersData.length;
+            const pending = netflixOrdersData.filter(o => o.status === 'pending').length;
+            const processing = netflixOrdersData.filter(o => o.status === 'processing').length;
+            const completed = netflixOrdersData.filter(o => o.status === 'completed').length;
+            
+            totalNetflixOrdersEl.textContent = total;
+            pendingNetflixOrdersEl.textContent = pending;
+            processingNetflixOrdersEl.textContent = processing;
+            completedNetflixOrdersEl.textContent = completed;
+        }
+
+        // Fonction pour mettre à jour la grille des commandes Netflix
+        function updateNetflixOrdersGrid() {
+            let filteredOrders = [...netflixOrdersData];
+            
+            // Appliquer le filtre
+            if (currentNetflixFilter !== 'all') {
+                filteredOrders = netflixOrdersData.filter(order => order.status === currentNetflixFilter);
+            }
+            
+            // Trier par date (plus récent en premier)
+            filteredOrders.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            // Vider le conteneur
+            netflixOrdersGrid.innerHTML = '';
+            
+            // Ajouter les cartes de commande
+            if (filteredOrders.length === 0) {
+                const noOrders = document.createElement('div');
+                noOrders.className = 'no-comments';
+                noOrders.innerHTML = `
+                    <i class="fab fa-netflix" style="color: #e50914;"></i>
+                    <h3>Aucune commande Netflix</h3>
+                    <p>Les commandes d'abonnements Netflix apparaîtront ici.</p>
+                `;
+                netflixOrdersGrid.appendChild(noOrders);
+            } else {
+                filteredOrders.forEach((order, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'comment-card';
+                    
+                    // Couleur selon le statut
+                    let statusColor = '';
+                    let statusText = '';
+                    let statusClass = '';
+                    
+                    switch(order.status) {
+                        case 'pending':
+                            statusColor = '#e17055';
+                            statusText = 'EN ATTENTE';
+                            statusClass = 'status-new';
+                            card.style.borderLeft = '4px solid #e17055';
+                            break;
+                        case 'processing':
+                            statusColor = '#00cec9';
+                            statusText = 'EN TRAITEMENT';
+                            statusClass = 'status-pending';
+                            card.style.borderLeft = '4px solid #00cec9';
+                            break;
+                        case 'completed':
+                            statusColor = '#00b894';
+                            statusText = 'TERMINÉE';
+                            statusClass = 'status-responded';
+                            card.style.borderLeft = '4px solid #00b894';
+                            break;
+                        case 'cancelled':
+                            statusColor = '#d63031';
+                            statusText = 'ANNULÉE';
+                            statusClass = 'status-new';
+                            card.style.borderLeft = '4px solid #d63031';
+                            break;
+                        default:
+                            statusColor = '#e17055';
+                            statusText = 'EN ATTENTE';
+                            statusClass = 'status-new';
+                    }
+                    
+                    // Format date
+                    const orderDate = new Date(order.date);
+                    const formattedDate = orderDate.toLocaleDateString('fr-FR', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                    
+                    card.innerHTML = `
+                        <div class="comment-number" style="background-color: ${statusColor}">${index + 1}</div>
+                        
+                        <div class="comment-header">
+                            <div class="comment-user">
+                                <div class="user-avatar" style="background: linear-gradient(135deg, ${statusColor}, ${statusColor});">
+                                    <i class="fab fa-netflix"></i>
+                                </div>
+                                <div class="user-info">
+                                    <h4>${order.customerName}</h4>
+                                    <p><i class="fas fa-hashtag"></i> ${order.orderNumber}</p>
+                                </div>
+                            </div>
+                            <span class="comment-status ${statusClass}">${statusText}</span>
+                        </div>
+                        
+                        <div class="comment-body">
+                            <div class="comment-subject">
+                                <i class="fas fa-tag"></i> Abonnement ${order.plan}
+                            </div>
+                            <div class="comment-message">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                    <span><i class="fas fa-money-bill-wave"></i> ${order.price}</span>
+                                    <span><i class="fas fa-mobile-alt"></i> ${order.paymentMethod}</span>
+                                </div>
+                                <div style="font-size: 0.9em; color: #666;">
+                                    <i class="fas fa-phone"></i> ${order.customerPhone}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="comment-footer">
+                            <div class="comment-date">
+                                <i class="far fa-clock"></i> ${formattedDate}
+                            </div>
+                            <div class="comment-actions">
+                                <button class="card-action-btn view-btn" data-id="${order.id}" title="Voir les détails">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="card-action-btn mark-btn" data-id="${order.id}" title="Marquer comme traité">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Ajouter l'événement click pour voir les détails
+                    const viewBtn = card.querySelector('.view-btn');
+                    const markBtn = card.querySelector('.mark-btn');
+                    
+                    viewBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        viewNetflixOrder(order.id);
+                    });
+                    
+                    markBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        updateNetflixOrderStatus(order.id, 'completed');
+                    });
+                    
+                    netflixOrdersGrid.appendChild(card);
+                });
+            }
+        }
+
+        // Fonction pour voir les détails d'une commande Netflix
+        function viewNetflixOrder(orderId) {
+            const order = netflixOrdersData.find(o => o.id === orderId);
+            
+            if (!order) {
+                alert('Commande non trouvée');
+                return;
+            }
+            
+            const orderDate = new Date(order.date);
+            const formattedDate = orderDate.toLocaleString('fr-FR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            
+            // Créer un modal simple pour afficher les détails
+            alert(`DÉTAILS DE LA COMMANDE NETFLIX
+
+Numéro de commande: ${order.orderNumber}
+Client: ${order.customerName}
+Email: ${order.customerEmail}
+Téléphone: ${order.customerPhone}
+Plan: ${order.plan}
+Prix: ${order.price}
+Méthode de paiement: ${order.paymentMethod}
+Numéro de paiement: ${order.paymentNumber}
+Statut: ${order.status}
+Date de commande: ${formattedDate}
+Notes: ${order.notes || 'Aucune note'}`);
+        }
+
+        // Fonction pour mettre à jour le statut d'une commande Netflix
+        function updateNetflixOrderStatus(orderId, newStatus) {
+            const orderIndex = netflixOrdersData.findIndex(o => o.id === orderId);
+            
+            if (orderIndex !== -1) {
+                netflixOrdersData[orderIndex].status = newStatus;
+                netflixOrdersData[orderIndex].date = new Date().toISOString();
+                
+                // Sauvegarder dans localStorage
+                localStorage.setItem('netflix_orders', JSON.stringify(netflixOrdersData));
+                
+                // Mettre à jour l'affichage
+                updateNetflixOrdersGrid();
+                updateNetflixStats();
+                updateDashboard();
+                
+                alert(`Commande ${netflixOrdersData[orderIndex].orderNumber} marquée comme ${newStatus}`);
             }
         }
 
@@ -2146,29 +2657,13 @@
         function startAutoRefresh() {
             setInterval(async () => {
                 const token = localStorage.getItem('admin_token');
-                if (token) {
+                if (token && currentPage === 'dashboard') {
                     try {
-                        const response = await fetch(API_CONFIG.BASE_URL + API_CONFIG.ENDPOINTS.COMMENTS, {
-                            headers: {
-                                'Authorization': `Bearer ${token}`
-                            }
-                        });
-                        
-                        if (response.ok) {
-                            const data = await response.json();
-                            if (data.success) {
-                                const oldCount = commentsData.length;
-                                commentsData = data.comments || [];
-                                
-                                if (commentsData.length !== oldCount || currentPage === 'dashboard') {
-                                    if (currentPage === 'dashboard') {
-                                        updateDashboard();
-                                    } else if (currentPage === 'comments') {
-                                        updateCommentsGrid();
-                                    }
-                                    console.log('Données rafraîchies automatiquement');
-                                }
-                            }
+                        // Rafraîchir les commandes Netflix
+                        const savedOrders = localStorage.getItem('netflix_orders');
+                        if (savedOrders) {
+                            netflixOrdersData = JSON.parse(savedOrders);
+                            updateDashboard();
                         }
                     } catch (error) {
                         // Silencieux en cas d'erreur
