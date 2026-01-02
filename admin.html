@@ -187,6 +187,7 @@
         .admin-main {
             padding: 30px;
             background-color: #f9fafc;
+            min-height: calc(100vh - 70px);
         }
         
         .admin-title {
@@ -202,6 +203,26 @@
             color: var(--gray);
             margin-bottom: 30px;
             font-size: 1.1rem;
+        }
+        
+        /* Dashboard Page */
+        .dashboard-welcome {
+            background: linear-gradient(135deg, var(--primary), #1a1a52);
+            color: white;
+            padding: 40px;
+            border-radius: var(--radius);
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+        }
+        
+        .dashboard-welcome h2 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .dashboard-welcome p {
+            opacity: 0.9;
+            max-width: 600px;
         }
         
         /* Stats Cards */
@@ -221,6 +242,7 @@
             align-items: center;
             gap: 20px;
             transition: transform 0.3s;
+            cursor: pointer;
         }
         
         .stat-card:hover {
@@ -265,7 +287,65 @@
             font-weight: 500;
         }
         
-        /* Comments Grid - NOUVEAU DESIGN RESPONSIVE */
+        /* Quick Actions */
+        .quick-actions {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+        
+        .quick-actions h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .action-btn {
+            padding: 12px 25px;
+            background-color: var(--light);
+            border: 2px solid transparent;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .action-btn:hover {
+            background-color: var(--secondary);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .action-btn.primary {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .action-btn.primary:hover {
+            background-color: #0088e0;
+        }
+        
+        /* Comments Page (hidden by default) */
+        .comments-page {
+            display: none;
+        }
+        
+        .comments-page.active {
+            display: block;
+        }
+        
+        /* Comments Grid */
         .comments-grid {
             background-color: white;
             border-radius: var(--radius);
@@ -319,6 +399,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 20px;
+            min-height: 300px;
         }
         
         /* Carte de commentaire */
@@ -489,12 +570,12 @@
             gap: 6px;
         }
         
-        .comment-actions {
+        .comment-card-actions {
             display: flex;
             gap: 8px;
         }
         
-        .action-btn {
+        .card-action-btn {
             width: 32px;
             height: 32px;
             border-radius: 50%;
@@ -841,6 +922,16 @@
             margin-bottom: 10px;
         }
         
+        /* Footer Admin */
+        .admin-footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--light-gray);
+            color: var(--gray);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
         /* Responsive */
         @media (max-width: 1200px) {
             .comments-container {
@@ -890,6 +981,10 @@
                 grid-template-columns: 1fr 1fr;
             }
             
+            .dashboard-welcome {
+                padding: 30px 20px;
+            }
+            
             .detail-row {
                 flex-direction: column;
                 gap: 15px;
@@ -918,6 +1013,15 @@
                 width: 95%;
                 max-width: 95%;
             }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .action-btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
         
         @media (max-width: 576px) {
@@ -936,7 +1040,7 @@
                 align-items: flex-start;
             }
             
-            .comment-actions {
+            .comment-card-actions {
                 align-self: flex-end;
             }
             
@@ -946,6 +1050,10 @@
             
             .modal-footer .btn {
                 width: 100%;
+            }
+            
+            .dashboard-welcome h2 {
+                font-size: 1.8rem;
             }
         }
         
@@ -1056,6 +1164,7 @@
                     <li>
                         <a href="#" data-page="comments">
                             <i class="fas fa-comments"></i> Commentaires
+                            <span id="commentsBadge" style="margin-left: auto; background: var(--danger); color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 10px; display: none;">0</span>
                         </a>
                     </li>
                     <li>
@@ -1069,79 +1178,129 @@
         
         <!-- Main Content -->
         <main class="admin-main">
-            <h1 class="admin-title">
-                <i class="fas fa-comments"></i> Gestion des Commentaires
-            </h1>
-            <p class="admin-subtitle">Consultez et gérez les commentaires des utilisateurs depuis le formulaire de contact</p>
-            
-            <!-- Stats Cards -->
-            <div class="stats-cards">
-                <div class="stat-card">
-                    <div class="stat-icon total">
-                        <i class="fas fa-inbox"></i>
+            <!-- Dashboard Page (shown by default) -->
+            <div id="dashboardPage" class="dashboard-page">
+                <div class="dashboard-welcome">
+                    <h2>Bienvenue, <span id="welcomeName">Administrateur</span> !</h2>
+                    <p>Gérez vos commentaires et suivez les activités de votre site ES_COMPANY depuis ce panel d'administration.</p>
+                </div>
+                
+                <h2 class="admin-title">
+                    <i class="fas fa-chart-bar"></i> Statistiques
+                </h2>
+                <p class="admin-subtitle">Aperçu de l'activité de votre site</p>
+                
+                <!-- Stats Cards -->
+                <div class="stats-cards">
+                    <div class="stat-card" data-page="comments">
+                        <div class="stat-icon total">
+                            <i class="fas fa-inbox"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalComments">0</h3>
+                            <p>Total des commentaires</p>
+                        </div>
                     </div>
-                    <div class="stat-info">
-                        <h3 id="totalComments">0</h3>
-                        <p>Total des commentaires</p>
+                    
+                    <div class="stat-card" data-page="comments" data-filter="new">
+                        <div class="stat-icon new">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="newComments">0</h3>
+                            <p>Nouveaux commentaires</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card" data-page="comments" data-filter="pending">
+                        <div class="stat-icon pending">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="pendingComments">0</h3>
+                            <p>En attente de réponse</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card" data-page="comments" data-filter="responded">
+                        <div class="stat-icon responded">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="respondedComments">0</h3>
+                            <p>Commentaires répondu</p>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="stat-card">
-                    <div class="stat-icon new">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3 id="newComments">0</h3>
-                        <p>Nouveaux commentaires</p>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon pending">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3 id="pendingComments">0</h3>
-                        <p>En attente de réponse</p>
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h3><i class="fas fa-bolt"></i> Actions rapides</h3>
+                    <div class="action-buttons">
+                        <button class="action-btn primary" data-page="comments">
+                            <i class="fas fa-comments"></i> Voir tous les commentaires
+                        </button>
+                        <button class="action-btn" data-page="comments" data-filter="new">
+                            <i class="fas fa-envelope"></i> Voir nouveaux commentaires
+                        </button>
+                        <button class="action-btn" data-page="comments" data-filter="pending">
+                            <i class="fas fa-clock"></i> Commentaires en attente
+                        </button>
                     </div>
                 </div>
                 
-                <div class="stat-card">
-                    <div class="stat-icon responded">
-                        <i class="fas fa-check-circle"></i>
+                <!-- Recent Activity -->
+                <div class="quick-actions">
+                    <h3><i class="fas fa-history"></i> Activité récente</h3>
+                    <div id="recentActivity" style="color: var(--gray);">
+                        <p><i class="fas fa-info-circle"></i> Les activités récentes s'afficheront ici.</p>
                     </div>
-                    <div class="stat-info">
-                        <h3 id="respondedComments">0</h3>
-                        <p>Commentaires répondu</p>
-                    </div>
+                </div>
+                
+                <div class="admin-footer">
+                    <p>ES_COMPANY Admin Panel © 2023 | Dernière actualisation: <span id="lastUpdate">--:--</span></p>
                 </div>
             </div>
             
-            <!-- Loading Spinner -->
-            <div class="loading-spinner" id="commentsLoading">
-                <i class="fas fa-spinner fa-spin"></i>
-                <p>Chargement des commentaires...</p>
-            </div>
-            
-            <!-- Comments Grid -->
-            <div class="comments-grid" id="commentsGrid" style="display: none;">
-                <div class="section-header">
-                    <h2><i class="fas fa-list"></i> Liste des Commentaires</h2>
-                    <div class="table-filters">
-                        <button class="filter-btn active" data-filter="all">Tous</button>
-                        <button class="filter-btn" data-filter="new">Nouveaux</button>
-                        <button class="filter-btn" data-filter="pending">En attente</button>
-                        <button class="filter-btn" data-filter="responded">Répondu</button>
+            <!-- Comments Page (hidden by default) -->
+            <div id="commentsPage" class="comments-page">
+                <h1 class="admin-title">
+                    <i class="fas fa-comments"></i> Gestion des Commentaires
+                </h1>
+                <p class="admin-subtitle">Consultez et gérez les commentaires des utilisateurs depuis le formulaire de contact</p>
+                
+                <!-- Loading Spinner -->
+                <div class="loading-spinner" id="commentsLoading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Chargement des commentaires...</p>
+                </div>
+                
+                <!-- Comments Grid -->
+                <div class="comments-grid" id="commentsGrid" style="display: none;">
+                    <div class="section-header">
+                        <h2><i class="fas fa-list"></i> Liste des Commentaires</h2>
+                        <div class="table-filters">
+                            <button class="filter-btn active" data-filter="all">Tous</button>
+                            <button class="filter-btn" data-filter="new">Nouveaux</button>
+                            <button class="filter-btn" data-filter="pending">En attente</button>
+                            <button class="filter-btn" data-filter="responded">Répondu</button>
+                        </div>
+                    </div>
+                    
+                    <div class="comments-container" id="commentsContainer">
+                        <!-- Comment cards will be inserted here -->
+                        <div class="no-comments" id="noComments">
+                            <i class="fas fa-inbox"></i>
+                            <h3>Aucun commentaire</h3>
+                            <p>Les commentaires envoyés via le formulaire de contact apparaîtront ici.</p>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="comments-container" id="commentsContainer">
-                    <!-- Comment cards will be inserted here -->
-                    <div class="no-comments" id="noComments">
-                        <i class="fas fa-inbox"></i>
-                        <h3>Aucun commentaire</h3>
-                        <p>Les commentaires envoyés via le formulaire de contact apparaîtront ici.</p>
-                    </div>
+                <div class="admin-footer">
+                    <button class="btn btn-secondary" id="backToDashboard">
+                        <i class="fas fa-arrow-left"></i> Retour au tableau de bord
+                    </button>
                 </div>
             </div>
         </main>
@@ -1225,6 +1384,7 @@
         let commentsData = [];
         let currentFilter = 'all';
         let selectedCommentId = null;
+        let currentPage = 'dashboard';
 
         // DOM Elements
         const loginPage = document.getElementById('loginPage');
@@ -1237,11 +1397,30 @@
         const logoutBtn = document.getElementById('logoutBtn');
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const adminSidebar = document.getElementById('adminSidebar');
+        
+        // Pages
+        const dashboardPage = document.getElementById('dashboardPage');
+        const commentsPage = document.getElementById('commentsPage');
+        
+        // Dashboard elements
+        const welcomeName = document.getElementById('welcomeName');
+        const totalCommentsEl = document.getElementById('totalComments');
+        const newCommentsEl = document.getElementById('newComments');
+        const pendingCommentsEl = document.getElementById('pendingComments');
+        const respondedCommentsEl = document.getElementById('respondedComments');
+        const recentActivity = document.getElementById('recentActivity');
+        const lastUpdate = document.getElementById('lastUpdate');
+        const commentsBadge = document.getElementById('commentsBadge');
+        const backToDashboardBtn = document.getElementById('backToDashboard');
+        
+        // Comments elements
         const commentsContainer = document.getElementById('commentsContainer');
         const noComments = document.getElementById('noComments');
         const filterButtons = document.querySelectorAll('.filter-btn');
         const commentsGrid = document.getElementById('commentsGrid');
         const commentsLoading = document.getElementById('commentsLoading');
+        
+        // Modal elements
         const commentModal = document.getElementById('commentModal');
         const closeModalBtn = document.getElementById('closeModalBtn');
         const closeModalIcon = document.getElementById('closeModal');
@@ -1257,12 +1436,6 @@
         const sendResponseBtn = document.getElementById('sendResponseBtn');
         const adminUserName = document.getElementById('adminUserName');
         const adminUserRole = document.getElementById('adminUserRole');
-        
-        // Stats elements
-        const totalCommentsEl = document.getElementById('totalComments');
-        const newCommentsEl = document.getElementById('newComments');
-        const pendingCommentsEl = document.getElementById('pendingComments');
-        const respondedCommentsEl = document.getElementById('respondedComments');
 
         // Vérifier la connexion API
         async function checkAPIHealth() {
@@ -1317,8 +1490,8 @@
                     
                     showAdminDashboard(username);
                     
-                    // Charger les commentaires
-                    await loadCommentsFromAPI();
+                    // Charger les données initiales
+                    await loadInitialData();
                     
                 } else {
                     showLoginError(data.error || 'Identifiants incorrects');
@@ -1357,27 +1530,105 @@
             adminSidebar.classList.toggle('active');
         });
 
-        // Navigation
-        document.querySelectorAll('.admin-nav a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                if (this.getAttribute('href') === '#') {
-                    e.preventDefault();
-                    
-                    // Remove active class from all links
-                    document.querySelectorAll('.admin-nav a').forEach(item => {
-                        item.classList.remove('active');
-                    });
-                    
-                    // Add active class to clicked link
-                    this.classList.add('active');
-                    
-                    // For mobile, close sidebar after click
-                    if (window.innerWidth <= 992) {
-                        adminSidebar.classList.remove('active');
+        // Navigation entre pages
+        function setupNavigation() {
+            // Navigation dans la sidebar
+            document.querySelectorAll('.admin-nav a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (this.getAttribute('href') === '#') {
+                        e.preventDefault();
+                        
+                        const page = this.getAttribute('data-page');
+                        
+                        // Remove active class from all links
+                        document.querySelectorAll('.admin-nav a').forEach(item => {
+                            item.classList.remove('active');
+                        });
+                        
+                        // Add active class to clicked link
+                        this.classList.add('active');
+                        
+                        // Switch page
+                        switchPage(page);
+                        
+                        // For mobile, close sidebar after click
+                        if (window.innerWidth <= 992) {
+                            adminSidebar.classList.remove('active');
+                        }
                     }
+                });
+            });
+            
+            // Boutons d'action rapide
+            document.querySelectorAll('.action-btn, .stat-card').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const page = this.getAttribute('data-page');
+                    const filter = this.getAttribute('data-filter');
+                    
+                    if (page) {
+                        // Mettre à jour la navigation
+                        document.querySelectorAll('.admin-nav a').forEach(item => {
+                            item.classList.remove('active');
+                            if (item.getAttribute('data-page') === page) {
+                                item.classList.add('active');
+                            }
+                        });
+                        
+                        // Changer de page
+                        switchPage(page, filter);
+                    }
+                });
+            });
+            
+            // Bouton retour au dashboard
+            backToDashboardBtn.addEventListener('click', function() {
+                switchPage('dashboard');
+            });
+        }
+
+        // Changer de page
+        function switchPage(page, filter = null) {
+            currentPage = page;
+            
+            // Cacher toutes les pages
+            dashboardPage.style.display = 'none';
+            commentsPage.style.display = 'none';
+            commentsPage.classList.remove('active');
+            
+            // Afficher la page sélectionnée
+            if (page === 'dashboard') {
+                dashboardPage.style.display = 'block';
+                updateDashboard();
+            } else if (page === 'comments') {
+                commentsPage.style.display = 'block';
+                commentsPage.classList.add('active');
+                
+                // Appliquer le filtre si spécifié
+                if (filter) {
+                    currentFilter = filter;
+                    updateFilterButtons();
+                }
+                
+                loadCommentsFromAPI();
+            }
+        }
+
+        // Mettre à jour les boutons de filtre
+        function updateFilterButtons() {
+            filterButtons.forEach(btn => {
+                if (btn.getAttribute('data-filter') === currentFilter) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
                 }
             });
-        });
+        }
+
+        // Charger les données initiales
+        async function loadInitialData() {
+            await loadCommentsFromAPI();
+            updateDashboard();
+        }
 
         // Charger les commentaires depuis l'API
         async function loadCommentsFromAPI() {
@@ -1388,8 +1639,10 @@
                     return;
                 }
                 
-                commentsLoading.classList.add('active');
-                commentsGrid.style.display = 'none';
+                if (currentPage === 'comments') {
+                    commentsLoading.classList.add('active');
+                    commentsGrid.style.display = 'none';
+                }
                 
                 const response = await fetch(API_CONFIG.BASE_URL + API_CONFIG.ENDPOINTS.COMMENTS, {
                     headers: {
@@ -1408,15 +1661,21 @@
                 
                 if (data.success) {
                     commentsData = data.comments || [];
-                    updateCommentsGrid();
-                    updateStats();
                     
-                    if (commentsData.length > 0) {
-                        commentsGrid.style.display = 'block';
-                        noComments.style.display = 'none';
-                    } else {
-                        commentsGrid.style.display = 'block';
-                        noComments.style.display = 'block';
+                    // Mettre à jour selon la page active
+                    if (currentPage === 'dashboard') {
+                        updateDashboard();
+                    } else if (currentPage === 'comments') {
+                        updateCommentsGrid();
+                        updateStats();
+                        
+                        if (commentsData.length > 0) {
+                            commentsGrid.style.display = 'block';
+                            noComments.style.display = 'none';
+                        } else {
+                            commentsGrid.style.display = 'block';
+                            noComments.style.display = 'block';
+                        }
                     }
                     
                     console.log(`${commentsData.length} commentaires chargés depuis l'API`);
@@ -1427,24 +1686,97 @@
                 console.error('Erreur chargement commentaires:', error);
                 alert('Impossible de se connecter à l\'API. Vérifiez votre connexion.');
             } finally {
-                commentsLoading.classList.remove('active');
+                if (currentPage === 'comments') {
+                    commentsLoading.classList.remove('active');
+                }
             }
         }
 
-        // Update stats
-        function updateStats() {
+        // Update dashboard
+        function updateDashboard() {
             const total = commentsData.length;
             const newComments = commentsData.filter(c => c.status === 'new').length;
             const pending = commentsData.filter(c => c.status === 'pending').length;
             const responded = commentsData.filter(c => c.status === 'responded').length;
             
+            // Mettre à jour les statistiques
             totalCommentsEl.textContent = total;
             newCommentsEl.textContent = newComments;
             pendingCommentsEl.textContent = pending;
             respondedCommentsEl.textContent = responded;
+            
+            // Mettre à jour le badge
+            if (newComments > 0) {
+                commentsBadge.textContent = newComments;
+                commentsBadge.style.display = 'inline-block';
+            } else {
+                commentsBadge.style.display = 'none';
+            }
+            
+            // Mettre à jour l'activité récente
+            updateRecentActivity();
+            
+            // Mettre à jour l'heure
+            lastUpdate.textContent = new Date().toLocaleTimeString('fr-FR');
         }
 
-        // Update comments grid (NOUVELLE FONCTION)
+        // Update recent activity
+        function updateRecentActivity() {
+            if (commentsData.length === 0) {
+                recentActivity.innerHTML = '<p><i class="fas fa-info-circle"></i> Aucune activité récente.</p>';
+                return;
+            }
+            
+            // Trier par date (plus récent en premier)
+            const recentComments = [...commentsData]
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .slice(0, 5);
+            
+            let html = '';
+            recentComments.forEach(comment => {
+                const date = new Date(comment.date);
+                const timeAgo = getTimeAgo(date);
+                const statusIcon = comment.status === 'new' ? 'fas fa-envelope text-danger' :
+                                 comment.status === 'pending' ? 'fas fa-clock text-warning' :
+                                 'fas fa-check-circle text-success';
+                
+                html += `
+                    <div style="padding: 10px 0; border-bottom: 1px solid var(--light-gray);">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <strong>${comment.fullName}</strong> - ${comment.subject}
+                                <br>
+                                <small style="color: var(--gray);">${comment.message.substring(0, 50)}${comment.message.length > 50 ? '...' : ''}</small>
+                            </div>
+                            <div style="text-align: right;">
+                                <i class="${statusIcon}"></i>
+                                <br>
+                                <small>${timeAgo}</small>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            recentActivity.innerHTML = html;
+        }
+
+        // Helper: Get time ago
+        function getTimeAgo(date) {
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+            
+            if (diffMins < 1) return 'À l\'instant';
+            if (diffMins < 60) return `Il y a ${diffMins} min`;
+            if (diffHours < 24) return `Il y a ${diffHours} h`;
+            if (diffDays < 7) return `Il y a ${diffDays} j`;
+            return date.toLocaleDateString('fr-FR');
+        }
+
+        // Update comments grid
         function updateCommentsGrid() {
             let filteredComments = [...commentsData];
             
@@ -1505,7 +1837,7 @@
                             statusClass = 'status-new';
                     }
                     
-                    // Numéro du commentaire (position dans la liste totale)
+                    // Numéro du commentaire
                     const commentNumber = commentsData.findIndex(c => c.id === comment.id) + 1;
                     
                     // Numérotation rouge pour non lu, vert pour lu
@@ -1541,11 +1873,11 @@
                             <div class="comment-date">
                                 <i class="far fa-clock"></i> ${formattedDate}
                             </div>
-                            <div class="comment-actions">
-                                <button class="action-btn view-btn" data-id="${comment.id}" title="Voir le détail">
+                            <div class="comment-card-actions">
+                                <button class="card-action-btn view-btn" data-id="${comment.id}" title="Voir le détail">
                                     <i class="fas fa-eye"></i>
                                 </button>
-                                <button class="action-btn mark-btn" data-id="${comment.id}" title="Marquer comme répondu">
+                                <button class="card-action-btn mark-btn" data-id="${comment.id}" title="Marquer comme répondu">
                                     <i class="fas fa-check"></i>
                                 </button>
                             </div>
@@ -1555,7 +1887,7 @@
                     // Ajouter l'événement click sur toute la carte
                     card.addEventListener('click', function(e) {
                         // Ne pas déclencher si on clique sur un bouton
-                        if (!e.target.closest('.action-btn')) {
+                        if (!e.target.closest('.card-action-btn')) {
                             viewComment(comment.id);
                         }
                     });
@@ -1582,13 +1914,7 @@
             });
             
             // Update filter buttons
-            filterButtons.forEach(btn => {
-                if (btn.getAttribute('data-filter') === currentFilter) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
-            });
+            updateFilterButtons();
         }
 
         // View comment details
@@ -1665,7 +1991,11 @@
                     const commentIndex = commentsData.findIndex(c => c.id === commentId);
                     if (commentIndex !== -1) {
                         commentsData[commentIndex].read = true;
-                        updateCommentsGrid();
+                        if (currentPage === 'dashboard') {
+                            updateDashboard();
+                        } else if (currentPage === 'comments') {
+                            updateCommentsGrid();
+                        }
                     }
                 }
             } catch (error) {
@@ -1701,8 +2031,14 @@
                     if (commentIndex !== -1) {
                         commentsData[commentIndex].status = 'responded';
                         commentsData[commentIndex].read = true;
-                        updateCommentsGrid();
-                        updateStats();
+                        
+                        // Mettre à jour l'affichage
+                        if (currentPage === 'dashboard') {
+                            updateDashboard();
+                        } else if (currentPage === 'comments') {
+                            updateCommentsGrid();
+                            updateStats();
+                        }
                         
                         // Si modal est ouvert pour ce commentaire, fermer
                         if (selectedCommentId === commentId) {
@@ -1781,6 +2117,7 @@
             adminDashboard.style.display = 'grid';
             
             // Set admin user info
+            welcomeName.textContent = username;
             adminUserName.textContent = username || 'Administrateur';
             adminUserRole.textContent = "Administrateur ES_COMPANY";
         }
@@ -1802,7 +2139,8 @@
                     
                     if (response.ok) {
                         showAdminDashboard(username);
-                        await loadCommentsFromAPI();
+                        await loadInitialData();
+                        setupNavigation();
                     } else {
                         // Token invalide
                         localStorage.clear();
@@ -1811,11 +2149,12 @@
                     // API inaccessible, mais on peut montrer le dashboard
                     showAdminDashboard(username);
                     alert('API temporairement inaccessible. Mode hors ligne activé.');
+                    setupNavigation();
                 }
             }
         }
 
-        // Rafraîchir automatiquement les commentaires toutes les 30 secondes
+        // Rafraîchir automatiquement les données
         function startAutoRefresh() {
             setInterval(async () => {
                 const token = localStorage.getItem('admin_token');
@@ -1832,10 +2171,15 @@
                             if (data.success) {
                                 const oldCount = commentsData.length;
                                 commentsData = data.comments || [];
-                                if (commentsData.length !== oldCount) {
-                                    updateCommentsGrid();
-                                    updateStats();
-                                    console.log('Commentaires rafraîchis automatiquement');
+                                
+                                if (commentsData.length !== oldCount || currentPage === 'dashboard') {
+                                    if (currentPage === 'dashboard') {
+                                        updateDashboard();
+                                    } else if (currentPage === 'comments') {
+                                        updateCommentsGrid();
+                                        updateStats();
+                                    }
+                                    console.log('Données rafraîchies automatiquement');
                                 }
                             }
                         }
