@@ -14,6 +14,8 @@
             --light: #f8f9fa;
             --dark: #232528;
             --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
             --gray: #6c757d;
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             --radius: 8px;
@@ -418,6 +420,12 @@
             font-size: 1.2rem;
         }
         
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
         /* Footer */
         footer {
             background: linear-gradient(135deg, var(--primary), #1a1a52);
@@ -527,7 +535,7 @@
             font-size: 0.9rem;
         }
         
-        /* Success Message */
+        /* Messages */
         .success-message {
             background-color: #d4edda;
             color: #155724;
@@ -539,6 +547,36 @@
         }
         
         .success-message.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+            display: none;
+        }
+        
+        .error-message.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        .loading-message {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            margin-bottom: 20px;
+            border: 1px solid #ffeaa7;
+            display: none;
+        }
+        
+        .loading-message.active {
             display: block;
             animation: fadeIn 0.5s;
         }
@@ -707,7 +745,6 @@
                         <i class="fas fa-envelope"></i>
                     </div>
                     <h3>Informations de contact</h3>
-                    <!-- MODIFICATION ICI: Vos coordonnées -->
                     <p><i class="fas fa-envelope"></i> contact.escompany@gmail.com</p>
                     <p><i class="fas fa-phone"></i> +1 510-281 7365</p>
                     <p><i class="fas fa-map-marker-alt"></i> Nord-Est, Haïti</p>
@@ -728,7 +765,6 @@
                         <a href="#" class="social-link">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <!-- MODIFICATION ICI: Lien WhatsApp avec votre numéro -->
                         <a href="https://wa.me/15102817365" class="social-link whatsapp-link" target="_blank">
                             <i class="fab fa-whatsapp"></i>
                         </a>
@@ -754,9 +790,20 @@
             <!-- Contact Form -->
             <div class="contact-form-container">
                 <h2 class="form-title">Envoyez-nous un message</h2>
+                
+                <!-- Messages de statut -->
                 <div class="success-message" id="successMessage">
                     <i class="fas fa-check-circle"></i> Votre message a été envoyé avec succès ! Nous vous répondrons dans les plus brefs délais.
                 </div>
+                
+                <div class="error-message" id="errorMessage">
+                    <i class="fas fa-exclamation-circle"></i> <span id="errorText">Une erreur est survenue. Veuillez réessayer.</span>
+                </div>
+                
+                <div class="loading-message" id="loadingMessage">
+                    <i class="fas fa-spinner fa-spin"></i> Envoi en cours...
+                </div>
+                
                 <form class="contact-form" id="contactForm">
                     <div class="form-row">
                         <div class="form-group">
@@ -794,7 +841,7 @@
                         <textarea id="message" class="form-textarea" required placeholder="Décrivez votre demande en détail..."></textarea>
                     </div>
                     
-                    <button type="submit" class="btn btn-full btn-large">
+                    <button type="submit" class="btn btn-full btn-large" id="submitBtn">
                         <i class="fas fa-paper-plane"></i> Envoyer le message
                     </button>
                 </form>
@@ -887,7 +934,6 @@
                         <a href="#" aria-label="Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <!-- MODIFICATION ICI: Lien WhatsApp avec votre numéro -->
                         <a href="https://wa.me/15102817365" target="_blank" aria-label="WhatsApp">
                             <i class="fab fa-whatsapp"></i>
                         </a>
@@ -906,7 +952,6 @@
                 
                 <div class="footer-contact">
                     <h4>Contactez-nous</h4>
-                    <!-- MODIFICATION ICI: Vos coordonnées -->
                     <p>
                         <i class="fas fa-envelope"></i> 
                         <span>contact.escompany@gmail.com</span>
@@ -934,178 +979,92 @@
     </footer>
 
     <script>
-        // Fonction pour initialiser les données d'exemple si nécessaire
-        function initializeSampleData() {
+        // Configuration de l'API - CHANGEZ CETTE URL AVEC VOTRE API RENDER
+        const API_CONFIG = {
+            BASE_URL: 'https://escompany-api.onrender.com', // À changer avec ton URL Render
+            ENDPOINTS: {
+                COMMENTS: '/api/comments',
+                HEALTH: '/api/health'
+            },
+            // Fallback à localStorage si l'API ne répond pas
+            USE_FALLBACK: true,
+            // Temps d'attente pour la requête API (en ms)
+            TIMEOUT: 10000
+        };
+
+        // Fonction pour tester la connexion à l'API
+        async function testAPIConnection() {
             try {
-                const existingComments = loadCommentsFromStorage();
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 3000);
                 
-                if (existingComments.length === 0) {
-                    const sampleComments = [
-                        {
-                            id: 1,
-                            fullName: "Jean Dupont",
-                            phone: "+509 48 12 34 56",
-                            email: "jean.dupont@example.com",
-                            subject: "Diamants FreeFire",
-                            message: "Bonjour, j'ai commandé 500 diamants FreeFire il y a 2 heures mais je ne les ai pas encore reçus. Pouvez-vous vérifier?",
-                            date: new Date().toISOString().replace('T', ' ').substring(0, 16),
-                            status: "new",
-                            read: false
-                        },
-                        {
-                            id: 2,
-                            fullName: "Marie Laurent",
-                            phone: "+509 48 98 76 54",
-                            email: "marie.laurent@example.com",
-                            subject: "Abonnement Netflix",
-                            message: "Je souhaite souscrire à un abonnement Netflix Premium pour 6 mois. Quels sont les tarifs et modalités?",
-                            date: new Date(Date.now() - 86400000).toISOString().replace('T', ' ').substring(0, 16), // Hier
-                            status: "pending",
-                            read: true
-                        },
-                        {
-                            id: 3,
-                            fullName: "Pierre Martin",
-                            phone: "+1 510-281 7365",
-                            email: "pierre.martin@example.com",
-                            subject: "Création compte PayPal",
-                            message: "J'ai besoin d'un compte PayPal vérifié pour mes transactions en ligne. Combien de temps prend le processus?",
-                            date: new Date(Date.now() - 172800000).toISOString().replace('T', ' ').substring(0, 16), // Avant-hier
-                            status: "responded",
-                            read: true
-                        }
-                    ];
-                    
-                    saveCommentsToStorage(sampleComments);
-                    console.log('Données d\'exemple initialisées');
-                }
-            } catch (error) {
-                console.error('Erreur lors de l\'initialisation des données:', error);
-            }
-        }
-        
-        // Fonction pour charger les commentaires depuis le stockage
-        function loadCommentsFromStorage() {
-            try {
-                const comments = localStorage.getItem('escompany_comments');
-                return comments ? JSON.parse(comments) : [];
-            } catch (error) {
-                console.error('Erreur lors du chargement des commentaires:', error);
-                return [];
-            }
-        }
-        
-        // Fonction pour sauvegarder les commentaires dans le stockage
-        function saveCommentsToStorage(comments) {
-            try {
-                localStorage.setItem('escompany_comments', JSON.stringify(comments));
-                return true;
-            } catch (error) {
-                console.error('Erreur lors de la sauvegarde des commentaires:', error);
-                return false;
-            }
-        }
-        
-        // Fonction pour sauvegarder un commentaire
-        function saveCommentToStorage(comment) {
-            try {
-                // Charger les commentaires existants
-                let existingComments = loadCommentsFromStorage();
-                
-                // Ajouter le nouveau commentaire
-                existingComments.push(comment);
-                
-                // Sauvegarder dans le stockage
-                saveCommentsToStorage(existingComments);
-                
-                console.log('Commentaire sauvegardé:', comment);
-                return true;
-            } catch (error) {
-                console.error('Erreur lors de la sauvegarde du commentaire:', error);
-                return false;
-            }
-        }
-        
-        // Mobile menu toggle
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mainNav = document.getElementById('mainNav');
-        
-        mobileMenuBtn.addEventListener('click', () => {
-            mainNav.classList.toggle('active');
-        });
-        
-        // FAQ functionality
-        const faqItems = document.querySelectorAll('.faq-item');
-        
-        faqItems.forEach(item => {
-            const question = item.querySelector('.faq-question');
-            
-            question.addEventListener('click', () => {
-                // Close all other FAQ items
-                faqItems.forEach(otherItem => {
-                    if (otherItem !== item && otherItem.classList.contains('active')) {
-                        otherItem.classList.remove('active');
-                    }
+                const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.HEALTH || '/'}`, {
+                    signal: controller.signal
                 });
                 
-                // Toggle current FAQ item
-                item.classList.toggle('active');
-            });
-        });
-        
-        // Contact form submission
-        const contactForm = document.getElementById('contactForm');
-        const successMessage = document.getElementById('successMessage');
-        
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            // Get form data
-            const fullName = document.getElementById('fullName').value;
-            const phoneNumber = document.getElementById('phoneNumber').value;
-            const email = document.getElementById('email').value;
-            const about = document.getElementById('about').value;
-            const message = document.getElementById('message').value;
-            
-            // Create comment object
-            const comment = {
-                id: Date.now(), // ID unique basé sur le timestamp
-                fullName: fullName,
-                phone: phoneNumber,
-                email: email,
-                subject: getSubjectText(about),
-                message: message,
-                date: new Date().toLocaleString('fr-FR', {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                }),
-                status: 'new',
-                read: false
-            };
-            
-            // Save to storage
-            saveCommentToStorage(comment);
-            
-            // Show success message
-            successMessage.classList.add('active');
-            
-            // Scroll to success message
-            successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            
-            // Reset form after 3 seconds
-            setTimeout(() => {
-                contactForm.reset();
-                successMessage.classList.remove('active');
-            }, 5000);
-            
-            // Log form data (for debugging)
-            console.log('Formulaire soumis:', comment);
-        });
-        
-        // Helper function to get subject text
+                clearTimeout(timeoutId);
+                return response.ok;
+            } catch (error) {
+                console.log('API non disponible, utilisation du fallback:', error.message);
+                return false;
+            }
+        }
+
+        // Fonction pour sauvegarder un commentaire dans l'API
+        async function saveCommentToAPI(comment) {
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), API_CONFIG.TIMEOUT);
+                
+                const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.COMMENTS}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(comment),
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                
+                if (!response.ok) {
+                    throw new Error(`Erreur API: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                return { success: true, data };
+            } catch (error) {
+                console.error('Erreur lors de l\'envoi à l\'API:', error);
+                return { success: false, error: error.message };
+            }
+        }
+
+        // Fonction pour sauvegarder dans localStorage (fallback)
+        function saveCommentToLocalStorage(comment) {
+            try {
+                // Charger les commentaires existants
+                let existingComments = JSON.parse(localStorage.getItem('escompany_comments') || '[]');
+                
+                // Ajouter le nouveau commentaire
+                existingComments.push({
+                    ...comment,
+                    id: Date.now(),
+                    savedLocally: true,
+                    syncStatus: 'pending'
+                });
+                
+                // Sauvegarder
+                localStorage.setItem('escompany_comments', JSON.stringify(existingComments));
+                
+                console.log('Commentaire sauvegardé localement:', comment);
+                return { success: true, local: true };
+            } catch (error) {
+                console.error('Erreur lors de la sauvegarde locale:', error);
+                return { success: false, error: error.message };
+            }
+        }
+
+        // Fonction pour obtenir le texte du sujet
         function getSubjectText(value) {
             const subjects = {
                 'freefire': 'Diamants FreeFire',
@@ -1118,16 +1077,191 @@
             };
             return subjects[value] || value;
         }
-        
-        // Initialize on page load
+
+        // Fonction pour formater la date
+        function formatDate(date = new Date()) {
+            return date.toLocaleString('fr-FR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Initialiser les données d'exemple si nécessaire
+        function initializeSampleData() {
+            try {
+                const existingComments = JSON.parse(localStorage.getItem('escompany_comments') || '[]');
+                
+                if (existingComments.length === 0) {
+                    const sampleComments = [
+                        {
+                            id: 1,
+                            fullName: "Jean Dupont",
+                            phone: "+509 48 12 34 56",
+                            email: "jean.dupont@example.com",
+                            subject: "Diamants FreeFire",
+                            message: "Bonjour, j'ai commandé 500 diamants FreeFire il y a 2 heures mais je ne les ai pas encore reçus. Pouvez-vous vérifier?",
+                            date: formatDate(new Date(Date.now() - 86400000)),
+                            status: "new",
+                            read: false,
+                            savedLocally: true
+                        }
+                    ];
+                    
+                    localStorage.setItem('escompany_comments', JSON.stringify(sampleComments));
+                }
+            } catch (error) {
+                console.error('Erreur lors de l\'initialisation des données:', error);
+            }
+        }
+
+        // DOM Elements
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        const contactForm = document.getElementById('contactForm');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+        const errorText = document.getElementById('errorText');
+        const loadingMessage = document.getElementById('loadingMessage');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // Mobile menu toggle
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+        });
+
+        // FAQ functionality
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                item.classList.toggle('active');
+            });
+        });
+
+        // Contact form submission
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Récupérer les données du formulaire
+            const fullName = document.getElementById('fullName').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const email = document.getElementById('email').value;
+            const about = document.getElementById('about').value;
+            const message = document.getElementById('message').value;
+            
+            // Créer l'objet commentaire
+            const comment = {
+                fullName: fullName.trim(),
+                phone: phoneNumber.trim(),
+                email: email.trim(),
+                subject: getSubjectText(about),
+                subjectCode: about,
+                message: message.trim(),
+                date: formatDate(),
+                status: 'new',
+                read: false,
+                source: 'website_form'
+            };
+            
+            // Désactiver le bouton et afficher le chargement
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+            
+            // Masquer les anciens messages
+            successMessage.classList.remove('active');
+            errorMessage.classList.remove('active');
+            loadingMessage.classList.add('active');
+            
+            try {
+                let result;
+                
+                // Essayer d'envoyer à l'API d'abord
+                const apiAvailable = await testAPIConnection();
+                
+                if (apiAvailable) {
+                    console.log('API disponible, envoi à l\'API...');
+                    result = await saveCommentToAPI(comment);
+                    
+                    if (result.success) {
+                        console.log('Commentaire envoyé à l\'API avec succès');
+                    } else {
+                        console.log('Échec de l\'envoi à l\'API, utilisation du fallback');
+                        // Fallback à localStorage
+                        result = saveCommentToLocalStorage(comment);
+                    }
+                } else {
+                    console.log('API non disponible, utilisation du fallback local');
+                    // API non disponible, utiliser localStorage
+                    result = saveCommentToLocalStorage(comment);
+                }
+                
+                // Gérer le résultat
+                if (result.success) {
+                    // Succès
+                    loadingMessage.classList.remove('active');
+                    successMessage.classList.add('active');
+                    
+                    // Scroll vers le message de succès
+                    successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                    // Réinitialiser le formulaire après 3 secondes
+                    setTimeout(() => {
+                        contactForm.reset();
+                        successMessage.classList.remove('active');
+                    }, 5000);
+                    
+                    console.log('Formulaire soumis avec succès:', comment);
+                    
+                } else {
+                    // Échec
+                    throw new Error(result.error || 'Erreur inconnue lors de la sauvegarde');
+                }
+                
+            } catch (error) {
+                // Erreur
+                loadingMessage.classList.remove('active');
+                errorText.textContent = `Une erreur est survenue: ${error.message}. Votre message a été sauvegardé localement et sera envoyé plus tard.`;
+                errorMessage.classList.add('active');
+                
+                // Essayer de sauvegarder localement même en cas d'erreur
+                saveCommentToLocalStorage(comment);
+                
+                console.error('Erreur lors de la soumission:', error);
+                
+            } finally {
+                // Réactiver le bouton
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Envoyer le message';
+                
+                // Masquer le message de chargement
+                loadingMessage.classList.remove('active');
+            }
+        });
+
+        // Initialiser au chargement de la page
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize sample data
+            // Initialiser les données d'exemple
             initializeSampleData();
             
-            // Check if admin panel exists and show/hide admin link accordingly
+            // Tester la connexion à l'API
+            testAPIConnection().then(apiAvailable => {
+                if (apiAvailable) {
+                    console.log('✅ Connexion API établie');
+                } else {
+                    console.log('⚠️ API non disponible, mode fallback activé');
+                }
+            });
+            
+            // Vérifier si le panel admin existe
             try {
-                // Try to check if admin.html exists (this is a simple check)
-                // In production, you might want to implement this differently
                 fetch('admin.html', { method: 'HEAD' })
                     .then(response => {
                         if (!response.ok) {
@@ -1138,7 +1272,7 @@
                         document.querySelector('.admin-access-link').style.display = 'none';
                     });
             } catch (error) {
-                console.log('Admin panel check failed, hiding admin link');
+                console.log('Admin panel check failed');
                 document.querySelector('.admin-access-link').style.display = 'none';
             }
         });
