@@ -516,108 +516,241 @@
             box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
         }
         
-        /* Payment Dialog */
-        .payment-info {
-            background-color: #e8f4ff;
+        /* New Payment Dialog Design */
+        .payment-dialog-box {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            animation: dialogAppear 0.3s ease-out;
+            position: relative;
+            border-top: 5px solid var(--accent);
+        }
+        
+        .payment-dialog-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .payment-dialog-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .payment-dialog-subtitle {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+        
+        .payment-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .payment-details {
+            background-color: #f8f9ff;
             border-radius: var(--radius);
             padding: 25px;
-            margin-bottom: 25px;
-            text-align: left;
-            border-left: 4px solid var(--primary);
+            border: 2px solid #eaeaea;
         }
         
-        .payment-info h4 {
-            color: var(--primary);
-            margin-bottom: 15px;
-            text-align: center;
+        .payment-details-title {
             font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
         }
         
-        .payment-row {
+        .payment-info-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 12px;
-            padding-bottom: 12px;
-            border-bottom: 1px dashed #aaa;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #ddd;
         }
         
-        .payment-row:last-child {
+        .payment-info-row:last-child {
             border-bottom: none;
             margin-bottom: 0;
             padding-bottom: 0;
         }
         
-        .payment-methods {
-            margin-top: 25px;
-            margin-bottom: 25px;
+        .payment-info-label {
+            color: var(--gray);
+            font-weight: 500;
         }
         
-        .payment-methods h4 {
-            font-size: 1.2rem;
+        .payment-info-value {
             color: var(--primary);
-            margin-bottom: 15px;
-            text-align: left;
+            font-weight: 600;
+            text-align: right;
         }
         
-        .payment-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
+        .payment-methods-container {
+            background-color: #f8f9ff;
+            border-radius: var(--radius);
+            padding: 25px;
+            border: 2px solid #eaeaea;
         }
         
-        .payment-option {
+        .payment-methods-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+        }
+        
+        .payment-method-option {
             background-color: white;
             border-radius: var(--radius);
-            padding: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
             border: 2px solid #ddd;
             cursor: pointer;
             transition: all 0.3s;
+            text-align: center;
         }
         
-        .payment-option.active {
+        .payment-method-option.active {
             border-color: var(--primary);
             background-color: #e8f4ff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 35, 126, 0.1);
         }
         
-        .payment-header {
+        .payment-method-header {
             display: flex;
             align-items: center;
             gap: 15px;
             margin-bottom: 15px;
         }
         
-        .payment-logo {
-            width: 50px;
-            height: 50px;
+        .payment-method-logo {
+            width: 60px;
+            height: 60px;
             border-radius: var(--radius);
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
             background-color: white;
-            padding: 5px;
+            padding: 8px;
+            border: 1px solid #eee;
         }
         
-        .payment-logo img {
+        .payment-method-logo img {
             max-width: 100%;
             max-height: 100%;
         }
         
-        .payment-info-detail h5 {
-            font-size: 1.1rem;
-            margin-bottom: 5px;
+        .payment-method-info h5 {
+            font-size: 1.2rem;
             color: var(--primary);
+            margin-bottom: 5px;
         }
         
-        .payment-number {
+        .payment-method-number {
             background-color: #f0f7ff;
             border-radius: var(--radius);
-            padding: 12px;
-            margin-top: 10px;
-            font-weight: 600;
+            padding: 15px;
+            font-weight: 700;
             color: var(--primary);
             text-align: center;
-            border: 1px dashed var(--primary);
+            font-size: 1.1rem;
+            border: 2px dashed var(--primary);
+            margin-top: 10px;
+        }
+        
+        .upload-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+        
+        .upload-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .upload-description {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+        
+        .upload-container {
+            border: 2px dashed var(--primary);
+            border-radius: var(--radius);
+            padding: 30px;
+            text-align: center;
+            background-color: #f8f9ff;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+        
+        .upload-container:hover {
+            background-color: #e8f4ff;
+            border-color: var(--accent);
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .upload-text {
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+        
+        .upload-note {
+            color: var(--gray);
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+        
+        #proofImage {
+            display: none;
+        }
+        
+        .preview-container {
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .preview-image {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: var(--radius);
+            margin-bottom: 10px;
+            border: 2px solid #ddd;
+        }
+        
+        .remove-preview {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+        
+        .remove-preview:hover {
+            background-color: #d40813;
         }
         
         .dialog-instructions {
@@ -860,7 +993,7 @@
                 max-width: 400px;
             }
             
-            .payment-options {
+            .payment-grid {
                 grid-template-columns: 1fr;
             }
             
@@ -868,7 +1001,7 @@
                 flex-direction: column;
             }
             
-            .dialog-box {
+            .dialog-box, .payment-dialog-box {
                 padding: 25px;
             }
             
@@ -886,8 +1019,8 @@
                 font-size: 2rem;
             }
             
-            .payment-options {
-                grid-template-columns: 1fr;
+            .payment-method-option {
+                padding: 15px;
             }
             
             .netflix-logo, .plan-logo {
@@ -1141,97 +1274,122 @@
         </div>
     </div>
 
-    <!-- Payment Dialog -->
+    <!-- New Payment Dialog -->
     <div class="dialog-overlay" id="paymentDialog">
-        <div class="dialog-box">
+        <div class="payment-dialog-box">
             <button class="close-dialog" id="closePaymentDialog">
                 <i class="fas fa-times"></i>
             </button>
             
-            <div class="dialog-icon">
-                <i class="fas fa-credit-card"></i>
+            <div class="payment-dialog-header">
+                <h2 class="payment-dialog-title" id="dialogPlanTitle">Finalisation de la Commande</h2>
+                <p class="payment-dialog-subtitle">Veuillez effectuer le paiement et télécharger la preuve</p>
             </div>
             
-            <h2 class="dialog-title" id="dialogPlanTitle">Abonnement Netflix</h2>
-            
-            <p class="dialog-message" id="dialogPlanDescription">
-                Pour finaliser votre achat, veuillez effectuer le paiement en suivant les instructions ci-dessous.
-            </p>
-            
-            <div class="payment-info">
-                <h4>Détails de votre commande</h4>
-                <div class="payment-row">
-                    <span>Abonnement:</span>
-                    <span id="dialogPlanName">Netflix 1 Mois</span>
+            <div class="payment-grid">
+                <div class="payment-details">
+                    <h3 class="payment-details-title">Détails de la commande</h3>
+                    <div class="payment-info-row">
+                        <span class="payment-info-label">Service:</span>
+                        <span class="payment-info-value" id="dialogPlanName">Netflix 1 Mois</span>
+                    </div>
+                    <div class="payment-info-row">
+                        <span class="payment-info-label">Durée:</span>
+                        <span class="payment-info-value" id="dialogPlanDuration">1 Mois</span>
+                    </div>
+                    <div class="payment-info-row">
+                        <span class="payment-info-label">Client:</span>
+                        <span class="payment-info-value" id="dialogCustomerName">-</span>
+                    </div>
+                    <div class="payment-info-row">
+                        <span class="payment-info-label">Téléphone:</span>
+                        <span class="payment-info-value" id="dialogCustomerPhone">-</span>
+                    </div>
+                    <div class="payment-info-row">
+                        <span class="payment-info-label">Email:</span>
+                        <span class="payment-info-value" id="dialogCustomerEmail">-</span>
+                    </div>
+                    <div class="payment-info-row">
+                        <span class="payment-info-label">Montant à payer:</span>
+                        <span class="payment-info-value" id="dialogPlanPrice" style="color: var(--accent); font-weight: 700;">550 GDS</span>
+                    </div>
                 </div>
-                <div class="payment-row">
-                    <span>Durée:</span>
-                    <span id="dialogPlanDuration">1 Mois</span>
-                </div>
-                <div class="payment-row">
-                    <span>Client:</span>
-                    <span id="dialogCustomerName">-</span>
-                </div>
-                <div class="payment-row">
-                    <span>Téléphone:</span>
-                    <span id="dialogCustomerPhone">-</span>
-                </div>
-                <div class="payment-row">
-                    <span>Prix total:</span>
-                    <span id="dialogPlanPrice" style="color: var(--primary); font-weight: 600;">550 GDS</span>
-                </div>
-            </div>
-            
-            <div class="payment-methods">
-                <h4>Méthodes de paiement disponibles:</h4>
                 
-                <div class="payment-options">
-                    <div class="payment-option" id="natcashOption">
-                        <div class="payment-header">
-                            <div class="payment-logo">
+                <div class="payment-methods-container">
+                    <h3 class="payment-methods-title">Méthodes de paiement</h3>
+                    
+                    <div class="payment-method-option" id="natcashPaymentOption">
+                        <div class="payment-method-header">
+                            <div class="payment-method-logo">
                                 <img src="https://i.postimg.cc/tTCFPMs2/d144965d8de439a0d8d6689b85fe4093.jpg" alt="NatCash">
                             </div>
-                            <div class="payment-info-detail">
+                            <div class="payment-method-info">
                                 <h5>NatCash</h5>
                                 <p>Transférez le montant à:</p>
                             </div>
                         </div>
-                        <div class="payment-number">41866098</div>
+                        <div class="payment-method-number">41866098</div>
                     </div>
                     
-                    <div class="payment-option" id="moncashOption">
-                        <div class="payment-header">
-                            <div class="payment-logo">
+                    <div class="payment-method-option" id="moncashPaymentOption">
+                        <div class="payment-method-header">
+                            <div class="payment-method-logo">
                                 <img src="https://i.postimg.cc/K8B7yLXM/images.jpg" alt="MonCash">
                             </div>
-                            <div class="payment-info-detail">
+                            <div class="payment-method-info">
                                 <h5>MonCash</h5>
                                 <p>Transférez le montant à:</p>
                             </div>
                         </div>
-                        <div class="payment-number">46433333</div>
+                        <div class="payment-method-number">46433333</div>
                     </div>
                 </div>
             </div>
             
+            <div class="upload-section">
+                <h3 class="upload-title">Preuve de paiement</h3>
+                <p class="upload-description">Après avoir effectué le paiement, téléchargez une capture d'écran de la confirmation.</p>
+                
+                <div class="upload-container" id="uploadContainer">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <div class="upload-text">
+                        Cliquez pour télécharger une image
+                    </div>
+                    <div class="upload-note">
+                        Formats acceptés: JPG, PNG, GIF (max 5MB)
+                    </div>
+                </div>
+                
+                <input type="file" id="proofImage" accept="image/*">
+                
+                <div class="preview-container" id="previewContainer">
+                    <img src="" alt="Aperçu" class="preview-image" id="previewImage">
+                    <button type="button" class="remove-preview" id="removePreview">
+                        <i class="fas fa-trash"></i> Supprimer l'image
+                    </button>
+                </div>
+            </div>
+            
             <div class="dialog-instructions">
-                <h4>Instructions de paiement:</h4>
+                <h4>Instructions importantes:</h4>
                 <ol>
                     <li>Sélectionnez une méthode de paiement ci-dessus</li>
                     <li>Effectuez le paiement au numéro indiqué</li>
-                    <li>Prenez une capture d'écran de la confirmation</li>
-                    <li>Contactez-nous sur WhatsApp avec la preuve de paiement</li>
-                    <li>Votre compte sera activé dans les 30 minutes</li>
+                    <li>Téléchargez une capture d'écran de la confirmation</li>
+                    <li>Cliquez sur "Passer la commande" pour finaliser</li>
+                    <li>Nous traiterons votre commande dans les 30 minutes</li>
                 </ol>
             </div>
             
-            <div style="text-align: center; margin-top: 25px;">
-                <a href="https://wa.me/15102817365?text=Bonjour,%20je%20viens%20d'effectuer%20le%20paiement%20pour%20l'abonnement%20Netflix" class="btn btn-success" target="_blank" id="whatsappLink">
-                    <i class="fab fa-whatsapp"></i> Contacter sur WhatsApp
-                </a>
+            <div style="margin-top: 30px;">
+                <button class="btn btn-success" id="submitOrderBtn" disabled>
+                    <i class="fas fa-paper-plane"></i> Passer la commande
+                </button>
             </div>
             
-            <div class="dialog-buttons" style="margin-top: 20px;">
+            <div style="margin-top: 20px;">
                 <button class="btn btn-secondary btn-small" id="backToCustomerInfo">
                     <i class="fas fa-arrow-left"></i> Retour aux informations
                 </button>
@@ -1321,13 +1479,19 @@
         const backToCustomerInfoBtn = document.getElementById('backToCustomerInfo');
         const resellerBtn = document.getElementById('resellerBtn');
         const planButtons = document.querySelectorAll('.plan-btn');
-        const paymentOptions = document.querySelectorAll('.payment-option');
+        const paymentOptions = document.querySelectorAll('.payment-method-option');
         const customerInfoForm = document.getElementById('customerInfoForm');
-        const whatsappLink = document.getElementById('whatsappLink');
+        const proofImageInput = document.getElementById('proofImage');
+        const uploadContainer = document.getElementById('uploadContainer');
+        const previewContainer = document.getElementById('previewContainer');
+        const previewImage = document.getElementById('previewImage');
+        const removePreviewBtn = document.getElementById('removePreview');
+        const submitOrderBtn = document.getElementById('submitOrderBtn');
         
         let selectedPaymentMethod = null;
         let currentPlanData = null;
         let customerData = null;
+        let proofImageData = null;
 
         // Plan button click handlers
         planButtons.forEach(button => {
@@ -1361,6 +1525,9 @@
                 // Mettre à jour le titre de la boîte de dialogue
                 document.getElementById('customerDialogTitle').textContent = `Informations pour ${planName}`;
                 
+                // Réinitialiser le formulaire
+                customerInfoForm.reset();
+                
                 // Afficher la boîte de dialogue d'informations client
                 customerInfoDialog.classList.add('active');
                 document.body.style.overflow = 'hidden';
@@ -1378,6 +1545,7 @@
             };
             
             document.getElementById('customerDialogTitle').textContent = "Informations pour devenir revendeur";
+            customerInfoForm.reset();
             customerInfoDialog.classList.add('active');
             document.body.style.overflow = 'hidden';
         });
@@ -1419,32 +1587,124 @@
         
         // Préparer la boîte de dialogue de paiement
         function preparePaymentDialog() {
+            // Réinitialiser l'image de preuve
+            resetProofImage();
+            
             // Mettre à jour le contenu de la boîte de dialogue de paiement
             document.getElementById('dialogPlanTitle').textContent = currentPlanData.planName;
-            document.getElementById('dialogPlanDescription').textContent = currentPlanData.planDescription;
             document.getElementById('dialogPlanName').textContent = currentPlanData.planName;
             document.getElementById('dialogPlanDuration').textContent = currentPlanData.plan === "reseller" ? "Complet" : currentPlanData.plan + " Mois";
             document.getElementById('dialogPlanPrice').textContent = currentPlanData.priceFormatted;
             document.getElementById('dialogCustomerName').textContent = customerData.name;
             document.getElementById('dialogCustomerPhone').textContent = customerData.phone;
+            document.getElementById('dialogCustomerEmail').textContent = customerData.email;
             
-            // Préparer le message WhatsApp
-            let whatsappMessage = "";
-            
-            if (currentPlanData.plan === "reseller") {
-                whatsappMessage = `Bonjour, je suis intéressé par devenir revendeur de comptes Netflix.\n\nNom: ${customerData.name}\nEmail: ${customerData.email}\nTéléphone: ${customerData.phone}\n\n${customerData.notes ? 'Notes: ' + customerData.notes + '\n\n' : ''}Pouvez-vous me donner plus d'informations?`;
-            } else {
-                whatsappMessage = `Bonjour, je viens d'effectuer le paiement pour l'abonnement Netflix ${currentPlanData.plan} Mois (${currentPlanData.priceFormatted}).\n\nInformations client:\nNom: ${customerData.name}\nEmail: ${customerData.email}\nTéléphone: ${customerData.phone}\n\n${customerData.notes ? 'Notes: ' + customerData.notes + '\n\n' : ''}Voici la preuve de paiement:`;
-            }
-            
-            whatsappLink.href = `https://wa.me/15102817365?text=${encodeURIComponent(whatsappMessage)}`;
-            
-            // Enregistrer la commande dans localStorage
-            saveOrderToLocalStorage();
+            // Désactiver le bouton de soumission jusqu'à ce qu'une image soit téléchargée
+            submitOrderBtn.disabled = true;
+            submitOrderBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Passer la commande';
             
             // Afficher la boîte de dialogue de paiement
             paymentDialog.classList.add('active');
         }
+        
+        // Payment method selection
+        paymentOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                // Remove active class from all options
+                paymentOptions.forEach(opt => opt.classList.remove('active'));
+                
+                // Add active class to selected option
+                option.classList.add('active');
+                selectedPaymentMethod = option.id.replace('PaymentOption', '');
+            });
+        });
+        
+        // Default select NatCash
+        document.getElementById('natcashPaymentOption').classList.add('active');
+        selectedPaymentMethod = 'natcash';
+        
+        // Upload proof image
+        uploadContainer.addEventListener('click', () => {
+            proofImageInput.click();
+        });
+        
+        proofImageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // Vérifier la taille du fichier (max 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert("Le fichier est trop volumineux. Maximum 5MB.");
+                    return;
+                }
+                
+                // Vérifier le type de fichier
+                if (!file.type.match('image.*')) {
+                    alert("Veuillez sélectionner une image.");
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    proofImageData = e.target.result;
+                    previewImage.src = proofImageData;
+                    previewContainer.style.display = 'block';
+                    submitOrderBtn.disabled = false;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // Remove preview image
+        removePreviewBtn.addEventListener('click', () => {
+            resetProofImage();
+        });
+        
+        function resetProofImage() {
+            proofImageInput.value = '';
+            proofImageData = null;
+            previewImage.src = '';
+            previewContainer.style.display = 'none';
+            submitOrderBtn.disabled = true;
+        }
+        
+        // Submit order
+        submitOrderBtn.addEventListener('click', () => {
+            if (!proofImageData) {
+                alert("Veuillez télécharger une preuve de paiement.");
+                return;
+            }
+            
+            if (!selectedPaymentMethod) {
+                alert("Veuillez sélectionner une méthode de paiement.");
+                return;
+            }
+            
+            // Désactiver le bouton pendant le traitement
+            submitOrderBtn.disabled = true;
+            submitOrderBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement en cours...';
+            
+            // Simuler un traitement
+            setTimeout(() => {
+                // Enregistrer la commande
+                const orderSaved = saveOrderToLocalStorage();
+                
+                if (orderSaved) {
+                    // Afficher un message de succès
+                    alert(`Commande passée avec succès!\n\nNuméro de commande: ${orderSaved.orderNumber}\nNous traiterons votre commande dans les 30 minutes.\n\nMerci pour votre confiance!`);
+                    
+                    // Fermer la boîte de dialogue
+                    paymentDialog.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    
+                    // Réinitialiser tout
+                    resetForms();
+                } else {
+                    alert("Une erreur s'est produite. Veuillez réessayer.");
+                    submitOrderBtn.disabled = false;
+                    submitOrderBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Passer la commande';
+                }
+            }, 1500);
+        });
         
         // Fonction pour sauvegarder la commande dans localStorage
         function saveOrderToLocalStorage() {
@@ -1465,9 +1725,11 @@
                     planDuration: currentPlanData.plan === "reseller" ? "Complet" : currentPlanData.plan + " Mois",
                     paymentMethod: selectedPaymentMethod === 'natcash' ? 'NatCash' : 'MonCash',
                     paymentNumber: selectedPaymentMethod === 'natcash' ? '41866098' : '46433333',
+                    proofImage: proofImageData,
                     status: 'pending',
                     date: new Date().toISOString(),
-                    type: 'netflix'
+                    type: 'netflix',
+                    processed: false
                 };
                 
                 // Récupérer les commandes existantes
@@ -1480,27 +1742,13 @@
                 localStorage.setItem('netflix_orders', JSON.stringify(existingOrders));
                 
                 console.log('Commande Netflix enregistrée:', orderData);
+                return orderData;
                 
             } catch (error) {
                 console.error('Erreur lors de l\'enregistrement de la commande:', error);
+                return null;
             }
         }
-        
-        // Payment method selection
-        paymentOptions.forEach(option => {
-            option.addEventListener('click', () => {
-                // Remove active class from all options
-                paymentOptions.forEach(opt => opt.classList.remove('active'));
-                
-                // Add active class to selected option
-                option.classList.add('active');
-                selectedPaymentMethod = option.id.replace('Option', '');
-            });
-        });
-        
-        // Default select NatCash
-        document.getElementById('natcashOption').classList.add('active');
-        selectedPaymentMethod = 'natcash';
         
         // Close customer dialog button
         closeCustomerDialogBtn.addEventListener('click', function() {
@@ -1542,12 +1790,18 @@
         // Fonction pour réinitialiser les formulaires
         function resetForms() {
             customerInfoForm.reset();
+            resetProofImage();
             currentPlanData = null;
             customerData = null;
+            proofImageData = null;
+            // Réinitialiser la sélection de paiement
+            document.getElementById('natcashPaymentOption').classList.add('active');
+            document.getElementById('moncashPaymentOption').classList.remove('active');
+            selectedPaymentMethod = 'natcash';
         }
         
         // Initialiser avec NatCash sélectionné
-        document.getElementById('natcashOption').click();
+        document.getElementById('natcashPaymentOption').click();
     </script>
 </body>
 </html>
