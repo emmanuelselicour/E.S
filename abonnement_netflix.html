@@ -419,7 +419,7 @@
             filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.1));
         }
         
-        /* Payment Dialog */
+        /* Customer Info Dialog */
         .dialog-overlay {
             position: fixed;
             top: 0;
@@ -489,6 +489,34 @@
             line-height: 1.6;
         }
         
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
+        }
+        
+        /* Payment Dialog */
         .payment-info {
             background-color: #e8f4ff;
             border-radius: var(--radius);
@@ -1066,10 +1094,57 @@
         </div>
     </section>
 
+    <!-- Customer Info Dialog -->
+    <div class="dialog-overlay" id="customerInfoDialog">
+        <div class="dialog-box">
+            <button class="close-dialog" id="closeCustomerDialog">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="dialog-icon">
+                <i class="fas fa-user-check"></i>
+            </div>
+            
+            <h2 class="dialog-title" id="customerDialogTitle">Informations Personnelles</h2>
+            
+            <p class="dialog-message">
+                Veuillez remplir vos informations personnelles pour continuer avec votre commande.
+            </p>
+            
+            <form id="customerInfoForm">
+                <div class="form-group">
+                    <label class="form-label" for="customerName">Nom complet *</label>
+                    <input type="text" id="customerName" class="form-input" placeholder="Votre nom et prénom" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="customerEmail">Adresse email *</label>
+                    <input type="email" id="customerEmail" class="form-input" placeholder="exemple@email.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="customerPhone">Numéro de téléphone *</label>
+                    <input type="tel" id="customerPhone" class="form-input" placeholder="+509XXXXXXXX" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="customerNotes">Notes supplémentaires (optionnel)</label>
+                    <textarea id="customerNotes" class="form-input" placeholder="Informations supplémentaires pour votre commande..." rows="3"></textarea>
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-arrow-right"></i> Continuer vers le paiement
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Payment Dialog -->
     <div class="dialog-overlay" id="paymentDialog">
         <div class="dialog-box">
-            <button class="close-dialog" id="closeDialog">
+            <button class="close-dialog" id="closePaymentDialog">
                 <i class="fas fa-times"></i>
             </button>
             
@@ -1094,12 +1169,16 @@
                     <span id="dialogPlanDuration">1 Mois</span>
                 </div>
                 <div class="payment-row">
-                    <span>Prix total:</span>
-                    <span id="dialogPlanPrice" style="color: var(--primary); font-weight: 600;">550 GDS</span>
-                </div>
-                <div class="payment-row">
                     <span>Client:</span>
                     <span id="dialogCustomerName">-</span>
+                </div>
+                <div class="payment-row">
+                    <span>Téléphone:</span>
+                    <span id="dialogCustomerPhone">-</span>
+                </div>
+                <div class="payment-row">
+                    <span>Prix total:</span>
+                    <span id="dialogPlanPrice" style="color: var(--primary); font-weight: 600;">550 GDS</span>
                 </div>
             </div>
             
@@ -1153,8 +1232,8 @@
             </div>
             
             <div class="dialog-buttons" style="margin-top: 20px;">
-                <button class="btn btn-secondary btn-small" id="closePaymentDialog">
-                    <i class="fas fa-times"></i> Fermer
+                <button class="btn btn-secondary btn-small" id="backToCustomerInfo">
+                    <i class="fas fa-arrow-left"></i> Retour aux informations
                 </button>
             </div>
         </div>
@@ -1235,28 +1314,164 @@
         });
         
         // Variables
+        const customerInfoDialog = document.getElementById('customerInfoDialog');
         const paymentDialog = document.getElementById('paymentDialog');
-        const closeDialogBtn = document.getElementById('closeDialog');
+        const closeCustomerDialogBtn = document.getElementById('closeCustomerDialog');
         const closePaymentDialogBtn = document.getElementById('closePaymentDialog');
+        const backToCustomerInfoBtn = document.getElementById('backToCustomerInfo');
         const resellerBtn = document.getElementById('resellerBtn');
         const planButtons = document.querySelectorAll('.plan-btn');
         const paymentOptions = document.querySelectorAll('.payment-option');
+        const customerInfoForm = document.getElementById('customerInfoForm');
         const whatsappLink = document.getElementById('whatsappLink');
         
         let selectedPaymentMethod = null;
-        let currentOrderData = null;
+        let currentPlanData = null;
+        let customerData = null;
 
-        // Fonction pour enregistrer une commande Netflix
-        function saveNetflixOrder(orderData) {
+        // Plan button click handlers
+        planButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const plan = this.getAttribute('data-plan');
+                const price = this.getAttribute('data-price');
+                
+                // Récupérer les infos du plan
+                let planName, planDescription;
+                
+                if (plan === '1') {
+                    planName = "Netflix 1 Mois";
+                    planDescription = "Abonnement Netflix Premium pour 1 mois";
+                } else if (plan === '3') {
+                    planName = "Netflix 3 Mois";
+                    planDescription = "Abonnement Netflix Premium pour 3 mois";
+                } else if (plan === '6') {
+                    planName = "Netflix 6 Mois";
+                    planDescription = "Abonnement Netflix Premium pour 6 mois";
+                }
+                
+                // Sauvegarder les infos du plan sélectionné
+                currentPlanData = {
+                    plan: plan,
+                    planName: planName,
+                    planDescription: planDescription,
+                    price: price,
+                    priceFormatted: parseInt(price).toLocaleString('fr-FR') + " GDS"
+                };
+                
+                // Mettre à jour le titre de la boîte de dialogue
+                document.getElementById('customerDialogTitle').textContent = `Informations pour ${planName}`;
+                
+                // Afficher la boîte de dialogue d'informations client
+                customerInfoDialog.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        // Reseller button click handler
+        resellerBtn.addEventListener('click', () => {
+            currentPlanData = {
+                plan: "reseller",
+                planName: "Compte Netflix Revendeur",
+                planDescription: "Achetez un compte Netflix complet qui vous appartient à 100%",
+                price: "1300",
+                priceFormatted: "À partir de 1,300 GDS"
+            };
+            
+            document.getElementById('customerDialogTitle').textContent = "Informations pour devenir revendeur";
+            customerInfoDialog.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        // Customer info form submission
+        customerInfoForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Récupérer les données du formulaire
+            customerData = {
+                name: document.getElementById('customerName').value,
+                email: document.getElementById('customerEmail').value,
+                phone: document.getElementById('customerPhone').value,
+                notes: document.getElementById('customerNotes').value
+            };
+            
+            // Valider les données
+            if (!customerData.name || customerData.name.trim() === '') {
+                alert("Veuillez entrer votre nom complet");
+                return;
+            }
+            
+            if (!customerData.email || customerData.email.trim() === '') {
+                alert("Veuillez entrer votre email");
+                return;
+            }
+            
+            if (!customerData.phone || customerData.phone.trim() === '') {
+                alert("Veuillez entrer votre numéro de téléphone");
+                return;
+            }
+            
+            // Cacher la boîte de dialogue client
+            customerInfoDialog.classList.remove('active');
+            
+            // Préparer les données pour la boîte de dialogue de paiement
+            preparePaymentDialog();
+        });
+        
+        // Préparer la boîte de dialogue de paiement
+        function preparePaymentDialog() {
+            // Mettre à jour le contenu de la boîte de dialogue de paiement
+            document.getElementById('dialogPlanTitle').textContent = currentPlanData.planName;
+            document.getElementById('dialogPlanDescription').textContent = currentPlanData.planDescription;
+            document.getElementById('dialogPlanName').textContent = currentPlanData.planName;
+            document.getElementById('dialogPlanDuration').textContent = currentPlanData.plan === "reseller" ? "Complet" : currentPlanData.plan + " Mois";
+            document.getElementById('dialogPlanPrice').textContent = currentPlanData.priceFormatted;
+            document.getElementById('dialogCustomerName').textContent = customerData.name;
+            document.getElementById('dialogCustomerPhone').textContent = customerData.phone;
+            
+            // Préparer le message WhatsApp
+            let whatsappMessage = "";
+            
+            if (currentPlanData.plan === "reseller") {
+                whatsappMessage = `Bonjour, je suis intéressé par devenir revendeur de comptes Netflix.\n\nNom: ${customerData.name}\nEmail: ${customerData.email}\nTéléphone: ${customerData.phone}\n\n${customerData.notes ? 'Notes: ' + customerData.notes + '\n\n' : ''}Pouvez-vous me donner plus d'informations?`;
+            } else {
+                whatsappMessage = `Bonjour, je viens d'effectuer le paiement pour l'abonnement Netflix ${currentPlanData.plan} Mois (${currentPlanData.priceFormatted}).\n\nInformations client:\nNom: ${customerData.name}\nEmail: ${customerData.email}\nTéléphone: ${customerData.phone}\n\n${customerData.notes ? 'Notes: ' + customerData.notes + '\n\n' : ''}Voici la preuve de paiement:`;
+            }
+            
+            whatsappLink.href = `https://wa.me/15102817365?text=${encodeURIComponent(whatsappMessage)}`;
+            
+            // Enregistrer la commande dans localStorage
+            saveOrderToLocalStorage();
+            
+            // Afficher la boîte de dialogue de paiement
+            paymentDialog.classList.add('active');
+        }
+        
+        // Fonction pour sauvegarder la commande dans localStorage
+        function saveOrderToLocalStorage() {
             try {
+                // Générer un ID unique pour la commande
+                const orderId = 'nfx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                const orderNumber = 'NFX' + Date.now().toString().substr(-6);
+                
+                const orderData = {
+                    id: orderId,
+                    orderNumber: orderNumber,
+                    customerName: customerData.name,
+                    customerEmail: customerData.email,
+                    customerPhone: customerData.phone,
+                    customerNotes: customerData.notes,
+                    plan: currentPlanData.planName,
+                    price: currentPlanData.priceFormatted,
+                    planDuration: currentPlanData.plan === "reseller" ? "Complet" : currentPlanData.plan + " Mois",
+                    paymentMethod: selectedPaymentMethod === 'natcash' ? 'NatCash' : 'MonCash',
+                    paymentNumber: selectedPaymentMethod === 'natcash' ? '41866098' : '46433333',
+                    status: 'pending',
+                    date: new Date().toISOString(),
+                    type: 'netflix'
+                };
+                
                 // Récupérer les commandes existantes
                 const existingOrders = JSON.parse(localStorage.getItem('netflix_orders')) || [];
-                
-                // Générer un ID unique
-                orderData.id = 'nfx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-                orderData.orderNumber = 'NFX' + Date.now().toString().substr(-6);
-                orderData.status = 'pending';
-                orderData.date = new Date().toISOString();
                 
                 // Ajouter la nouvelle commande
                 existingOrders.push(orderData);
@@ -1266,131 +1481,10 @@
                 
                 console.log('Commande Netflix enregistrée:', orderData);
                 
-                // Message de confirmation
-                alert(`Commande enregistrée avec succès!\n\nNuméro de commande: ${orderData.orderNumber}\nClient: ${orderData.customerName}\nPlan: ${orderData.plan}\nPrix: ${orderData.price}\n\nVeuillez maintenant effectuer le paiement et nous envoyer la preuve sur WhatsApp.`);
-                
-                return orderData.orderNumber;
-                
             } catch (error) {
                 console.error('Erreur lors de l\'enregistrement de la commande:', error);
-                alert('Erreur lors de l\'enregistrement de la commande. Veuillez réessayer.');
-                return null;
             }
         }
-
-        // Plan button click handlers
-        planButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const plan = this.getAttribute('data-plan');
-                const price = this.getAttribute('data-price');
-                
-                // Demander les informations du client
-                const customerName = prompt("Veuillez entrer votre nom complet:");
-                if (!customerName || customerName.trim() === '') {
-                    alert("Nom requis pour la commande");
-                    return;
-                }
-                
-                const customerEmail = prompt("Veuillez entrer votre email (facultatif):");
-                const customerPhone = prompt("Veuillez entrer votre numéro de téléphone:");
-                
-                // Récupérer les infos du plan
-                let planName, planDescription;
-                
-                if (plan === '1') {
-                    planName = "Netflix 1 Mois";
-                    planDescription = "Abonnement Netflix Premium pour 1 mois. Accès complet à toute la bibliothèque Netflix en qualité HD.";
-                } else if (plan === '3') {
-                    planName = "Netflix 3 Mois";
-                    planDescription = "Abonnement Netflix Premium pour 3 mois. Économisez 350 GDS. Streaming Ultra HD 4K et 4 écrans simultanés.";
-                } else if (plan === '6') {
-                    planName = "Netflix 6 Mois";
-                    planDescription = "Abonnement Netflix Premium pour 6 mois. Économisez 1,050 GDS. Meilleure offre à long terme avec tous les avantages premium.";
-                }
-                
-                // Créer l'objet commande
-                currentOrderData = {
-                    plan: planName,
-                    price: price + ' GDS',
-                    customerName: customerName.trim(),
-                    customerEmail: customerEmail ? customerEmail.trim() : '',
-                    customerPhone: customerPhone ? customerPhone.trim() : '',
-                    paymentMethod: 'À définir',
-                    paymentNumber: ''
-                };
-                
-                // Enregistrer la commande
-                const orderNumber = saveNetflixOrder(currentOrderData);
-                
-                if (!orderNumber) {
-                    return; // Arrêter si l'enregistrement a échoué
-                }
-                
-                // Update dialog content
-                document.getElementById('dialogPlanTitle').textContent = planName;
-                document.getElementById('dialogPlanDescription').textContent = planDescription;
-                document.getElementById('dialogPlanName').textContent = planName;
-                document.getElementById('dialogPlanDuration').textContent = plan + " Mois";
-                document.getElementById('dialogPlanPrice').textContent = parseInt(price).toLocaleString('fr-FR') + " GDS";
-                document.getElementById('dialogCustomerName').textContent = customerName;
-                
-                // Update WhatsApp link with order info
-                const whatsappMessage = `Bonjour, je viens d'effectuer le paiement pour l'abonnement Netflix ${plan} Mois (${price} GDS).\n\nNuméro de commande: ${orderNumber}\nNom: ${customerName}\nEmail: ${customerEmail || 'Non fourni'}\nTéléphone: ${customerPhone || 'Non fourni'}\n\nVoici la preuve de paiement:`;
-                whatsappLink.href = `https://wa.me/15102817365?text=${encodeURIComponent(whatsappMessage)}`;
-                
-                // Show payment dialog
-                paymentDialog.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
-        });
-        
-        // Reseller button click handler
-        resellerBtn.addEventListener('click', () => {
-            // Demander les informations du client
-            const customerName = prompt("Veuillez entrer votre nom complet pour devenir revendeur:");
-            if (!customerName || customerName.trim() === '') {
-                alert("Nom requis");
-                return;
-            }
-            
-            const customerEmail = prompt("Veuillez entrer votre email (facultatif):");
-            const customerPhone = prompt("Veuillez entrer votre numéro de téléphone:");
-            
-            // Créer l'objet commande pour revendeur
-            currentOrderData = {
-                plan: "Compte Netflix Revendeur",
-                price: "À partir de 1,300 GDS",
-                customerName: customerName.trim(),
-                customerEmail: customerEmail ? customerEmail.trim() : '',
-                customerPhone: customerPhone ? customerPhone.trim() : '',
-                paymentMethod: 'À définir',
-                paymentNumber: '',
-                isReseller: true
-            };
-            
-            // Enregistrer la commande
-            const orderNumber = saveNetflixOrder(currentOrderData);
-            
-            if (!orderNumber) {
-                return;
-            }
-            
-            // Update dialog content for reseller
-            document.getElementById('dialogPlanTitle').textContent = "Compte Netflix Revendeur";
-            document.getElementById('dialogPlanDescription').textContent = "Achetez un compte Netflix complet qui vous appartient à 100%. Vous pouvez ensuite le revendre à vos clients.";
-            document.getElementById('dialogPlanName').textContent = "Compte Netflix Revendeur";
-            document.getElementById('dialogPlanDuration').textContent = "Complet";
-            document.getElementById('dialogPlanPrice').textContent = "À partir de 1,300 GDS";
-            document.getElementById('dialogCustomerName').textContent = customerName;
-            
-            // Update WhatsApp link for reseller
-            const whatsappMessage = `Bonjour, je suis intéressé par devenir revendeur de comptes Netflix.\n\nNuméro de demande: ${orderNumber}\nNom: ${customerName}\nEmail: ${customerEmail || 'Non fourni'}\nTéléphone: ${customerPhone || 'Non fourni'}\n\nPouvez-vous me donner plus d'informations?`;
-            whatsappLink.href = `https://wa.me/15102817365?text=${encodeURIComponent(whatsappMessage)}`;
-            
-            // Show payment dialog
-            paymentDialog.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
         
         // Payment method selection
         paymentOptions.forEach(option => {
@@ -1401,81 +1495,59 @@
                 // Add active class to selected option
                 option.classList.add('active');
                 selectedPaymentMethod = option.id.replace('Option', '');
-                
-                // Mettre à jour les informations de paiement dans la commande
-                if (currentOrderData) {
-                    currentOrderData.paymentMethod = selectedPaymentMethod === 'natcash' ? 'NatCash' : 'MonCash';
-                    currentOrderData.paymentNumber = selectedPaymentMethod === 'natcash' ? '41866098' : '46433333';
-                    
-                    // Mettre à jour localStorage
-                    updateOrderPaymentInfo(currentOrderData);
-                }
             });
         });
-        
-        // Fonction pour mettre à jour les informations de paiement dans la commande
-        function updateOrderPaymentInfo(orderData) {
-            try {
-                const existingOrders = JSON.parse(localStorage.getItem('netflix_orders')) || [];
-                
-                // Trouver la commande la plus récente pour ce client
-                const recentOrder = existingOrders.find(order => 
-                    order.customerName === orderData.customerName && 
-                    order.plan === orderData.plan
-                );
-                
-                if (recentOrder) {
-                    recentOrder.paymentMethod = orderData.paymentMethod;
-                    recentOrder.paymentNumber = orderData.paymentNumber;
-                    
-                    // Sauvegarder les modifications
-                    localStorage.setItem('netflix_orders', JSON.stringify(existingOrders));
-                    console.log('Informations de paiement mises à jour pour la commande:', recentOrder.orderNumber);
-                }
-            } catch (error) {
-                console.error('Erreur mise à jour paiement:', error);
-            }
-        }
         
         // Default select NatCash
         document.getElementById('natcashOption').classList.add('active');
         selectedPaymentMethod = 'natcash';
         
-        // Close dialog buttons
-        closeDialogBtn.addEventListener('click', closePaymentDialog);
-        closePaymentDialogBtn.addEventListener('click', closePaymentDialog);
+        // Close customer dialog button
+        closeCustomerDialogBtn.addEventListener('click', function() {
+            customerInfoDialog.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            currentPlanData = null;
+        });
         
-        function closePaymentDialog() {
+        // Close payment dialog button
+        closePaymentDialogBtn.addEventListener('click', function() {
             paymentDialog.classList.remove('active');
             document.body.style.overflow = 'auto';
-            currentOrderData = null;
-        }
+            resetForms();
+        });
         
-        // Close dialog when clicking outside
-        paymentDialog.addEventListener('click', (e) => {
-            if (e.target === paymentDialog) {
-                closePaymentDialog();
+        // Back to customer info button
+        backToCustomerInfoBtn.addEventListener('click', function() {
+            paymentDialog.classList.remove('active');
+            customerInfoDialog.classList.add('active');
+        });
+        
+        // Close dialogs when clicking outside
+        customerInfoDialog.addEventListener('click', (e) => {
+            if (e.target === customerInfoDialog) {
+                customerInfoDialog.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                currentPlanData = null;
             }
         });
         
-        // Fonction pour afficher un message de bienvenue avec le nombre de commandes
-        function showWelcomeMessage() {
-            try {
-                const orders = JSON.parse(localStorage.getItem('netflix_orders')) || [];
-                if (orders.length > 0) {
-                    console.log(`Nombre total de commandes Netflix: ${orders.length}`);
-                    const pendingOrders = orders.filter(order => order.status === 'pending').length;
-                    if (pendingOrders > 0) {
-                        console.log(`Commandes en attente: ${pendingOrders}`);
-                    }
-                }
-            } catch (error) {
-                console.error('Erreur chargement commandes:', error);
+        paymentDialog.addEventListener('click', (e) => {
+            if (e.target === paymentDialog) {
+                paymentDialog.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                resetForms();
             }
+        });
+        
+        // Fonction pour réinitialiser les formulaires
+        function resetForms() {
+            customerInfoForm.reset();
+            currentPlanData = null;
+            customerData = null;
         }
         
-        // Afficher le message de bienvenue au chargement
-        window.addEventListener('load', showWelcomeMessage);
+        // Initialiser avec NatCash sélectionné
+        document.getElementById('natcashOption').click();
     </script>
 </body>
 </html>
