@@ -342,7 +342,8 @@
             padding: 40px;
             max-width: 500px;
             width: 90%;
-            text-align: center;
+            max-height: 90vh;
+            overflow-y: auto;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             animation: dialogAppear 0.3s ease-out;
             position: relative;
@@ -414,17 +415,35 @@
             box-shadow: 0 0 0 3px rgba(0, 185, 255, 0.1);
         }
         
-        /* New Payment Dialog Design */
+        /* New Payment Dialog Design - MODIFIED FOR SCROLLING */
         .payment-dialog-box {
             background-color: white;
             border-radius: var(--radius);
             padding: 40px;
             max-width: 700px;
             width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
             animation: dialogAppear 0.3s ease-out;
             position: relative;
             border-top: 5px solid var(--wise-color);
+            scrollbar-width: thin;
+            scrollbar-color: var(--wise-color) #f0f0f0;
+        }
+        
+        .payment-dialog-box::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .payment-dialog-box::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+        
+        .payment-dialog-box::-webkit-scrollbar-thumb {
+            background-color: var(--wise-color);
+            border-radius: 4px;
         }
         
         .payment-dialog-header {
@@ -739,7 +758,7 @@
             margin-bottom: 15px;
         }
         
-        /* Buttons */
+        /* Buttons - MODIFIED FOR BETTER VISIBILITY */
         .btn {
             display: inline-block;
             background: linear-gradient(to right, var(--wise-color), #0099cc);
@@ -769,6 +788,19 @@
         
         .btn-full {
             width: 100%;
+        }
+        
+        #submitOrderBtn {
+            position: relative;
+            z-index: 10;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 12px rgba(0, 185, 255, 0.3);
+        }
+        
+        #submitOrderBtn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
         
         /* Footer */
@@ -849,7 +881,7 @@
             font-size: 0.9rem;
         }
         
-        /* Responsive */
+        /* Responsive - MODIFIED FOR BETTER DIALOG SCROLLING */
         @media (max-width: 992px) {
             .wise-hero h2 {
                 font-size: 2.3rem;
@@ -911,6 +943,37 @@
             
             .dialog-box, .payment-dialog-box {
                 padding: 25px;
+                max-height: 85vh;
+            }
+            
+            /* Indicateur de défilement pour mobile */
+            .payment-dialog-box:after {
+                content: '';
+                position: sticky;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 40px;
+                background: linear-gradient(to top, white, transparent);
+                pointer-events: none;
+            }
+            
+            /* Assurer que la boîte de dialogue est centrée sur mobile */
+            .dialog-overlay {
+                align-items: flex-start;
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+            
+            .payment-dialog-box {
+                margin-top: auto;
+                margin-bottom: auto;
+            }
+            
+            #submitOrderBtn {
+                padding: 18px 25px;
+                font-size: 1.1rem;
+                font-weight: 600;
             }
         }
         
@@ -925,6 +988,56 @@
             
             .taux-value {
                 font-size: 3rem;
+            }
+            
+            .payment-dialog-box {
+                width: 95%;
+                padding: 20px;
+            }
+            
+            #submitOrderBtn {
+                box-shadow: 0 4px 15px rgba(0, 185, 255, 0.4);
+            }
+        }
+        
+        /* Scroll indicator animation */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 50px;
+            border: 2px solid var(--wise-color);
+            border-radius: 15px;
+            display: none;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 10px;
+            z-index: 5;
+        }
+        
+        .scroll-indicator:after {
+            content: '';
+            width: 4px;
+            height: 10px;
+            background-color: var(--wise-color);
+            border-radius: 2px;
+            animation: scrollIndicator 1.5s infinite;
+        }
+        
+        @keyframes scrollIndicator {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(10px);
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
             }
         }
     </style>
@@ -1136,6 +1249,8 @@
     <!-- New Payment Dialog -->
     <div class="dialog-overlay" id="paymentDialog">
         <div class="payment-dialog-box">
+            <div class="scroll-indicator" id="scrollIndicator"></div>
+            
             <button class="close-dialog" id="closePaymentDialog">
                 <i class="fas fa-times"></i>
             </button>
@@ -1242,13 +1357,13 @@
                 </ol>
             </div>
             
-            <div style="margin-top: 30px;">
+            <div style="margin-top: 30px; padding-bottom: 20px;">
                 <button class="btn btn-success" id="submitOrderBtn" disabled style="background: linear-gradient(to right, var(--wise-color), #0099cc); border-color: var(--wise-color);">
                     <i class="fas fa-paper-plane"></i> Passer la commande
                 </button>
             </div>
             
-            <div style="margin-top: 20px;">
+            <div style="margin-top: 20px; padding-bottom: 10px;">
                 <button class="btn btn-secondary btn-small" id="backToCustomerInfo" style="background: linear-gradient(to right, var(--secondary), #00b7ff); border-color: var(--secondary);">
                     <i class="fas fa-arrow-left"></i> Retour aux informations
                 </button>
@@ -1332,6 +1447,7 @@
         const previewImage = document.getElementById('previewImage');
         const removePreviewBtn = document.getElementById('removePreview');
         const submitOrderBtn = document.getElementById('submitOrderBtn');
+        const scrollIndicator = document.getElementById('scrollIndicator');
         
         let selectedPaymentMethod = null;
         let currentAmount = 30;
@@ -1455,7 +1571,6 @@
             const formattedTotal = totalGDS.toLocaleString('fr-FR');
             
             // Mettre à jour le contenu de la boîte de dialogue de paiement
-            document.getElementById('dialogPlanTitle').textContent = `Recharge WISE de $${amount} USD`;
             document.getElementById('dialogPlanName').textContent = `Recharge WISE - $${amount} USD`;
             document.getElementById('dialogPlanDuration').textContent = `$${amount} USD`;
             document.getElementById('dialogPlanPrice').textContent = `${formattedTotal} GDS`;
@@ -1466,8 +1581,41 @@
             submitOrderBtn.disabled = true;
             submitOrderBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Passer la commande';
             
-            // Afficher la boîte de dialogue de paiement
-            paymentDialog.classList.add('active');
+            // AJOUTER CETTE PARTIE POUR AMÉLIORER L'EXPÉRIENCE
+            // Attendre un peu pour s'assurer que le DOM est mis à jour
+            setTimeout(() => {
+                // Afficher la boîte de dialogue de paiement
+                paymentDialog.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                
+                // Configurer le défilement
+                setupDialogScrolling();
+                
+                // Sur mobile, montrer l'indicateur de défilement
+                if (window.innerWidth <= 768) {
+                    scrollIndicator.style.display = 'flex';
+                    
+                    // Cacher l'indicateur après 5 secondes
+                    setTimeout(() => {
+                        scrollIndicator.style.display = 'none';
+                    }, 5000);
+                }
+                
+                // Auto-scroll léger sur mobile pour montrer qu'il y a du contenu
+                if (window.innerWidth <= 768) {
+                    setTimeout(() => {
+                        const dialogBox = document.querySelector('.payment-dialog-box');
+                        if (dialogBox && dialogBox.scrollHeight > dialogBox.clientHeight) {
+                            dialogBox.scrollTop = 50; // Légèrement vers le bas
+                            
+                            // Revenir en haut après 1 seconde
+                            setTimeout(() => {
+                                dialogBox.scrollTop = 0;
+                            }, 1000);
+                        }
+                    }, 300);
+                }
+            }, 50);
         }
         
         // Payment method selection
@@ -1512,6 +1660,16 @@
                     previewImage.src = proofImageData;
                     previewContainer.style.display = 'block';
                     submitOrderBtn.disabled = false;
+                    
+                    // Scroller vers le bouton après téléchargement de l'image
+                    if (window.innerWidth <= 768) {
+                        setTimeout(() => {
+                            const dialogBox = document.querySelector('.payment-dialog-box');
+                            if (dialogBox) {
+                                dialogBox.scrollTop = dialogBox.scrollHeight;
+                            }
+                        }, 300);
+                    }
                 };
                 reader.readAsDataURL(file);
             }
@@ -1528,6 +1686,27 @@
             previewImage.src = '';
             previewContainer.style.display = 'none';
             submitOrderBtn.disabled = true;
+        }
+        
+        // Détecter quand l'utilisateur scroll dans la boîte de dialogue
+        function setupDialogScrolling() {
+            const paymentDialogBox = document.querySelector('.payment-dialog-box');
+            if (paymentDialogBox) {
+                paymentDialogBox.addEventListener('scroll', function() {
+                    const scrollPosition = paymentDialogBox.scrollTop + paymentDialogBox.clientHeight;
+                    const scrollHeight = paymentDialogBox.scrollHeight;
+                    
+                    // Cacher l'indicateur de défilement quand l'utilisateur scroll
+                    scrollIndicator.style.display = 'none';
+                    
+                    // Si l'utilisateur est proche du bas, rendre le bouton plus visible
+                    if (scrollHeight - scrollPosition < 100) {
+                        submitOrderBtn.style.boxShadow = '0 0 15px rgba(0, 185, 255, 0.5)';
+                    } else {
+                        submitOrderBtn.style.boxShadow = '0 4px 12px rgba(0, 185, 255, 0.3)';
+                    }
+                });
+            }
         }
         
         // Submit order
@@ -1667,10 +1846,20 @@
             document.getElementById('natcashPaymentOption').classList.add('active');
             document.getElementById('moncashPaymentOption').classList.remove('active');
             selectedPaymentMethod = 'natcash';
+            // Cacher l'indicateur de défilement
+            scrollIndicator.style.display = 'none';
         }
         
         // Initialize calculation on page load
         calculateWiseRecharge();
+        
+        // Ajouter un événement pour le redimensionnement de la fenêtre
+        window.addEventListener('resize', () => {
+            if (paymentDialog.classList.contains('active')) {
+                // Reconfigurer le défilement si la taille change
+                setupDialogScrolling();
+            }
+        });
     </script>
 </body>
 </html>
