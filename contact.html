@@ -548,6 +548,30 @@
             to { opacity: 1; }
         }
         
+        /* Admin Link */
+        .admin-access-link {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            z-index: 999;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .admin-access-link:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
         /* Responsive */
         @media (max-width: 992px) {
             .contact-hero h1 {
@@ -607,6 +631,13 @@
             .form-row {
                 grid-template-columns: 1fr;
             }
+            
+            .admin-access-link {
+                bottom: 10px;
+                right: 10px;
+                padding: 8px 15px;
+                font-size: 0.8rem;
+            }
         }
         
         @media (max-width: 576px) {
@@ -625,6 +656,11 @@
     </style>
 </head>
 <body>
+    <!-- Admin Access Link -->
+    <a href="admin.html" class="admin-access-link" target="_blank">
+        <i class="fas fa-lock"></i> Panel Admin
+    </a>
+    
     <!-- Header -->
     <header>
         <div class="container">
@@ -898,6 +934,98 @@
     </footer>
 
     <script>
+        // Fonction pour initialiser les données d'exemple si nécessaire
+        function initializeSampleData() {
+            try {
+                const existingComments = loadCommentsFromStorage();
+                
+                if (existingComments.length === 0) {
+                    const sampleComments = [
+                        {
+                            id: 1,
+                            fullName: "Jean Dupont",
+                            phone: "+509 48 12 34 56",
+                            email: "jean.dupont@example.com",
+                            subject: "Diamants FreeFire",
+                            message: "Bonjour, j'ai commandé 500 diamants FreeFire il y a 2 heures mais je ne les ai pas encore reçus. Pouvez-vous vérifier?",
+                            date: new Date().toISOString().replace('T', ' ').substring(0, 16),
+                            status: "new",
+                            read: false
+                        },
+                        {
+                            id: 2,
+                            fullName: "Marie Laurent",
+                            phone: "+509 48 98 76 54",
+                            email: "marie.laurent@example.com",
+                            subject: "Abonnement Netflix",
+                            message: "Je souhaite souscrire à un abonnement Netflix Premium pour 6 mois. Quels sont les tarifs et modalités?",
+                            date: new Date(Date.now() - 86400000).toISOString().replace('T', ' ').substring(0, 16), // Hier
+                            status: "pending",
+                            read: true
+                        },
+                        {
+                            id: 3,
+                            fullName: "Pierre Martin",
+                            phone: "+1 510-281 7365",
+                            email: "pierre.martin@example.com",
+                            subject: "Création compte PayPal",
+                            message: "J'ai besoin d'un compte PayPal vérifié pour mes transactions en ligne. Combien de temps prend le processus?",
+                            date: new Date(Date.now() - 172800000).toISOString().replace('T', ' ').substring(0, 16), // Avant-hier
+                            status: "responded",
+                            read: true
+                        }
+                    ];
+                    
+                    saveCommentsToStorage(sampleComments);
+                    console.log('Données d\'exemple initialisées');
+                }
+            } catch (error) {
+                console.error('Erreur lors de l\'initialisation des données:', error);
+            }
+        }
+        
+        // Fonction pour charger les commentaires depuis le stockage
+        function loadCommentsFromStorage() {
+            try {
+                const comments = localStorage.getItem('escompany_comments');
+                return comments ? JSON.parse(comments) : [];
+            } catch (error) {
+                console.error('Erreur lors du chargement des commentaires:', error);
+                return [];
+            }
+        }
+        
+        // Fonction pour sauvegarder les commentaires dans le stockage
+        function saveCommentsToStorage(comments) {
+            try {
+                localStorage.setItem('escompany_comments', JSON.stringify(comments));
+                return true;
+            } catch (error) {
+                console.error('Erreur lors de la sauvegarde des commentaires:', error);
+                return false;
+            }
+        }
+        
+        // Fonction pour sauvegarder un commentaire
+        function saveCommentToStorage(comment) {
+            try {
+                // Charger les commentaires existants
+                let existingComments = loadCommentsFromStorage();
+                
+                // Ajouter le nouveau commentaire
+                existingComments.push(comment);
+                
+                // Sauvegarder dans le stockage
+                saveCommentsToStorage(existingComments);
+                
+                console.log('Commentaire sauvegardé:', comment);
+                return true;
+            } catch (error) {
+                console.error('Erreur lors de la sauvegarde du commentaire:', error);
+                return false;
+            }
+        }
+        
         // Mobile menu toggle
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mainNav = document.getElementById('mainNav');
@@ -939,8 +1067,27 @@
             const about = document.getElementById('about').value;
             const message = document.getElementById('message').value;
             
-            // In a real application, you would send this data to a server
-            // For demonstration, we'll show a success message
+            // Create comment object
+            const comment = {
+                id: Date.now(), // ID unique basé sur le timestamp
+                fullName: fullName,
+                phone: phoneNumber,
+                email: email,
+                subject: getSubjectText(about),
+                message: message,
+                date: new Date().toLocaleString('fr-FR', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }),
+                status: 'new',
+                read: false
+            };
+            
+            // Save to storage
+            saveCommentToStorage(comment);
             
             // Show success message
             successMessage.classList.add('active');
@@ -955,13 +1102,45 @@
             }, 5000);
             
             // Log form data (for debugging)
-            console.log('Form submitted:', {
-                fullName,
-                phoneNumber,
-                email,
-                about,
-                message
-            });
+            console.log('Formulaire soumis:', comment);
+        });
+        
+        // Helper function to get subject text
+        function getSubjectText(value) {
+            const subjects = {
+                'freefire': 'Diamants FreeFire',
+                'netflix': 'Abonnement Netflix',
+                'paypal': 'Création compte PayPal',
+                'wise': 'Recharge compte WISE',
+                'technical': 'Problème technique',
+                'payment': 'Problème de paiement',
+                'other': 'Autre'
+            };
+            return subjects[value] || value;
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize sample data
+            initializeSampleData();
+            
+            // Check if admin panel exists and show/hide admin link accordingly
+            try {
+                // Try to check if admin.html exists (this is a simple check)
+                // In production, you might want to implement this differently
+                fetch('admin.html', { method: 'HEAD' })
+                    .then(response => {
+                        if (!response.ok) {
+                            document.querySelector('.admin-access-link').style.display = 'none';
+                        }
+                    })
+                    .catch(() => {
+                        document.querySelector('.admin-access-link').style.display = 'none';
+                    });
+            } catch (error) {
+                console.log('Admin panel check failed, hiding admin link');
+                document.querySelector('.admin-access-link').style.display = 'none';
+            }
         });
     </script>
 </body>
