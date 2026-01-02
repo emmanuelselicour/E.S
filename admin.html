@@ -716,6 +716,23 @@
             display: block;
         }
         
+        /* Loading */
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: var(--secondary);
+        }
+        
+        .loading-spinner.active {
+            display: block;
+        }
+        
+        .loading-spinner i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
         /* Responsive */
         @media (max-width: 992px) {
             .admin-dashboard {
@@ -794,13 +811,13 @@
             <h3 style="text-align: center; color: var(--primary); margin-bottom: 20px;">Connexion Admin</h3>
             
             <div class="login-error" id="loginError">
-                <i class="fas fa-exclamation-circle"></i> Identifiants incorrects. Veuillez réessayer.
+                <i class="fas fa-exclamation-circle"></i> <span id="loginErrorText">Identifiants incorrects. Veuillez réessayer.</span>
             </div>
             
             <form class="login-form" id="loginForm">
                 <div class="form-group">
                     <label class="form-label" for="adminUsername">Nom d'utilisateur</label>
-                    <input type="text" id="adminUsername" class="form-input" required>
+                    <input type="text" id="adminUsername" class="form-input" required value="admin_escompany">
                 </div>
                 
                 <div class="form-group">
@@ -808,10 +825,15 @@
                     <input type="password" id="adminPassword" class="form-input" required>
                 </div>
                 
-                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px;">
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px;" id="loginBtn">
                     <i class="fas fa-sign-in-alt"></i> Se connecter
                 </button>
             </form>
+            
+            <div class="loading-spinner" id="loginLoading">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Connexion en cours...</p>
+            </div>
             
             <p style="text-align: center; margin-top: 25px; color: var(--gray); font-size: 0.9rem;">
                 Accès réservé à l'administrateur
@@ -862,21 +884,6 @@
                     <li>
                         <a href="#" data-page="comments">
                             <i class="fas fa-comments"></i> Commentaires
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" data-page="users">
-                            <i class="fas fa-users"></i> Utilisateurs
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" data-page="services">
-                            <i class="fas fa-shopping-cart"></i> Services
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" data-page="settings">
-                            <i class="fas fa-cog"></i> Paramètres
                         </a>
                     </li>
                     <li>
@@ -938,8 +945,14 @@
                 </div>
             </div>
             
+            <!-- Loading Spinner -->
+            <div class="loading-spinner" id="commentsLoading">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Chargement des commentaires...</p>
+            </div>
+            
             <!-- Comments Table -->
-            <div class="comments-section">
+            <div class="comments-section" id="commentsSection" style="display: none;">
                 <div class="section-header">
                     <h2><i class="fas fa-list"></i> Liste des Commentaires</h2>
                     <div class="table-filters">
@@ -963,6 +976,13 @@
                     </thead>
                     <tbody id="commentsTableBody">
                         <!-- Comments will be dynamically inserted here -->
+                        <tr id="noCommentsRow">
+                            <td colspan="6" style="text-align: center; padding: 40px; color: var(--gray);">
+                                <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 15px; display: block;"></i>
+                                <h3 style="color: var(--primary); margin-bottom: 10px;">Aucun commentaire</h3>
+                                <p>Les commentaires envoyés via le formulaire de contact apparaîtront ici.</p>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -1027,79 +1047,37 @@
     </div>
     
     <script>
-        // Authentication credentials (in production, these should be stored securely on a server)
-        const ADMIN_USERNAME = "admin_escompany";
-        const ADMIN_PASSWORD = "admin123";
-        
-        // Sample comments data (in production, this would come from a database)
-        let commentsData = [
-            {
-                id: 1,
-                fullName: "Jean Dupont",
-                phone: "+509 48 12 34 56",
-                email: "jean.dupont@example.com",
-                subject: "Diamants FreeFire",
-                message: "Bonjour, j'ai commandé 500 diamants FreeFire il y a 2 heures mais je ne les ai pas encore reçus. Pouvez-vous vérifier?",
-                date: "2023-10-15 14:30",
-                status: "new", // new, pending, responded
-                read: false
-            },
-            {
-                id: 2,
-                fullName: "Marie Laurent",
-                phone: "+509 48 98 76 54",
-                email: "marie.laurent@example.com",
-                subject: "Abonnement Netflix",
-                message: "Je souhaite souscrire à un abonnement Netflix Premium pour 6 mois. Quels sont les tarifs et modalités?",
-                date: "2023-10-14 10:15",
-                status: "pending",
-                read: true
-            },
-            {
-                id: 3,
-                fullName: "Pierre Martin",
-                phone: "+1 510-281 7365",
-                email: "pierre.martin@example.com",
-                subject: "Création compte PayPal",
-                message: "J'ai besoin d'un compte PayPal vérifié pour mes transactions en ligne. Combien de temps prend le processus?",
-                date: "2023-10-13 16:45",
-                status: "responded",
-                read: true
-            },
-            {
-                id: 4,
-                fullName: "Sophie Bernard",
-                phone: "+509 36 12 34 56",
-                email: "sophie.bernard@example.com",
-                subject: "Recharge compte WISE",
-                message: "Je veux recharger mon compte WISE avec 500 USD. Quel est le taux de change actuel?",
-                date: "2023-10-12 09:20",
-                status: "responded",
-                read: true
-            },
-            {
-                id: 5,
-                fullName: "Thomas Petit",
-                phone: "+509 48 55 66 77",
-                email: "thomas.petit@example.com",
-                subject: "Problème technique",
-                message: "Le lien de paiement pour les diamants FreeFire ne fonctionne pas. Pouvez-vous m'envoyer un nouveau lien?",
-                date: "2023-10-11 18:10",
-                status: "new",
-                read: false
+        // Configuration de l'API Render
+        const API_CONFIG = {
+            BASE_URL: 'https://escompany-api.onrender.com', // REMPLACE AVEC TON URL RENDER
+            ENDPOINTS: {
+                COMMENTS: '/api/comments',
+                LOGIN: '/api/admin/login',
+                HEALTH: '/api/health'
             }
-        ];
-        
+        };
+
+        // Données des commentaires
+        let commentsData = [];
+        let currentFilter = 'all';
+        let selectedCommentId = null;
+
         // DOM Elements
         const loginPage = document.getElementById('loginPage');
         const adminDashboard = document.getElementById('adminDashboard');
         const loginForm = document.getElementById('loginForm');
         const loginError = document.getElementById('loginError');
+        const loginErrorText = document.getElementById('loginErrorText');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginLoading = document.getElementById('loginLoading');
         const logoutBtn = document.getElementById('logoutBtn');
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const adminSidebar = document.getElementById('adminSidebar');
         const commentsTableBody = document.getElementById('commentsTableBody');
+        const noCommentsRow = document.getElementById('noCommentsRow');
         const filterButtons = document.querySelectorAll('.filter-btn');
+        const commentsSection = document.getElementById('commentsSection');
+        const commentsLoading = document.getElementById('commentsLoading');
         const commentModal = document.getElementById('commentModal');
         const closeModalBtn = document.getElementById('closeModalBtn');
         const closeModalIcon = document.getElementById('closeModal');
@@ -1119,88 +1097,174 @@
         const newCommentsEl = document.getElementById('newComments');
         const pendingCommentsEl = document.getElementById('pendingComments');
         const respondedCommentsEl = document.getElementById('respondedComments');
-        
-        // Current selected comment
-        let selectedCommentId = null;
-        
-        // Check if user is already logged in
-        function checkAuth() {
-            const isLoggedIn = localStorage.getItem('escompany_admin_logged_in');
-            const username = localStorage.getItem('escompany_admin_username');
-            
-            if (isLoggedIn === 'true' && username) {
-                showAdminDashboard(username);
+
+        // Vérifier la connexion API
+        async function checkAPIHealth() {
+            try {
+                const response = await fetch(API_CONFIG.BASE_URL + API_CONFIG.ENDPOINTS.HEALTH);
+                const data = await response.json();
+                return data.success === true;
+            } catch (error) {
+                console.warn('API non disponible:', error.message);
+                return false;
             }
         }
-        
+
         // Login form submission
-        loginForm.addEventListener('submit', function(e) {
+        loginForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const username = document.getElementById('adminUsername').value;
             const password = document.getElementById('adminPassword').value;
             
-            // Simple authentication (in production, this would be server-side)
-            if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-                // Save login state
-                localStorage.setItem('escompany_admin_logged_in', 'true');
-                localStorage.setItem('escompany_admin_username', username);
-                
-                showAdminDashboard(username);
-            } else {
+            // Vérifier que l'API est disponible
+            const apiHealthy = await checkAPIHealth();
+            if (!apiHealthy) {
+                loginErrorText.textContent = 'L\'API n\'est pas disponible. Veuillez réessayer plus tard.';
                 loginError.classList.add('active');
-                setTimeout(() => {
-                    loginError.classList.remove('active');
-                }, 3000);
+                return;
+            }
+            
+            // Afficher le loading
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connexion...';
+            loginLoading.classList.add('active');
+            loginError.classList.remove('active');
+            
+            try {
+                const response = await fetch(API_CONFIG.BASE_URL + API_CONFIG.ENDPOINTS.LOGIN, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success && data.token) {
+                    // Sauvegarder le token
+                    localStorage.setItem('escompany_admin_logged_in', 'true');
+                    localStorage.setItem('escompany_admin_username', username);
+                    localStorage.setItem('admin_token', data.token);
+                    localStorage.setItem('admin_user', JSON.stringify(data.user));
+                    
+                    showAdminDashboard(username);
+                    
+                    // Charger les commentaires
+                    await loadCommentsFromAPI();
+                    
+                } else {
+                    showLoginError(data.error || 'Identifiants incorrects');
+                }
+            } catch (error) {
+                console.error('Erreur de connexion:', error);
+                showLoginError('Erreur de connexion au serveur. Vérifiez votre connexion internet.');
+            } finally {
+                // Réinitialiser le bouton
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Se connecter';
+                loginLoading.classList.remove('active');
             }
         });
-        
-        // Show admin dashboard
-        function showAdminDashboard(username) {
-            loginPage.style.display = 'none';
-            adminDashboard.style.display = 'grid';
-            
-            // Set admin user info
-            adminUserName.textContent = username.charAt(0).toUpperCase() + username.slice(1);
-            adminUserRole.textContent = "Administrateur";
-            
-            // Load comments
-            updateCommentsTable();
-            updateStats();
+
+        // Afficher erreur login
+        function showLoginError(message) {
+            loginErrorText.textContent = message;
+            loginError.classList.add('active');
+            setTimeout(() => {
+                loginError.classList.remove('active');
+            }, 5000);
         }
-        
+
         // Logout
         logoutBtn.addEventListener('click', function() {
             localStorage.removeItem('escompany_admin_logged_in');
             localStorage.removeItem('escompany_admin_username');
+            localStorage.removeItem('admin_token');
+            localStorage.removeItem('admin_user');
             location.reload();
         });
-        
+
         // Mobile menu toggle
         mobileMenuBtn.addEventListener('click', function() {
             adminSidebar.classList.toggle('active');
         });
-        
+
         // Navigation
         document.querySelectorAll('.admin-nav a').forEach(link => {
             link.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Remove active class from all links
-                document.querySelectorAll('.admin-nav a').forEach(item => {
-                    item.classList.remove('active');
-                });
-                
-                // Add active class to clicked link
-                this.classList.add('active');
-                
-                // For mobile, close sidebar after click
-                if (window.innerWidth <= 992) {
-                    adminSidebar.classList.remove('active');
+                if (this.getAttribute('href') === '#') {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links
+                    document.querySelectorAll('.admin-nav a').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // For mobile, close sidebar after click
+                    if (window.innerWidth <= 992) {
+                        adminSidebar.classList.remove('active');
+                    }
                 }
             });
         });
-        
+
+        // Charger les commentaires depuis l'API
+        async function loadCommentsFromAPI() {
+            try {
+                const token = localStorage.getItem('admin_token');
+                if (!token) {
+                    console.error('Token manquant');
+                    return;
+                }
+                
+                commentsLoading.classList.add('active');
+                commentsSection.style.display = 'none';
+                
+                const response = await fetch(API_CONFIG.BASE_URL + API_CONFIG.ENDPOINTS.COMMENTS, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.status === 401) {
+                    // Token invalide
+                    localStorage.clear();
+                    location.reload();
+                    return;
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    commentsData = data.comments || [];
+                    updateCommentsTable();
+                    updateStats();
+                    
+                    if (commentsData.length > 0) {
+                        commentsSection.style.display = 'block';
+                        noCommentsRow.style.display = 'none';
+                    } else {
+                        commentsSection.style.display = 'none';
+                        noCommentsRow.style.display = 'table-row';
+                    }
+                    
+                    console.log(`${commentsData.length} commentaires chargés depuis l'API`);
+                } else {
+                    alert('Erreur: ' + (data.error || 'Impossible de charger les commentaires'));
+                }
+            } catch (error) {
+                console.error('Erreur chargement commentaires:', error);
+                alert('Impossible de se connecter à l\'API. Vérifiez votre connexion.');
+            } finally {
+                commentsLoading.classList.remove('active');
+            }
+        }
+
         // Update stats
         function updateStats() {
             const total = commentsData.length;
@@ -1213,14 +1277,14 @@
             pendingCommentsEl.textContent = pending;
             respondedCommentsEl.textContent = responded;
         }
-        
+
         // Update comments table
-        function updateCommentsTable(filter = 'all') {
+        function updateCommentsTable() {
             let filteredComments = [...commentsData];
             
             // Apply filter
-            if (filter !== 'all') {
-                filteredComments = commentsData.filter(comment => comment.status === filter);
+            if (currentFilter !== 'all') {
+                filteredComments = commentsData.filter(comment => comment.status === currentFilter);
             }
             
             // Sort by date (newest first)
@@ -1230,73 +1294,85 @@
             commentsTableBody.innerHTML = '';
             
             // Add comments to table
-            filteredComments.forEach(comment => {
-                const row = document.createElement('tr');
+            if (filteredComments.length === 0) {
+                noCommentsRow.style.display = 'table-row';
+                commentsTableBody.appendChild(noCommentsRow);
+            } else {
+                noCommentsRow.style.display = 'none';
                 
-                // Format date for display
-                const commentDate = new Date(comment.date);
-                const formattedDate = commentDate.toLocaleDateString('fr-FR', {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric'
-                }) + ' ' + commentDate.toLocaleTimeString('fr-FR', {
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-                
-                // Get first letter for avatar
-                const firstLetter = comment.fullName.charAt(0).toUpperCase();
-                
-                // Status badge text
-                let statusText = '';
-                let statusClass = '';
-                
-                switch(comment.status) {
-                    case 'new':
-                        statusText = 'Nouveau';
-                        statusClass = 'status-new';
-                        break;
-                    case 'pending':
-                        statusText = 'En attente';
-                        statusClass = 'status-pending';
-                        break;
-                    case 'responded':
-                        statusText = 'Répondu';
-                        statusClass = 'status-responded';
-                        break;
-                }
-                
-                row.innerHTML = `
-                    <td>
-                        <div class="comment-user">
-                            <div class="user-avatar">${firstLetter}</div>
-                            <div class="user-info">
-                                <h4>${comment.fullName}</h4>
-                                <p>${comment.email}</p>
+                filteredComments.forEach(comment => {
+                    const row = document.createElement('tr');
+                    
+                    // Format date for display
+                    const commentDate = new Date(comment.date);
+                    const formattedDate = commentDate.toLocaleDateString('fr-FR', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric'
+                    }) + ' ' + commentDate.toLocaleTimeString('fr-FR', {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                    
+                    // Get first letter for avatar
+                    const firstLetter = comment.fullName ? comment.fullName.charAt(0).toUpperCase() : '?';
+                    
+                    // Status badge text
+                    let statusText = '';
+                    let statusClass = '';
+                    
+                    switch(comment.status) {
+                        case 'new':
+                            statusText = 'Nouveau';
+                            statusClass = 'status-new';
+                            break;
+                        case 'pending':
+                            statusText = 'En attente';
+                            statusClass = 'status-pending';
+                            break;
+                        case 'responded':
+                            statusText = 'Répondu';
+                            statusClass = 'status-responded';
+                            break;
+                        default:
+                            statusText = 'Nouveau';
+                            statusClass = 'status-new';
+                    }
+                    
+                    // Truncate message for display
+                    const truncatedMessage = comment.message.length > 50 
+                        ? comment.message.substring(0, 50) + '...' 
+                        : comment.message;
+                    
+                    row.innerHTML = `
+                        <td>
+                            <div class="comment-user">
+                                <div class="user-avatar">${firstLetter}</div>
+                                <div class="user-info">
+                                    <h4>${comment.fullName || 'Non renseigné'}</h4>
+                                    <p>${comment.email || 'Pas d\'email'}</p>
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                    <td class="comment-subject">${comment.subject}</td>
-                    <td class="comment-message" title="${comment.message}">${comment.message.substring(0, 50)}${comment.message.length > 50 ? '...' : ''}</td>
-                    <td>${formattedDate}</td>
-                    <td><span class="status-badge ${statusClass}">${statusText}</span></td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="action-btn view-btn" data-id="${comment.id}" title="Voir">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="action-btn mark-btn" data-id="${comment.id}" title="Marquer comme répondu">
-                                <i class="fas fa-check"></i>
-                            </button>
-                            <button class="action-btn delete-btn" data-id="${comment.id}" title="Supprimer">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </td>
-                `;
-                
-                commentsTableBody.appendChild(row);
-            });
+                        </td>
+                        <td class="comment-subject">${comment.subject || 'Autre'}</td>
+                        <td class="comment-message" title="${comment.message}">${truncatedMessage}</td>
+                        <td>${formattedDate}</td>
+                        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn view-btn" data-id="${comment.id}" title="Voir">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="action-btn mark-btn" data-id="${comment.id}" title="Marquer comme répondu">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    
+                    commentsTableBody.appendChild(row);
+                });
+            }
             
             // Add event listeners to action buttons
             document.querySelectorAll('.view-btn').forEach(btn => {
@@ -1313,110 +1389,104 @@
                 });
             });
             
-            document.querySelectorAll('.delete-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const commentId = parseInt(this.getAttribute('data-id'));
-                    deleteComment(commentId);
-                });
-            });
-            
             // Update filter buttons
             filterButtons.forEach(btn => {
-                if (btn.getAttribute('data-filter') === filter) {
+                if (btn.getAttribute('data-filter') === currentFilter) {
                     btn.classList.add('active');
                 } else {
                     btn.classList.remove('active');
                 }
             });
         }
-        
+
         // View comment details
         function viewComment(commentId) {
             const comment = commentsData.find(c => c.id === commentId);
             
-            if (!comment) return;
+            if (!comment) {
+                alert('Commentaire non trouvé');
+                return;
+            }
             
             selectedCommentId = commentId;
             
             // Update modal content
-            modalFullName.textContent = comment.fullName;
-            modalPhone.textContent = comment.phone;
-            modalEmail.textContent = comment.email;
-            modalSubject.textContent = comment.subject;
-            modalMessage.textContent = comment.message;
-            modalDate.textContent = comment.date;
+            modalFullName.textContent = comment.fullName || 'Non renseigné';
+            modalPhone.textContent = comment.phone || 'Non renseigné';
+            modalEmail.textContent = comment.email || 'Non renseigné';
+            modalSubject.textContent = comment.subject || 'Autre';
+            modalMessage.textContent = comment.message || 'Pas de message';
             
-            // Mark as read if it's new
-            if (!comment.read) {
-                comment.read = true;
-                updateCommentsTable();
-                updateStats();
-            }
+            // Format date
+            const commentDate = new Date(comment.date);
+            modalDate.textContent = commentDate.toLocaleString('fr-FR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
             
             // Show modal
             commentModal.classList.add('active');
         }
-        
+
         // Mark comment as responded
-        function markAsResponded(commentId) {
-            const commentIndex = commentsData.findIndex(c => c.id === commentId);
-            
-            if (commentIndex !== -1) {
-                commentsData[commentIndex].status = 'responded';
-                updateCommentsTable();
-                updateStats();
-                
-                // If modal is open for this comment, update it
-                if (selectedCommentId === commentId) {
-                    modalSubject.textContent = commentsData[commentIndex].subject;
-                }
-                
-                alert('Commentaire marqué comme répondu');
-            }
-        }
-        
-        // Delete comment
-        function deleteComment(commentId) {
-            if (confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?')) {
-                commentsData = commentsData.filter(c => c.id !== commentId);
-                updateCommentsTable();
-                updateStats();
-                alert('Commentaire supprimé');
-            }
-        }
-        
-        // Send response (simulated)
-        function sendResponse() {
-            const responseText = document.getElementById('responseText').value;
-            
-            if (!responseText.trim()) {
-                alert('Veuillez écrire une réponse');
+        async function markAsResponded(commentId) {
+            if (!confirm('Marquer ce commentaire comme répondu ?')) {
                 return;
             }
             
-            // In production, this would send an email to the user
-            alert('Réponse envoyée à l\'utilisateur !');
-            
-            // Mark as responded
-            if (selectedCommentId) {
-                markAsResponded(selectedCommentId);
+            try {
+                const token = localStorage.getItem('admin_token');
+                const response = await fetch(`${API_CONFIG.BASE_URL}/api/comments/${commentId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        status: 'responded',
+                        read: true
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Mettre à jour localement
+                    const commentIndex = commentsData.findIndex(c => c.id === commentId);
+                    if (commentIndex !== -1) {
+                        commentsData[commentIndex].status = 'responded';
+                        commentsData[commentIndex].read = true;
+                        updateCommentsTable();
+                        updateStats();
+                        
+                        // Si modal est ouvert pour ce commentaire, fermer
+                        if (selectedCommentId === commentId) {
+                            commentModal.classList.remove('active');
+                        }
+                        
+                        alert('Commentaire marqué comme répondu');
+                    }
+                } else {
+                    alert('Erreur: ' + (data.error || 'Impossible de mettre à jour'));
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Erreur lors de la mise à jour');
             }
-            
-            // Clear response textarea
-            document.getElementById('responseText').value = '';
-            
-            // Close modal
-            commentModal.classList.remove('active');
         }
-        
+
         // Filter comments
         filterButtons.forEach(btn => {
             btn.addEventListener('click', function() {
-                const filter = this.getAttribute('data-filter');
-                updateCommentsTable(filter);
+                currentFilter = this.getAttribute('data-filter');
+                updateCommentsTable();
             });
         });
-        
+
         // Modal close events
         closeModalBtn.addEventListener('click', function() {
             commentModal.classList.remove('active');
@@ -1432,20 +1502,126 @@
                 commentModal.classList.remove('active');
             }
         });
-        
+
         // Mark as responded button
         markAsRespondedBtn.addEventListener('click', function() {
             if (selectedCommentId) {
                 markAsResponded(selectedCommentId);
-                commentModal.classList.remove('active');
             }
         });
-        
-        // Send response button
-        sendResponseBtn.addEventListener('click', sendResponse);
-        
+
+        // Send response button (simulé)
+        sendResponseBtn.addEventListener('click', function() {
+            const responseText = document.getElementById('responseText').value;
+            
+            if (!responseText.trim()) {
+                alert('Veuillez écrire une réponse');
+                return;
+            }
+            
+            // Ici, tu pourrais envoyer un email à l'utilisateur
+            alert('Réponse envoyée à l\'utilisateur !');
+            
+            // Marquer comme répondu
+            if (selectedCommentId) {
+                markAsResponded(selectedCommentId);
+            }
+            
+            // Clear response textarea
+            document.getElementById('responseText').value = '';
+            
+            // Close modal
+            commentModal.classList.remove('active');
+        });
+
+        // Show admin dashboard
+        function showAdminDashboard(username) {
+            loginPage.style.display = 'none';
+            adminDashboard.style.display = 'grid';
+            
+            // Set admin user info
+            adminUserName.textContent = username || 'Administrateur';
+            adminUserRole.textContent = "Administrateur ES_COMPANY";
+        }
+
+        // Check if user is already logged in
+        async function checkAuth() {
+            const isLoggedIn = localStorage.getItem('escompany_admin_logged_in');
+            const username = localStorage.getItem('escompany_admin_username');
+            const token = localStorage.getItem('admin_token');
+            
+            if (isLoggedIn === 'true' && username && token) {
+                try {
+                    // Vérifier si le token est toujours valide
+                    const response = await fetch(API_CONFIG.BASE_URL + API_CONFIG.ENDPOINTS.HEALTH, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        showAdminDashboard(username);
+                        await loadCommentsFromAPI();
+                    } else {
+                        // Token invalide
+                        localStorage.clear();
+                    }
+                } catch (error) {
+                    // API inaccessible, mais on peut montrer le dashboard
+                    showAdminDashboard(username);
+                    alert('API temporairement inaccessible. Mode hors ligne activé.');
+                }
+            }
+        }
+
+        // Rafraîchir automatiquement les commentaires toutes les 30 secondes
+        function startAutoRefresh() {
+            setInterval(async () => {
+                const token = localStorage.getItem('admin_token');
+                if (token) {
+                    try {
+                        const response = await fetch(API_CONFIG.BASE_URL + API_CONFIG.ENDPOINTS.COMMENTS, {
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        });
+                        
+                        if (response.ok) {
+                            const data = await response.json();
+                            if (data.success) {
+                                const oldCount = commentsData.length;
+                                commentsData = data.comments || [];
+                                if (commentsData.length !== oldCount) {
+                                    updateCommentsTable();
+                                    updateStats();
+                                    console.log('Commentaires rafraîchis automatiquement');
+                                }
+                            }
+                        }
+                    } catch (error) {
+                        // Silencieux en cas d'erreur
+                    }
+                }
+            }, 30000); // 30 secondes
+        }
+
         // Initialize
-        checkAuth();
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Vérifier la santé de l'API
+            const apiHealthy = await checkAPIHealth();
+            if (!apiHealthy) {
+                console.warn('API non disponible au chargement');
+            }
+            
+            // Vérifier l'authentification
+            await checkAuth();
+            
+            // Démarrer le rafraîchissement automatique
+            startAutoRefresh();
+            
+            // Tester la connexion à l'API
+            console.log('Configuration API:', API_CONFIG);
+        });
     </script>
 </body>
 </html>
