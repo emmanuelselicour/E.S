@@ -1255,7 +1255,7 @@
                     
                     <div class="form-group">
                         <label class="form-label" for="phone">Numéro de Téléphone <span class="required">*</span></label>
-                        <input type="tel" id="phone" class="form-control" required>
+                            <input type="tel" id="phone" class="form-control" required>
                         <div class="form-info">Utilisé pour la vérification du compte PayPal</div>
                     </div>
                     
@@ -1572,7 +1572,7 @@
         const API_CONFIG = {
             BASE_URL: 'https://escompany-api.onrender.com',
             ENDPOINTS: {
-                ORDERS: '/api/orders',
+                ORDERS: '/api/orders/paypal',
                 HEALTH: '/api/health'
             }
         };
@@ -1828,31 +1828,24 @@
                 const apiHealthy = await checkAPIHealth();
                 
                 if (!apiHealthy) {
-                    console.warn('API non disponible, sauvegarde locale uniquement');
-                    return { success: false, message: 'API non disponible' };
+                    throw new Error('API non disponible');
                 }
                 
                 // Préparer les données pour l'API
                 const apiOrderData = {
-                    type: 'paypal',
                     orderNumber: orderData.orderNumber,
                     customerName: orderData.customerName,
                     customerEmail: orderData.customerEmail,
                     customerPhone: orderData.customerPhone,
-                    serviceDetails: {
-                        paypalEmail: orderData.paypalEmail,
-                        country: orderData.country,
-                        price: orderData.price,
-                        service: 'Création complète de compte PayPal'
-                    },
-                    payment: {
-                        method: orderData.paymentMethod,
-                        number: orderData.paymentNumber,
-                        proofImage: orderData.proofImage ? 'image_uploaded' : null
-                    },
-                    status: 'pending',
+                    paypalEmail: orderData.paypalEmail,
+                    country: orderData.country,
                     notes: orderData.notes,
-                    date: orderData.date
+                    price: orderData.price,
+                    paymentMethod: orderData.paymentMethod,
+                    paymentNumber: orderData.paymentNumber,
+                    proofImage: orderData.proofImage,
+                    status: 'pending',
+                    type: 'paypal'
                 };
                 
                 const response = await fetch(API_CONFIG.BASE_URL + API_CONFIG.ENDPOINTS.ORDERS, {
@@ -1874,7 +1867,7 @@
                 }
             } catch (error) {
                 console.error('Erreur envoi commande à l\'API:', error);
-                return { success: false, message: error.message };
+                throw error;
             }
         }
         
@@ -1917,12 +1910,7 @@
                     processed: false
                 };
                 
-                // 1. Sauvegarder localement (fallback)
-                const existingOrders = JSON.parse(localStorage.getItem('paypal_orders')) || [];
-                existingOrders.push(orderData);
-                localStorage.setItem('paypal_orders', JSON.stringify(existingOrders));
-                
-                // 2. Envoyer à l'API
+                // Envoyer directement à l'API
                 const apiResult = await sendOrderToAPI(orderData);
                 
                 if (apiResult.success) {
@@ -1932,17 +1920,14 @@
                     document.body.style.overflow = 'auto';
                     resetForms();
                 } else {
-                    // Fallback: Sauvegarde locale seulement
-                    alert(`⚠️ Commande enregistrée localement!\n\nNuméro: ${orderData.orderNumber}\nNote: API non accessible, votre commande est sauvegardée.\nNous la traiterons manuellement.`);
-                    
-                    paymentDialog.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                    resetForms();
+                    alert(`❌ Erreur: ${apiResult.message || 'Impossible de sauvegarder la commande'}`);
+                    submitOrderBtn.disabled = false;
+                    submitOrderBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Passer la commande';
                 }
                 
             } catch (error) {
                 console.error('Erreur complète:', error);
-                alert("Une erreur s'est produite. Veuillez réessayer.");
+                alert(`❌ Impossible de se connecter au serveur.\n\nVeuillez nous contacter directement:\n\n📞 +1 510-281 7365\n✉️ contact.escompany@gmail.com\n\nAvec les détails de votre commande.`);
                 submitOrderBtn.disabled = false;
                 submitOrderBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Passer la commande';
             }
