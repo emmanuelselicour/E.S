@@ -1450,81 +1450,74 @@
         </div>
     </footer>
 
-    <script>
-        // Mobile menu toggle
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mainNav = document.getElementById('mainNav');
-        
-        mobileMenuBtn.addEventListener('click', () => {
-            mainNav.classList.toggle('active');
-        });
-        
-        // Variables
-        const customerInfoDialog = document.getElementById('customerInfoDialog');
-        const paymentDialog = document.getElementById('paymentDialog');
-        const closeCustomerDialogBtn = document.getElementById('closeCustomerDialog');
-        const closePaymentDialogBtn = document.getElementById('closePaymentDialog');
-        const backToCustomerInfoBtn = document.getElementById('backToCustomerInfo');
-        const paymentOptions = document.querySelectorAll('.payment-method-option');
-        const customerInfoForm = document.getElementById('customerInfoForm');
-        const proofImageInput = document.getElementById('proofImage');
-        const uploadContainer = document.getElementById('uploadContainer');
-        const previewContainer = document.getElementById('previewContainer');
-        const previewImage = document.getElementById('previewImage');
-        const removePreviewBtn = document.getElementById('removePreview');
-        const submitOrderBtn = document.getElementById('submitOrderBtn');
-        const scrollIndicator = document.getElementById('scrollIndicator');
-        const selectPlanButtons = document.querySelectorAll('.select-plan-btn');
-        const customAccountBtn = document.getElementById('customAccountBtn');
-        const planSelectionMessage = document.getElementById('planSelectionMessage');
-        const selectedPlanText = document.getElementById('selectedPlanText');
-        
-        let selectedPaymentMethod = null;
-        let selectedPlan = null;
-        let selectedPlanPrice = null;
-        let selectedPlanName = null;
-        let customerData = null;
-        let proofImageData = null;
-        
-        // Plan selection
-        selectPlanButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const planCard = this.closest('.plan-card');
-                const plan = planCard.getAttribute('data-plan');
-                const price = planCard.getAttribute('data-price');
-                const planName = planCard.querySelector('.plan-name').textContent;
-                
-                // Remove selected class from all cards
-                document.querySelectorAll('.plan-card').forEach(card => {
-                    card.classList.remove('plan-selected');
-                });
-                
-                // Add selected class to clicked card
-                planCard.classList.add('plan-selected');
-                
-                // Store selected plan data
-                selectedPlan = plan;
-                selectedPlanPrice = price;
-                selectedPlanName = planName;
-                
-                // Update selection message
-                selectedPlanText.textContent = `${planName} - ${parseInt(price).toLocaleString('fr-FR')} GDS/mois`;
-                planSelectionMessage.classList.add('active');
-                
-                // Show customer info dialog
-                setTimeout(() => {
-                    showCustomerInfoDialog();
-                }, 300);
-            });
-        });
-        
-        // Custom account button
-        customAccountBtn.addEventListener('click', () => {
-            selectedPlan = 'custom';
-            selectedPlanPrice = '0';
-            selectedPlanName = 'Compte personnalisé';
+<script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mainNav = document.getElementById('mainNav');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+        mainNav.classList.toggle('active');
+    });
+    
+    // Variables
+    const customerInfoDialog = document.getElementById('customerInfoDialog');
+    const paymentDialog = document.getElementById('paymentDialog');
+    const closeCustomerDialogBtn = document.getElementById('closeCustomerDialog');
+    const closePaymentDialogBtn = document.getElementById('closePaymentDialog');
+    const backToCustomerInfoBtn = document.getElementById('backToCustomerInfo');
+    const paymentOptions = document.querySelectorAll('.payment-method-option');
+    const customerInfoForm = document.getElementById('customerInfoForm');
+    const proofImageInput = document.getElementById('proofImage');
+    const uploadContainer = document.getElementById('uploadContainer');
+    const previewContainer = document.getElementById('previewContainer');
+    const previewImage = document.getElementById('previewImage');
+    const removePreviewBtn = document.getElementById('removePreview');
+    const submitOrderBtn = document.getElementById('submitOrderBtn');
+    const scrollIndicator = document.getElementById('scrollIndicator');
+    const selectPlanButtons = document.querySelectorAll('.select-plan-btn');
+    const customAccountBtn = document.getElementById('customAccountBtn');
+    const planSelectionMessage = document.getElementById('planSelectionMessage');
+    const selectedPlanText = document.getElementById('selectedPlanText');
+    
+    let selectedPaymentMethod = null;
+    let selectedPlan = null;
+    let selectedPlanPrice = null;
+    let selectedPlanName = null;
+    let customerData = null;
+    let proofImageData = null;
+    
+    // Configuration de l'API
+    const API_CONFIG = {
+        BASE_URL: 'https://escompany-api.onrender.com',
+        ENDPOINTS: {
+            ORDERS: '/api/orders',
+            HEALTH: '/api/health'
+        }
+    };
+    
+    // Plan selection
+    selectPlanButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const planCard = this.closest('.plan-card');
+            const plan = planCard.getAttribute('data-plan');
+            const price = planCard.getAttribute('data-price');
+            const planName = planCard.querySelector('.plan-name').textContent;
             
-            selectedPlanText.textContent = 'Compte personnalisé - Prix selon la durée';
+            // Remove selected class from all cards
+            document.querySelectorAll('.plan-card').forEach(card => {
+                card.classList.remove('plan-selected');
+            });
+            
+            // Add selected class to clicked card
+            planCard.classList.add('plan-selected');
+            
+            // Store selected plan data
+            selectedPlan = plan;
+            selectedPlanPrice = price;
+            selectedPlanName = planName;
+            
+            // Update selection message
+            selectedPlanText.textContent = `${planName} - ${parseInt(price).toLocaleString('fr-FR')} GDS/mois`;
             planSelectionMessage.classList.add('active');
             
             // Show customer info dialog
@@ -1532,351 +1525,422 @@
                 showCustomerInfoDialog();
             }, 300);
         });
+    });
+    
+    // Custom account button
+    customAccountBtn.addEventListener('click', () => {
+        selectedPlan = 'custom';
+        selectedPlanPrice = '0';
+        selectedPlanName = 'Compte personnalisé';
+        
+        selectedPlanText.textContent = 'Compte personnalisé - Prix selon la durée';
+        planSelectionMessage.classList.add('active');
         
         // Show customer info dialog
-        function showCustomerInfoDialog() {
-            // Réinitialiser le formulaire
-            customerInfoForm.reset();
-            
-            // Afficher la boîte de dialogue d'informations client
-            customerInfoDialog.classList.add('active');
-            document.body.style.overflow = 'hidden';
+        setTimeout(() => {
+            showCustomerInfoDialog();
+        }, 300);
+    });
+    
+    // Show customer info dialog
+    function showCustomerInfoDialog() {
+        // Réinitialiser le formulaire
+        customerInfoForm.reset();
+        
+        // Afficher la boîte de dialogue d'informations client
+        customerInfoDialog.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    // Customer info form submission
+    customerInfoForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Récupérer les données du formulaire
+        customerData = {
+            name: document.getElementById('customerName').value,
+            email: document.getElementById('customerEmail').value,
+            phone: document.getElementById('customerPhone').value,
+            netflixEmail: document.getElementById('netflixEmail').value,
+            notes: document.getElementById('customerNotes').value
+        };
+        
+        // Valider les données
+        if (!customerData.name || customerData.name.trim() === '') {
+            alert("Veuillez entrer votre nom complet");
+            return;
         }
         
-        // Customer info form submission
-        customerInfoForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Récupérer les données du formulaire
-            customerData = {
-                name: document.getElementById('customerName').value,
-                email: document.getElementById('customerEmail').value,
-                phone: document.getElementById('customerPhone').value,
-                netflixEmail: document.getElementById('netflixEmail').value,
-                notes: document.getElementById('customerNotes').value
-            };
-            
-            // Valider les données
-            if (!customerData.name || customerData.name.trim() === '') {
-                alert("Veuillez entrer votre nom complet");
-                return;
-            }
-            
-            if (!customerData.email || customerData.email.trim() === '') {
-                alert("Veuillez entrer votre email");
-                return;
-            }
-            
-            if (!customerData.phone || customerData.phone.trim() === '') {
-                alert("Veuillez entrer votre numéro de téléphone");
-                return;
-            }
-            
-            // Cacher la boîte de dialogue client
-            customerInfoDialog.classList.remove('active');
-            
-            // Préparer les données pour la boîte de dialogue de paiement
-            preparePaymentDialog();
-        });
+        if (!customerData.email || customerData.email.trim() === '') {
+            alert("Veuillez entrer votre email");
+            return;
+        }
         
-        // Préparer la boîte de dialogue de paiement
-        function preparePaymentDialog() {
-            // Réinitialiser l'image de preuve
-            resetProofImage();
+        if (!customerData.phone || customerData.phone.trim() === '') {
+            alert("Veuillez entrer votre numéro de téléphone");
+            return;
+        }
+        
+        // Cacher la boîte de dialogue client
+        customerInfoDialog.classList.remove('active');
+        
+        // Préparer les données pour la boîte de dialogue de paiement
+        preparePaymentDialog();
+    });
+    
+    // Préparer la boîte de dialogue de paiement
+    function preparePaymentDialog() {
+        // Réinitialiser l'image de preuve
+        resetProofImage();
+        
+        // Déterminer le type de compte
+        const accountType = customerData.netflixEmail && customerData.netflixEmail.trim() !== '' ? 'Existant' : 'Nouveau (à créer)';
+        
+        // Mettre à jour le contenu de la boîte de dialogue de paiement
+        document.getElementById('dialogPlanName').textContent = `Netflix ${selectedPlanName}`;
+        document.getElementById('dialogPlanDuration').textContent = selectedPlan === 'custom' ? 'Personnalisé' : '1 Mois';
+        document.getElementById('dialogPlanPrice').textContent = selectedPlan === 'custom' ? 'À déterminer' : `${parseInt(selectedPlanPrice).toLocaleString('fr-FR')} GDS`;
+        document.getElementById('dialogCustomerName').textContent = customerData.name;
+        document.getElementById('dialogNetflixEmail').textContent = customerData.netflixEmail || 'À créer';
+        document.getElementById('dialogAccountType').textContent = accountType;
+        
+        // Désactiver le bouton de soumission jusqu'à ce qu'une image soit téléchargée
+        submitOrderBtn.disabled = true;
+        submitOrderBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Passer la commande';
+        
+        // AJOUTER CETTE PARTIE POUR AMÉLIORER L'EXPÉRIENCE
+        // Attendre un peu pour s'assurer que le DOM est mis à jour
+        setTimeout(() => {
+            // Afficher la boîte de dialogue de paiement
+            paymentDialog.classList.add('active');
+            document.body.style.overflow = 'hidden';
             
-            // Déterminer le type de compte
-            const accountType = customerData.netflixEmail && customerData.netflixEmail.trim() !== '' ? 'Existant' : 'Nouveau (à créer)';
+            // Configurer le défilement
+            setupDialogScrolling();
             
-            // Mettre à jour le contenu de la boîte de dialogue de paiement
-            document.getElementById('dialogPlanName').textContent = `Netflix ${selectedPlanName}`;
-            document.getElementById('dialogPlanDuration').textContent = selectedPlan === 'custom' ? 'Personnalisé' : '1 Mois';
-            document.getElementById('dialogPlanPrice').textContent = selectedPlan === 'custom' ? 'À déterminer' : `${parseInt(selectedPlanPrice).toLocaleString('fr-FR')} GDS`;
-            document.getElementById('dialogCustomerName').textContent = customerData.name;
-            document.getElementById('dialogNetflixEmail').textContent = customerData.netflixEmail || 'À créer';
-            document.getElementById('dialogAccountType').textContent = accountType;
-            
-            // Désactiver le bouton de soumission jusqu'à ce qu'une image soit téléchargée
-            submitOrderBtn.disabled = true;
-            submitOrderBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Passer la commande';
-            
-            // AJOUTER CETTE PARTIE POUR AMÉLIORER L'EXPÉRIENCE
-            // Attendre un peu pour s'assurer que le DOM est mis à jour
-            setTimeout(() => {
-                // Afficher la boîte de dialogue de paiement
-                paymentDialog.classList.add('active');
-                document.body.style.overflow = 'hidden';
+            // Sur mobile, montrer l'indicateur de défilement
+            if (window.innerWidth <= 768) {
+                scrollIndicator.style.display = 'flex';
                 
-                // Configurer le défilement
-                setupDialogScrolling();
+                // Cacher l'indicateur après 5 secondes
+                setTimeout(() => {
+                    scrollIndicator.style.display = 'none';
+                }, 5000);
+            }
+            
+            // Auto-scroll léger sur mobile pour montrer qu'il y a du contenu
+            if (window.innerWidth <= 768) {
+                setTimeout(() => {
+                    const dialogBox = document.querySelector('.payment-dialog-box');
+                    if (dialogBox && dialogBox.scrollHeight > dialogBox.clientHeight) {
+                        dialogBox.scrollTop = 50; // Légèrement vers le bas
+                        
+                        // Revenir en haut après 1 seconde
+                        setTimeout(() => {
+                            dialogBox.scrollTop = 0;
+                        }, 1000);
+                    }
+                }, 300);
+            }
+        }, 50);
+    }
+    
+    // Payment method selection
+    paymentOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            // Remove active class from all options
+            paymentOptions.forEach(opt => opt.classList.remove('active'));
+            
+            // Add active class to selected option
+            option.classList.add('active');
+            selectedPaymentMethod = option.id.replace('PaymentOption', '');
+        });
+    });
+    
+    // Default select NatCash
+    document.getElementById('natcashPaymentOption').classList.add('active');
+    selectedPaymentMethod = 'natcash';
+    
+    // Upload proof image
+    uploadContainer.addEventListener('click', () => {
+        proofImageInput.click();
+    });
+    
+    proofImageInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            // Vérifier la taille du fichier (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert("Le fichier est trop volumineux. Maximum 5MB.");
+                return;
+            }
+            
+            // Vérifier le type de fichier
+            if (!file.type.match('image.*')) {
+                alert("Veuillez sélectionner une image.");
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                proofImageData = e.target.result;
+                previewImage.src = proofImageData;
+                previewContainer.style.display = 'block';
+                submitOrderBtn.disabled = false;
                 
-                // Sur mobile, montrer l'indicateur de défilement
-                if (window.innerWidth <= 768) {
-                    scrollIndicator.style.display = 'flex';
-                    
-                    // Cacher l'indicateur après 5 secondes
-                    setTimeout(() => {
-                        scrollIndicator.style.display = 'none';
-                    }, 5000);
-                }
-                
-                // Auto-scroll léger sur mobile pour montrer qu'il y a du contenu
+                // Scroller vers le bouton après téléchargement de l'image
                 if (window.innerWidth <= 768) {
                     setTimeout(() => {
                         const dialogBox = document.querySelector('.payment-dialog-box');
-                        if (dialogBox && dialogBox.scrollHeight > dialogBox.clientHeight) {
-                            dialogBox.scrollTop = 50; // Légèrement vers le bas
-                            
-                            // Revenir en haut après 1 seconde
-                            setTimeout(() => {
-                                dialogBox.scrollTop = 0;
-                            }, 1000);
+                        if (dialogBox) {
+                            dialogBox.scrollTop = dialogBox.scrollHeight;
                         }
                     }, 300);
                 }
-            }, 50);
+            };
+            reader.readAsDataURL(file);
         }
-        
-        // Payment method selection
-        paymentOptions.forEach(option => {
-            option.addEventListener('click', () => {
-                // Remove active class from all options
-                paymentOptions.forEach(opt => opt.classList.remove('active'));
+    });
+    
+    // Remove preview image
+    removePreviewBtn.addEventListener('click', () => {
+        resetProofImage();
+    });
+    
+    function resetProofImage() {
+        proofImageInput.value = '';
+        proofImageData = null;
+        previewImage.src = '';
+        previewContainer.style.display = 'none';
+        submitOrderBtn.disabled = true;
+    }
+    
+    // Détecter quand l'utilisateur scroll dans la boîte de dialogue
+    function setupDialogScrolling() {
+        const paymentDialogBox = document.querySelector('.payment-dialog-box');
+        if (paymentDialogBox) {
+            paymentDialogBox.addEventListener('scroll', function() {
+                const scrollPosition = paymentDialogBox.scrollTop + paymentDialogBox.clientHeight;
+                const scrollHeight = paymentDialogBox.scrollHeight;
                 
-                // Add active class to selected option
-                option.classList.add('active');
-                selectedPaymentMethod = option.id.replace('PaymentOption', '');
-            });
-        });
-        
-        // Default select NatCash
-        document.getElementById('natcashPaymentOption').classList.add('active');
-        selectedPaymentMethod = 'natcash';
-        
-        // Upload proof image
-        uploadContainer.addEventListener('click', () => {
-            proofImageInput.click();
-        });
-        
-        proofImageInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                // Vérifier la taille du fichier (max 5MB)
-                if (file.size > 5 * 1024 * 1024) {
-                    alert("Le fichier est trop volumineux. Maximum 5MB.");
-                    return;
-                }
+                // Cacher l'indicateur de défilement quand l'utilisateur scroll
+                scrollIndicator.style.display = 'none';
                 
-                // Vérifier le type de fichier
-                if (!file.type.match('image.*')) {
-                    alert("Veuillez sélectionner une image.");
-                    return;
-                }
-                
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    proofImageData = e.target.result;
-                    previewImage.src = proofImageData;
-                    previewContainer.style.display = 'block';
-                    submitOrderBtn.disabled = false;
-                    
-                    // Scroller vers le bouton après téléchargement de l'image
-                    if (window.innerWidth <= 768) {
-                        setTimeout(() => {
-                            const dialogBox = document.querySelector('.payment-dialog-box');
-                            if (dialogBox) {
-                                dialogBox.scrollTop = dialogBox.scrollHeight;
-                            }
-                        }, 300);
-                    }
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-        
-        // Remove preview image
-        removePreviewBtn.addEventListener('click', () => {
-            resetProofImage();
-        });
-        
-        function resetProofImage() {
-            proofImageInput.value = '';
-            proofImageData = null;
-            previewImage.src = '';
-            previewContainer.style.display = 'none';
-            submitOrderBtn.disabled = true;
-        }
-        
-        // Détecter quand l'utilisateur scroll dans la boîte de dialogue
-        function setupDialogScrolling() {
-            const paymentDialogBox = document.querySelector('.payment-dialog-box');
-            if (paymentDialogBox) {
-                paymentDialogBox.addEventListener('scroll', function() {
-                    const scrollPosition = paymentDialogBox.scrollTop + paymentDialogBox.clientHeight;
-                    const scrollHeight = paymentDialogBox.scrollHeight;
-                    
-                    // Cacher l'indicateur de défilement quand l'utilisateur scroll
-                    scrollIndicator.style.display = 'none';
-                    
-                    // Si l'utilisateur est proche du bas, rendre le bouton plus visible
-                    if (scrollHeight - scrollPosition < 100) {
-                        submitOrderBtn.style.boxShadow = '0 0 15px rgba(229, 9, 20, 0.5)';
-                    } else {
-                        submitOrderBtn.style.boxShadow = '0 4px 12px rgba(229, 9, 20, 0.3)';
-                    }
-                });
-            }
-        }
-        
-        // Submit order
-        submitOrderBtn.addEventListener('click', () => {
-            if (!proofImageData) {
-                alert("Veuillez télécharger une preuve de paiement.");
-                return;
-            }
-            
-            if (!selectedPaymentMethod) {
-                alert("Veuillez sélectionner une méthode de paiement.");
-                return;
-            }
-            
-            // Désactiver le bouton pendant le traitement
-            submitOrderBtn.disabled = true;
-            submitOrderBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement en cours...';
-            
-            // Simuler un traitement
-            setTimeout(() => {
-                // Enregistrer la commande
-                const orderSaved = saveOrderToLocalStorage();
-                
-                if (orderSaved) {
-                    // Afficher un message de succès
-                    alert(`Commande passée avec succès!\n\nNuméro de commande: ${orderSaved.orderNumber}\nNous activerons votre compte Netflix dans les 30 minutes.\n\nMerci pour votre confiance!`);
-                    
-                    // Fermer la boîte de dialogue
-                    paymentDialog.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                    
-                    // Réinitialiser tout
-                    resetForms();
+                // Si l'utilisateur est proche du bas, rendre le bouton plus visible
+                if (scrollHeight - scrollPosition < 100) {
+                    submitOrderBtn.style.boxShadow = '0 0 15px rgba(229, 9, 20, 0.5)';
                 } else {
-                    alert("Une erreur s'est produite. Veuillez réessayer.");
-                    submitOrderBtn.disabled = false;
-                    submitOrderBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Passer la commande';
+                    submitOrderBtn.style.boxShadow = '0 4px 12px rgba(229, 9, 20, 0.3)';
                 }
-            }, 1500);
-        });
-        
-        // Fonction pour sauvegarder la commande dans localStorage
-        function saveOrderToLocalStorage() {
-            try {
-                // Générer un ID unique pour la commande
-                const orderId = 'netflix_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-                const orderNumber = 'NETFLIX' + Date.now().toString().substr(-6);
-                
-                const orderData = {
-                    id: orderId,
-                    orderNumber: orderNumber,
-                    customerName: customerData.name,
-                    customerEmail: customerData.email,
-                    customerPhone: customerData.phone,
-                    netflixEmail: customerData.netflixEmail || 'À créer',
-                    customerNotes: customerData.notes,
-                    plan: selectedPlan,
-                    planName: selectedPlanName,
-                    planPrice: selectedPlanPrice,
-                    planFormatted: selectedPlan === 'custom' ? 'Compte personnalisé' : `Netflix ${selectedPlanName} - ${parseInt(selectedPlanPrice).toLocaleString('fr-FR')} GDS`,
-                    accountType: customerData.netflixEmail && customerData.netflixEmail.trim() !== '' ? 'existant' : 'nouveau',
-                    paymentMethod: selectedPaymentMethod === 'natcash' ? 'NatCash' : 'MonCash',
-                    paymentNumber: selectedPaymentMethod === 'natcash' ? '41866098' : '46433333',
-                    proofImage: proofImageData,
-                    status: 'pending',
-                    date: new Date().toISOString(),
-                    type: 'netflix',
-                    processed: false
-                };
-                
-                // Récupérer les commandes existantes
-                const existingOrders = JSON.parse(localStorage.getItem('netflix_orders')) || [];
-                
-                // Ajouter la nouvelle commande
-                existingOrders.push(orderData);
-                
-                // Sauvegarder dans localStorage
-                localStorage.setItem('netflix_orders', JSON.stringify(existingOrders));
-                
-                console.log('Commande Netflix enregistrée:', orderData);
-                return orderData;
-                
-            } catch (error) {
-                console.error('Erreur lors de l\'enregistrement de la commande:', error);
-                return null;
+            });
+        }
+    }
+    
+    // Vérifier la santé de l'API
+    async function checkAPIHealth() {
+        try {
+            const response = await fetch(API_CONFIG.BASE_URL + API_CONFIG.ENDPOINTS.HEALTH);
+            const data = await response.json();
+            return data.success === true;
+        } catch (error) {
+            console.warn('API non disponible:', error.message);
+            return false;
+        }
+    }
+    
+    // Fonction pour envoyer la commande à l'API
+    async function sendOrderToAPI(orderData) {
+        try {
+            const apiHealthy = await checkAPIHealth();
+            
+            if (!apiHealthy) {
+                console.warn('API non disponible, sauvegarde locale uniquement');
+                return { success: false, message: 'API non disponible' };
             }
+            
+            // Préparer les données pour l'API
+            const apiOrderData = {
+                type: 'netflix',
+                orderNumber: orderData.orderNumber,
+                customerName: orderData.customerName,
+                customerEmail: orderData.customerEmail,
+                customerPhone: orderData.customerPhone,
+                serviceDetails: {
+                    plan: orderData.plan,
+                    planName: orderData.planName,
+                    price: orderData.price,
+                    accountType: orderData.accountType,
+                    netflixEmail: orderData.netflixEmail
+                },
+                payment: {
+                    method: orderData.paymentMethod,
+                    number: orderData.paymentNumber,
+                    proofImage: orderData.proofImage ? 'image_uploaded' : null
+                },
+                status: 'pending',
+                notes: orderData.notes,
+                date: orderData.date
+            };
+            
+            const response = await fetch(API_CONFIG.BASE_URL + API_CONFIG.ENDPOINTS.ORDERS, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(apiOrderData)
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                console.log('Commande Netflix envoyée à l\'API avec succès:', data);
+                return { success: true, data: data };
+            } else {
+                console.error('Erreur API:', data.error);
+                return { success: false, message: data.error || 'Erreur API' };
+            }
+        } catch (error) {
+            console.error('Erreur envoi commande à l\'API:', error);
+            return { success: false, message: error.message };
+        }
+    }
+    
+    // Submit order
+    submitOrderBtn.addEventListener('click', async () => {
+        if (!proofImageData) {
+            alert("Veuillez télécharger une preuve de paiement.");
+            return;
         }
         
-        // Close customer dialog button
-        closeCustomerDialogBtn.addEventListener('click', function() {
-            customerInfoDialog.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            selectedPlan = null;
-        });
+        if (!selectedPaymentMethod) {
+            alert("Veuillez sélectionner une méthode de paiement.");
+            return;
+        }
         
-        // Close payment dialog button
-        closePaymentDialogBtn.addEventListener('click', function() {
-            paymentDialog.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            resetForms();
-        });
+        // Désactiver le bouton pendant le traitement
+        submitOrderBtn.disabled = true;
+        submitOrderBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement en cours...';
         
-        // Back to customer info button
-        backToCustomerInfoBtn.addEventListener('click', function() {
-            paymentDialog.classList.remove('active');
-            customerInfoDialog.classList.add('active');
-        });
-        
-        // Close dialogs when clicking outside
-        customerInfoDialog.addEventListener('click', (e) => {
-            if (e.target === customerInfoDialog) {
-                customerInfoDialog.classList.remove('active');
+        try {
+            const orderId = 'netflix_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            const orderNumber = 'NETFLIX' + Date.now().toString().substr(-6);
+            
+            const orderData = {
+                id: orderId,
+                orderNumber: orderNumber,
+                customerName: customerData.name,
+                customerEmail: customerData.email,
+                customerPhone: customerData.phone,
+                netflixEmail: customerData.netflixEmail || 'À créer',
+                notes: customerData.notes,
+                plan: selectedPlan,
+                planName: selectedPlanName,
+                price: selectedPlan === 'custom' ? 'À déterminer' : `${parseInt(selectedPlanPrice).toLocaleString('fr-FR')} GDS`,
+                accountType: customerData.netflixEmail && customerData.netflixEmail.trim() !== '' ? 'existant' : 'nouveau',
+                paymentMethod: selectedPaymentMethod === 'natcash' ? 'NatCash' : 'MonCash',
+                paymentNumber: selectedPaymentMethod === 'natcash' ? '41866098' : '46433333',
+                proofImage: proofImageData,
+                status: 'pending',
+                date: new Date().toISOString(),
+                type: 'netflix',
+                processed: false
+            };
+            
+            // 1. Sauvegarder localement (fallback)
+            const existingOrders = JSON.parse(localStorage.getItem('netflix_orders')) || [];
+            existingOrders.push(orderData);
+            localStorage.setItem('netflix_orders', JSON.stringify(existingOrders));
+            
+            // 2. Envoyer à l'API
+            const apiResult = await sendOrderToAPI(orderData);
+            
+            if (apiResult.success) {
+                alert(`✅ Commande passée avec succès!\n\nNuméro: ${orderData.orderNumber}\nNous activerons votre compte Netflix dans les 30 minutes.\n\nMerci pour votre confiance!`);
+                
+                paymentDialog.classList.remove('active');
                 document.body.style.overflow = 'auto';
-                selectedPlan = null;
-            }
-        });
-        
-        paymentDialog.addEventListener('click', (e) => {
-            if (e.target === paymentDialog) {
+                resetForms();
+            } else {
+                // Fallback: Sauvegarde locale seulement
+                alert(`⚠️ Commande enregistrée localement!\n\nNuméro: ${orderData.orderNumber}\nNote: API non accessible, votre commande est sauvegardée.\nNous la traiterons manuellement.`);
+                
                 paymentDialog.classList.remove('active');
                 document.body.style.overflow = 'auto';
                 resetForms();
             }
-        });
-        
-        // Fonction pour réinitialiser les formulaires
-        function resetForms() {
-            customerInfoForm.reset();
-            resetProofImage();
-            selectedPlan = null;
-            customerData = null;
-            proofImageData = null;
-            // Réinitialiser la sélection de paiement
-            document.getElementById('natcashPaymentOption').classList.add('active');
-            document.getElementById('moncashPaymentOption').classList.remove('active');
-            selectedPaymentMethod = 'natcash';
-            // Cacher l'indicateur de défilement
-            scrollIndicator.style.display = 'none';
-            // Réinitialiser la sélection de plan
-            document.querySelectorAll('.plan-card').forEach(card => {
-                card.classList.remove('plan-selected');
-            });
-            planSelectionMessage.classList.remove('active');
+            
+        } catch (error) {
+            console.error('Erreur complète:', error);
+            alert("Une erreur s'est produite. Veuillez réessayer.");
+            submitOrderBtn.disabled = false;
+            submitOrderBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Passer la commande';
         }
-        
-        // Ajouter un événement pour le redimensionnement de la fenêtre
-        window.addEventListener('resize', () => {
-            if (paymentDialog.classList.contains('active')) {
-                // Reconfigurer le défilement si la taille change
-                setupDialogScrolling();
-            }
+    });
+    
+    // Close customer dialog button
+    closeCustomerDialogBtn.addEventListener('click', function() {
+        customerInfoDialog.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        selectedPlan = null;
+    });
+    
+    // Close payment dialog button
+    closePaymentDialogBtn.addEventListener('click', function() {
+        paymentDialog.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        resetForms();
+    });
+    
+    // Back to customer info button
+    backToCustomerInfoBtn.addEventListener('click', function() {
+        paymentDialog.classList.remove('active');
+        customerInfoDialog.classList.add('active');
+    });
+    
+    // Close dialogs when clicking outside
+    customerInfoDialog.addEventListener('click', (e) => {
+        if (e.target === customerInfoDialog) {
+            customerInfoDialog.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            selectedPlan = null;
+        }
+    });
+    
+    paymentDialog.addEventListener('click', (e) => {
+        if (e.target === paymentDialog) {
+            paymentDialog.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            resetForms();
+        }
+    });
+    
+    // Fonction pour réinitialiser les formulaires
+    function resetForms() {
+        customerInfoForm.reset();
+        resetProofImage();
+        selectedPlan = null;
+        customerData = null;
+        proofImageData = null;
+        // Réinitialiser la sélection de paiement
+        document.getElementById('natcashPaymentOption').classList.add('active');
+        document.getElementById('moncashPaymentOption').classList.remove('active');
+        selectedPaymentMethod = 'natcash';
+        // Cacher l'indicateur de défilement
+        scrollIndicator.style.display = 'none';
+        // Réinitialiser la sélection de plan
+        document.querySelectorAll('.plan-card').forEach(card => {
+            card.classList.remove('plan-selected');
         });
-    </script>
+        planSelectionMessage.classList.remove('active');
+    }
+    
+    // Ajouter un événement pour le redimensionnement de la fenêtre
+    window.addEventListener('resize', () => {
+        if (paymentDialog.classList.contains('active')) {
+            // Reconfigurer le défilement si la taille change
+            setupDialogScrolling();
+        }
+    });
+</script>
 </body>
 </html>
