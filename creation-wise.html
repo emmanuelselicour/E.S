@@ -758,7 +758,7 @@
             margin-bottom: 15px;
         }
         
-        /* Buttons - MODIFIED FOR BETTER VISIBILITY */
+        /* Buttons */
         .btn {
             display: inline-block;
             background: linear-gradient(to right, var(--wise-color), #0099cc);
@@ -881,7 +881,7 @@
             font-size: 0.9rem;
         }
         
-        /* Responsive - MODIFIED FOR BETTER DIALOG SCROLLING */
+        /* Responsive */
         @media (max-width: 992px) {
             .wise-hero h2 {
                 font-size: 2.3rem;
@@ -946,7 +946,6 @@
                 max-height: 85vh;
             }
             
-            /* Indicateur de défilement pour mobile */
             .payment-dialog-box:after {
                 content: '';
                 position: sticky;
@@ -958,7 +957,6 @@
                 pointer-events: none;
             }
             
-            /* Assurer que la boîte de dialogue est centrée sur mobile */
             .dialog-overlay {
                 align-items: flex-start;
                 padding-top: 20px;
@@ -993,10 +991,6 @@
             .payment-dialog-box {
                 width: 95%;
                 padding: 20px;
-            }
-            
-            #submitOrderBtn {
-                box-shadow: 0 4px 15px rgba(0, 185, 255, 0.4);
             }
         }
         
@@ -1456,6 +1450,15 @@
         let proofImageData = null;
         const exchangeRate = 148;
         
+        // Configuration de l'API
+        const API_CONFIG = {
+            BASE_URL: 'https://escompany-api.onrender.com',
+            ENDPOINTS: {
+                ORDERS: '/api/orders',
+                HEALTH: '/api/health'
+            }
+        };
+
         // Calculate WISE recharge
         function calculateWiseRecharge() {
             const amount = currentAmount;
@@ -1709,8 +1712,78 @@
             }
         }
         
+        // Vérifier la santé de l'API
+        async function checkAPIHealth() {
+            try {
+                const response = await fetch(API_CONFIG.BASE_URL + API_CONFIG.ENDPOINTS.HEALTH);
+                const data = await response.json();
+                return data.success === true;
+            } catch (error) {
+                console.warn('API non disponible:', error.message);
+                return false;
+            }
+        }
+        
+        // Fonction pour envoyer la commande à l'API
+        async function sendOrderToAPI(orderData) {
+            try {
+                const apiHealthy = await checkAPIHealth();
+                
+                if (!apiHealthy) {
+                    console.warn('API non disponible, sauvegarde locale uniquement');
+                    return { success: false, message: 'API non disponible' };
+                }
+                
+                // Préparer les données pour l'API
+                const apiOrderData = {
+                    type: 'wise',
+                    orderNumber: orderData.orderNumber,
+                    customerName: orderData.customerName,
+                    customerEmail: orderData.customerEmail,
+                    customerPhone: orderData.customerPhone,
+                    serviceDetails: {
+                        wiseEmail: orderData.wiseEmail,
+                        amountUSD: orderData.amountUSD,
+                        amountFormatted: orderData.amountFormatted,
+                        totalGDS: orderData.totalGDS,
+                        totalFormatted: orderData.totalFormatted,
+                        exchangeRate: orderData.exchangeRate
+                    },
+                    payment: {
+                        method: orderData.paymentMethod,
+                        number: orderData.paymentNumber,
+                        proofImage: orderData.proofImage ? 'image_uploaded' : null
+                    },
+                    status: 'pending',
+                    notes: orderData.customerNotes,
+                    date: orderData.date
+                };
+                
+                const response = await fetch(API_CONFIG.BASE_URL + API_CONFIG.ENDPOINTS.ORDERS, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(apiOrderData)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    console.log('Commande envoyée à l\'API avec succès:', data);
+                    return { success: true, data: data };
+                } else {
+                    console.error('Erreur API:', data.error);
+                    return { success: false, message: data.error || 'Erreur API' };
+                }
+            } catch (error) {
+                console.error('Erreur envoi commande à l\'API:', error);
+                return { success: false, message: error.message };
+            }
+        }
+        
         // Submit order
-        submitOrderBtn.addEventListener('click', () => {
+        submitOrderBtn.addEventListener('click', async () => {
             if (!proofImageData) {
                 alert("Veuillez télécharger une preuve de paiement.");
                 return;
@@ -1725,31 +1798,6 @@
             submitOrderBtn.disabled = true;
             submitOrderBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement en cours...';
             
-            // Simuler un traitement
-            setTimeout(() => {
-                // Enregistrer la commande
-                const orderSaved = saveOrderToLocalStorage();
-                
-                if (orderSaved) {
-                    // Afficher un message de succès
-                    alert(`Commande passée avec succès!\n\nNuméro de commande: ${orderSaved.orderNumber}\nNous traiterons votre recharge dans les 30 minutes.\n\nMerci pour votre confiance!`);
-                    
-                    // Fermer la boîte de dialogue
-                    paymentDialog.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                    
-                    // Réinitialiser tout
-                    resetForms();
-                } else {
-                    alert("Une erreur s'est produite. Veuillez réessayer.");
-                    submitOrderBtn.disabled = false;
-                    submitOrderBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Passer la commande';
-                }
-            }, 1500);
-        });
-        
-        // Fonction pour sauvegarder la commande dans localStorage
-        function saveOrderToLocalStorage() {
             try {
                 const { amount, totalGDS } = calculateWiseRecharge();
                 const formattedTotal = totalGDS.toLocaleString('fr-FR');
@@ -1780,23 +1828,40 @@
                     processed: false
                 };
                 
-                // Récupérer les commandes existantes
+                // 1. Sauvegarder localement (fallback)
                 const existingOrders = JSON.parse(localStorage.getItem('wise_orders')) || [];
-                
-                // Ajouter la nouvelle commande
                 existingOrders.push(orderData);
-                
-                // Sauvegarder dans localStorage
                 localStorage.setItem('wise_orders', JSON.stringify(existingOrders));
                 
-                console.log('Commande WISE enregistrée:', orderData);
-                return orderData;
+                // 2. Envoyer à l'API
+                const apiResult = await sendOrderToAPI(orderData);
+                
+                if (apiResult.success) {
+                    // Afficher un message de succès
+                    alert(`✅ Commande passée avec succès!\n\nNuméro de commande: ${orderData.orderNumber}\nNous traiterons votre recharge dans les 30 minutes.\n\nMerci pour votre confiance!`);
+                    
+                    // Fermer la boîte de dialogue
+                    paymentDialog.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    
+                    // Réinitialiser tout
+                    resetForms();
+                } else {
+                    // Fallback: Sauvegarde locale seulement
+                    alert(`⚠️ Commande enregistrée localement!\n\nNuméro: ${orderData.orderNumber}\nNote: API non accessible, votre commande est sauvegardée.\nNous la traiterons manuellement.`);
+                    
+                    paymentDialog.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    resetForms();
+                }
                 
             } catch (error) {
-                console.error('Erreur lors de l\'enregistrement de la commande:', error);
-                return null;
+                console.error('Erreur complète:', error);
+                alert("Une erreur s'est produite. Veuillez réessayer.");
+                submitOrderBtn.disabled = false;
+                submitOrderBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Passer la commande';
             }
-        }
+        });
         
         // Close customer dialog button
         closeCustomerDialogBtn.addEventListener('click', function() {
@@ -1850,9 +1915,6 @@
             scrollIndicator.style.display = 'none';
         }
         
-        // Initialize calculation on page load
-        calculateWiseRecharge();
-        
         // Ajouter un événement pour le redimensionnement de la fenêtre
         window.addEventListener('resize', () => {
             if (paymentDialog.classList.contains('active')) {
@@ -1860,6 +1922,9 @@
                 setupDialogScrolling();
             }
         });
+        
+        // Initialize calculation on page load
+        calculateWiseRecharge();
     </script>
 </body>
 </html>
